@@ -1,26 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
+import Email from "@material-ui/icons/Email";
+import Lock from "@material-ui/icons/Lock";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <div className="wrapper">
+          <h1>Sign In</h1>
+          <div className="con-input">
+            <input placeholder="Email" type="text" />
+            <i className="icon">
+              <Email />
+            </i>
+            <div className="bg"></div>
+          </div>
+          <div className="con-input">
+            <input placeholder="Password" type="text" />
+            <i className="icon">
+              <Lock />
+            </i>
+            <div className="bg"></div>
+          </div>
+          <button className="btn">Log In</button>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default App;
