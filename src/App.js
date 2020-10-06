@@ -24,6 +24,16 @@ class App extends Component {
             <div className="bg"></div>
           </div>
           <button className="btn">Log In</button>
+          <span>or</span>
+          <div className="afteror">
+            <a href="https://hacktoberfest.digitalocean.com" className="new">
+              Create an account
+            </a>
+            <div className="seperator"></div>
+            <a href="https://hacktoberfest.digitalocean.com" className="new">
+              Forgot password?
+            </a>
+          </div>
         </div>
       </div>
     );

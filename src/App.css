@@ -99,6 +99,7 @@
   font-family: "Poppins", sans-serif;
   font-size: 1rem;
   margin-top: 5%;
+  margin-bottom: 5%;
 }
 
 .btn:hover {
@@ -126,4 +127,38 @@
   bottom: 0px;
   z-index: -1;
   transition: all 0.25s ease;
+}
+
+.afteror {
+  display: flex;
+  position: relative;
+  flex: 1;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: row;
+  margin-top: 5%;
+}
+
+.new {
+  color: maroon;
+  flex: 0 1 auto;
+  font-size: 0.9rem;
+  align-self: auto;
+  margin-right: 5%;
+  margin-left: 5%;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.new:hover {
+  color: blue;
+  text-decoration: underline;
+}
+
+.seperator {
+  border-left: 1.6px solid #000;
+  border-radius: 0.8px;
+  height: 15px;
+  flex: 0 1 auto;
+  align-self: auto;
 }
