@@ -162,3 +162,146 @@
   flex: 0 1 auto;
   align-self: auto;
 }
+
+/* RESPONSIVE STYLES */
+
+@media screen and (max-width: 1000px) {
+  .App {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-repeat: no-repeat;
+    background-image: url("./background.jpg");
+    background-size: cover;
+  }
+
+  .wrapper {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px 40px;
+    margin-right: 0px;
+    border-radius: 10px;
+    box-shadow: 0px 10px 50px #555;
+    background-color: #ffffff;
+    width: 70%;
+  }
+
+  .con-input {
+    background: rgb(242, 243, 247);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border-radius: 12px;
+    position: relative;
+    width: 90%;
+    height: 11%;
+  }
+
+  .con-input input {
+    border: 0px;
+    background: transparent;
+    outline: none;
+    font-size: 1rem;
+    font-family: "Poppins", sans-serif;
+    /* margin-left: 8px; */
+    width: 260px;
+    transition: all 0.25s ease;
+  }
+
+  .con-input input:focus {
+    padding-left: 5px;
+    padding-right: 0px;
+  }
+
+  .con-input input:focus ~ .bg {
+    border: 0.8px solid #000000;
+  }
+
+  .con-input input:focus ~ i {
+    transform: translate(0, -8px);
+    box-shadow: 0px, 8px, 20px, 0px rgba(0, 0, 0, 15);
+  }
+
+  .con-input i.icon {
+    order: -1;
+    background: white;
+
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 31px;
+    height: 31px;
+    z-index: 20;
+    transition: all 0.25s ease;
+  }
+
+  .bg {
+    background: transparent;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+    left: 0px;
+    top: 0px;
+    pointer-events: none;
+    border-radius: inherit;
+    box-sizing: border-box;
+    border: 2px solid transparent;
+    transition: all 0.25s ease;
+  }
+
+  .btn {
+    background: black;
+    color: #ffffff;
+    border-radius: 25px;
+    transition: all 0.25s ease;
+    width: 40%;
+    height: 40px;
+    font-family: "Poppins", sans-serif;
+    font-size: 1rem;
+    margin-top: 5%;
+    margin-bottom: 5%;
+  }
+
+  .afteror {
+    display: flex;
+    position: relative;
+    flex: 1;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+    margin-top: 5%;
+  }
+
+  .new {
+    color: maroon;
+    flex: 0 1 auto;
+    font-size: 0.9rem;
+    align-self: auto;
+    /* margin-right: 5%; */
+    /* margin-left: 5%; */
+    white-space: nowrap;
+    text-decoration: none;
+  }
+
+  .new:hover {
+    color: blue;
+    text-decoration: underline;
+  }
+
+  .seperator {
+    border-left: 1.6px solid #000;
+    border-radius: 0.8px;
+    height: 15px;
+    flex: 0 1 auto;
+    align-self: auto;
+  }
+}
