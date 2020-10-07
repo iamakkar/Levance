@@ -5,8 +5,12 @@ import Lock from "@material-ui/icons/Lock";
 import Eye from "@material-ui/icons/VisibilitySharp";
 import Eyecut from "@material-ui/icons/VisibilityOffSharp";
 
+const validate = RegExp(/^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/);
+
 function App() {
   const [visible, setVisible] = useState(false);
+  const [cred, setCred] = useState({ email: "", password: "" });
+  const [valid, setValid] = useState(true);
 
   function PasswordShow() {
     if (!visible) setVisible(true);
@@ -15,19 +19,40 @@ function App() {
     }
   }
 
+  function ValidateEmail(e) {
+    setCred({
+      ...cred,
+      email: e.target.value,
+    });
+    setValid(validate.test(cred.email));
+    console.log(cred);
+    console.log(valid);
+  }
+
   return (
     <div className="App">
       <div className="wrapper">
         <h1>Sign In</h1>
-        <div className="con-input">
-          <input placeholder="Email" type="text" />
+        <div className={valid || cred.email === "" ? "con-input" : "invalid"}>
+          <input
+            name="email"
+            placeholder="Email"
+            type="email"
+            formNoValidate
+            onChange={ValidateEmail}
+          />
           <i className="icon">
             <Email />
           </i>
           <div className="bg"></div>
         </div>
         <div className="con-input">
-          <input placeholder="Password" type={!visible ? "password" : "text"} />
+          <input
+            className="input2"
+            placeholder="Password"
+            type={!visible ? "password" : "text"}
+            onChange={(val) => setCred({ ...cred, password: val })}
+          />
           <i className="icon">
             <Lock />
           </i>
