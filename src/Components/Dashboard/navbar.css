@@ -1,0 +1,89 @@
+.navbar {
+  background: #333;
+  height: 50px;
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 1.2rem;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.navbar-name {
+  color: red;
+  font-family: "Poppins", sans-serif;
+}
+
+.container {
+  display: flex;
+
+  height: 100%;
+
+  width: 85%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.container button {
+  align-items: center;
+  background: transparent;
+  border: 0px;
+  justify-content: center;
+  font-family: "Poppins", sans-serif;
+  height: 100%;
+  font-size: 1rem;
+  color: whitesmoke;
+  font-weight: bold;
+  margin-left: 2%;
+  margin-right: 2%;
+}
+
+.container :hover {
+  align-self: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+  background-color: aliceblue;
+  font-family: "Poppins", sans-serif;
+  border-top-color: rgb(0, 228, 205);
+  border-top-width: 1px;
+  margin-left: 2%;
+  margin-right: 2%;
+  transition: all 0.5s ease;
+}
+
+.logout {
+  display: flex;
+  height: 100%;
+  width: 10%;
+  align-items: center;
+  justify-content: center;
+}
+
+.logout button {
+  border-radius: 10px;
+  height: 80%;
+  width: 80%;
+  font-family: "Poppins", sans-serif;
+  background: transparent;
+  border: solid 1px aliceblue;
+  color: aliceblue;
+  font-weight: bold;
+}
+
+.logout button:hover {
+  border-radius: 10px;
+  height: 80%;
+  width: 80%;
+  font-family: "Poppins", sans-serif;
+  background: white;
+  border: solid aliceblue;
+  color: black;
+  font-weight: bold;
+  transition: all 0.5s ease;
+}
