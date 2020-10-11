@@ -1,15 +1,13 @@
-import React from "react";
-import "./App.css";
-import Nav from "./Components/Dashboard/navbar";
-import Main from "./Components/Dashboard/main";
+import React from 'react'
+import './App.css';
+import Navbar from './Components/Home/navbar';
+import Main from './Components/Home/main';
 
 export default function App() {
   return (
     <>
-      <div className="main">
-        <Nav />
-        <Main />
-      </div>
-    </>
-  );
+    <Navbar />
+    <Main />
+    </> 
+  )
 }
