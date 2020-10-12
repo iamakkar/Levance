@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import "./App.css";
+import "./SignIn.css";
 import Email from "@material-ui/icons/Email";
 import Lock from "@material-ui/icons/Lock";
 import Eye from "@material-ui/icons/VisibilitySharp";
 import Eyecut from "@material-ui/icons/VisibilityOffSharp";
+import {Link} from 'react-router-dom'
 
 const validate = RegExp(/^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/);
 
@@ -31,7 +32,7 @@ function App() {
 
   return (
     <div className="App">
-      <div className="wrapper">
+      <div className="wrappersignin">
         <h1>Sign In</h1>
         <div className={valid || cred.email === "" ? "con-input" : "invalid"}>
           <input
@@ -65,7 +66,7 @@ function App() {
         <span>or</span>
         <div className="afteror">
           <a href="https://hacktoberfest.digitalocean.com" className="new">
-            Create an account
+            <Link to={'/createaccount1'} className='new' >Create an account</Link>
           </a>
           <div className="seperator"></div>
           <a href="https://hacktoberfest.digitalocean.com" className="new">

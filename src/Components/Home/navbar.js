@@ -1,8 +1,7 @@
 import React, { useState,  } from 'react';
 import Menu from '@material-ui/icons/Menu'
 import Cross from '@material-ui/icons/Close'
-
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './navbar.css';
 
 function Navbar() {
@@ -20,9 +19,9 @@ function Navbar() {
     <>
       <nav className='navbar'>
         <div className='navbar-container'>
-          <span className='navbar-logo'>
+          <div className='navbar-logo'>
             Levance
-          </span>
+          </div>
           {window.innerWidth < 960 ? <div className='menu-icon' onClick={handleClick}>
             <i>
               {click ? <Cross /> : <Menu />}
@@ -39,10 +38,12 @@ function Navbar() {
             <li className={click || window.innerWidth > 960 ? 'nav-item' : 'nav-item-false'}>
             Help  
             </li>
-            <button className={click || window.innerWidth > 960 ? 'button' : 'nav-item-false'} >Sign In</button>
+            <Link to={'/signin'} className={click || window.innerWidth > 960 ? 'button' : 'nav-item-false'} >
+              <div className='signin' >
+              Sign In
+              </div>
+            </Link>
           </ul>
-          
-        
       </nav>
     </>
   );

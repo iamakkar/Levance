@@ -10,7 +10,7 @@
   background-size: cover;
 }
 
-.wrapper {
+.wrappersignin {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -231,7 +231,7 @@
 
 /* RESPONSIVE STYLES */
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 600px) {
   .App {
     height: 100vh;
     width: 100%;

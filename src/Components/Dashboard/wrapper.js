@@ -1,7 +1,7 @@
 import React from "react";
-import "./App.css";
-import Nav from "./Components/Dashboard/navbar";
-import Main from "./Components/Dashboard/main";
+import "./wrapper.css";
+import Nav from "./navbar";
+import Main from "./main";
 
 export default function App() {
   return (
