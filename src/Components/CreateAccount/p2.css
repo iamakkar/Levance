@@ -127,6 +127,13 @@
     width: 70%;
   }
 
+  .slider {
+    display: inherit;
+    flex-direction: inherit;
+    align-content: center;
+    justify-content: center;
+  }
+
   .btn {
     background: black;
     color: #ffffff;

@@ -1,52 +1,33 @@
-import React, { useState,  } from 'react';
-import Menu from '@material-ui/icons/Menu'
-import Cross from '@material-ui/icons/Close'
-import { Link } from 'react-router-dom';
-import './navbar.css';
+import React from "react";
+import "./navbar.css";
+import {Link} from 'react-router-dom'
 
-function Navbar() {
-  const [click, setClick] = useState(false);
-  
-
-  const handleClick = () => setClick(!click);
-  
-
-  
-
-  
-
+export default  function App() {
   return (
-    <>
-      <nav className='navbar'>
-        <div className='navbar-container'>
-          <div className='navbar-logo'>
-            Levance
-          </div>
-          {window.innerWidth < 960 ? <div className='menu-icon' onClick={handleClick}>
-            <i>
-              {click ? <Cross /> : <Menu />}
-            </i>
-            </div> : null}         
-          </div>
-          <ul className={click ? 'nav-menu active' : 'nav-menu'}>
-            <li className={click || window.innerWidth > 960 ? 'nav-item' : 'nav-item-false'}>
-                I am an Influencer 
-            </li>
-            <li className={click || window.innerWidth > 960 ? 'nav-item' : 'nav-item-false'}>
-               I am a Brand
-            </li>
-            <li className={click || window.innerWidth > 960 ? 'nav-item' : 'nav-item-false'}>
-            Help  
-            </li>
-            <Link to={'/signin'} className={click || window.innerWidth > 960 ? 'button' : 'nav-item-false'} >
-              <div className='signin' >
-              Sign In
-              </div>
-            </Link>
+    <div class="navbarhome">
+        <div class="logo">
+        <img src={require("./2.png")} alt={"Error-404"} />
+        </div>
+        <div class="items">
+          <ul>
+            <li class="item"><span>
+                <Link class='link' to={'/createaccount1'} >
+                I'm Influencer
+                </Link>
+                </span>
+                </li>
+            <li class="item"><span>I'm Brand</span></li>
+            <li class="item"><span>Contact Us</span></li>
           </ul>
-      </nav>
-    </>
-  );
+          <div className='signin' >
+              <Link className='button' to={'/signin'} >
+              Sign In
+              </Link>
+              
+              </div>
+        </div>
+      </div>
+  )
+
 }
 
-export default Navbar;
