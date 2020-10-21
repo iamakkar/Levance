@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
+import {createStore} from 'redux';
+import {Provider} from 'react-redux'
 import {Switch, BrowserRouter, Route} from 'react-router-dom'
 import Home from './Components/Home/wrapper';
 import Dashboard from "./Components/Dashboard/wrapper";
@@ -10,9 +12,14 @@ import CreateAccount1 from './Components/CreateAccount/p1';
 import CreateAccount2 from './Components/CreateAccount/p2';
 import CreateAccount3 from './Components/CreateAccount/p3';
 import CreateAccount5 from './Components/CreateAccount/p5';
-import ProtectedRoute from 'module'
+import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute'
+import rootReducer from './Components/Reducers/combinedReducer'
+
+const store = createStore(rootReducer);
+
 
 ReactDOM.render((
+  <Provider store={store} >
   <BrowserRouter>
   <Switch>
     <Route exact={true} path='/' component={Home} />
@@ -25,6 +32,7 @@ ReactDOM.render((
     <ProtectedRoute component={Dashboard} /> 
   </Switch>
   </BrowserRouter>
+  </Provider>
 ), document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

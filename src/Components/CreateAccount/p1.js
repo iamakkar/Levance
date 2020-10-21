@@ -1,35 +1,53 @@
-import React from "react";
+import React, {useState} from "react";
 import "./p1.css";
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import PersonIcon from '@material-ui/icons/Person';
 import EmailIcon from '@material-ui/icons/Email';
 import PhoneIcon from '@material-ui/icons/Phone';
 import CityIcon from '@material-ui/icons/LocationCity';
 import CircleIcon from '@material-ui/icons/CheckCircle';
 import {Link, useHistory } from 'react-router-dom';
+import {connect} from 'react-redux'
 
-function App() {
+const validate = RegExp(/^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/);
+
+function App(props) {
+
+const [valid, setValid] = useState(true);
 
 const history = useHistory();
 
 const Next = () => {
+  console.log(props.name)
+  console.log(props.email)
+  console.log(props.phone)
+  console.log(props.city)
+  console.log(props.gender)
   history.push('/createaccount2')
 }
 
-  return (
+const emailVerify = (e) => {
+  setValid(validate.test(e.target.value));
+  console.log(valid)
+}
+
+return (
     <div className="app">
       <div className="wrappercreateaccount1">
         <h1>Sign Up</h1>
         
         <div className="con-inputcreateaccount1">
-         <input placeholder="Full Name" type="text" />
+         <input placeholder="Full Name" type="text" onBlur={(val) => props.setName(val.target.value)} />
          <i className="icon">
             <PersonIcon />
           </i>
           <div className="bg"></div>
         </div>
         
-        <div className="con-inputcreateaccount1">
-         <input placeholder="Email" type="text" />
+        <div className={valid || props.email === "" ? "con-inputcreateaccount1" : "invalid"}>
+         <input placeholder="Email" type="text" onBlur={(val) => props.setEmail(val.target.value)} onChange={emailVerify} />
          <i className="icon">
             <EmailIcon />
           </i>
@@ -37,7 +55,7 @@ const Next = () => {
         </div>
         
         <div className="con-inputcreateaccount1">
-        <input placeholder="Phone Number" type="tel" />
+        <input placeholder="Phone Number" type="tel" onBlur={(val) => props.setPhone(val.target.value)} />
         <i className="icon">
             <PhoneIcon />
           </i>
@@ -46,7 +64,7 @@ const Next = () => {
 
         <div className="con-inputcreateaccount1">
               
-            <select name="user[location]" class="city" required="true">
+            <select name="user[location]" class="city" required="true" onBlur={(val) => props.setCity(val.target.value)} >
             
               <option value="">Select City</option>
               <optgroup label="--- Top Cities ---">
@@ -2127,23 +2145,68 @@ const Next = () => {
               <i className="icon">
                   <CircleIcon />
                 </i>
-                <input class="gender-check" type="radio" value="male" name="user[gender]" id="user_gender_male" />
-                <label class="gender-check-label" for="user_gender_male">Male</label>
-                <input class="gender-check" type="radio" value="female" checked="checked" name="user[gender]"
-                  id="user_gender_female" />
-                <label class="gender-check-label" for="user_gender_female">Female</label>      
+                <RadioGroup aria-label="gender" name="gender1" row onChange={val => props.setGender(val.target.value)}>
+        <FormControlLabel value="female" control={<Radio />} label="Female" />
+        <FormControlLabel value="male" control={<Radio />} label="Male" />
+        
+        </RadioGroup>   
         </div>
         
         <button className="btn" onClick={Next} >Next</button>
         <span>or</span>
         <div className="afteror">
-          
             <Link to={'/signin'} className="new" >Already have an account</Link>
-          
         </div>
       </div>
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    name: state.userDetails.fullName,
+    email: state.userDetails.email,
+    phone: state.userDetails.phone,
+    city: state.userDetails.city,
+    gender: state.userDetails.gender,
+  }
+}
+
+
+const mapDispatchToProps = dispatch => {
+  return {
+    
+      setName: data => {
+        dispatch({
+          type: 'SET_NAME',
+          name: data
+        })
+      },
+      setEmail: data => {
+        dispatch({
+          type: 'SET_EMAIL',
+          email: data
+        })
+      },
+      setPhone: data => {
+        dispatch({
+          type: "SET_PHONE",
+          phone: data
+        })
+      },
+      setCity: data => {
+        dispatch({
+          type: 'SET_CITY',
+          city: data
+        })
+      },
+      setGender: data => {
+        dispatch({
+          type: 'SET_GENDER',
+          gender: data
+        })
+      }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

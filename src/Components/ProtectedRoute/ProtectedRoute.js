@@ -13,3 +13,5 @@ class ProtectedRoute extends React.Component {
         )
     }
 }
+
+export default ProtectedRoute
