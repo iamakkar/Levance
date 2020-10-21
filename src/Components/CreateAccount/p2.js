@@ -1,10 +1,10 @@
 import { Link, useHistory } from "react-router-dom";
-import React from "react";
+import React, {useState} from "react";
 import Switch from "react-switch";
 import "./p2.css";
-import { useState } from "react";
+import {connect} from 'react-redux';
 
-function App() {
+function App(props) {
     const [checked, setChecked] = useState(false);
 
     const handlechange = () => {
@@ -13,7 +13,8 @@ function App() {
 
     const history = useHistory()
 
-    const Next = () => {
+    const Next = async() => {
+       await props.setCollege(checked);
         history.push('/createaccount3')
     }
   
@@ -38,4 +39,15 @@ function App() {
   );
 }
 
-export default App;
+const mapDispatchToProps = dispatch => {
+    return {
+        setCollege: data => {
+            dispatch({
+                type: 'SET_COLLEGE',
+                college: data
+            })
+        }
+    }
+}
+
+export default connect(undefined, mapDispatchToProps)(App);

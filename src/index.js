@@ -11,6 +11,7 @@ import SignIn from './Components/Signin/SignIn'
 import CreateAccount1 from './Components/CreateAccount/p1';
 import CreateAccount2 from './Components/CreateAccount/p2';
 import CreateAccount3 from './Components/CreateAccount/p3';
+import CreateAccount4 from './Components/CreateAccount/p4';
 import CreateAccount5 from './Components/CreateAccount/p5';
 import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute'
 import rootReducer from './Components/Reducers/combinedReducer'
@@ -27,6 +28,7 @@ ReactDOM.render((
     <Route exact={true} path='/createaccount1' component={CreateAccount1} />
     <Route exact={true} path='/createaccount2' component={CreateAccount2} />
     <Route exact={true} path='/createaccount3' component={CreateAccount3} />
+    <Route exact={true} path='/createaccount4' component={CreateAccount4} />
     <Route exact={true} path='/createaccount5' component={CreateAccount5} />
     <ProtectedRoute path='/' exact={true} component={Dashboard} />
     <ProtectedRoute component={Dashboard} /> 

@@ -5,14 +5,15 @@ import Lock from "@material-ui/icons/Lock";
 import Eye from "@material-ui/icons/VisibilitySharp";
 import Eyecut from "@material-ui/icons/VisibilityOffSharp";
 import {Link, useHistory } from 'react-router-dom';
+import {connect} from 'react-redux';
 
-function App() {
+function App(props) {
 
 const history = useHistory();
 
 const [visible, setVisible] = useState(false);
 const [cvisible, setCVisible] = useState(false);
-
+const [checked, setChecked] = useState(true);
 
 function PasswordShow() {
     setVisible(!visible)
@@ -22,8 +23,18 @@ function PasswordShow() {
     setCVisible(!cvisible)
   }
 
+  function passwordCheck(e) {
+    if (e.target.value === props.password ) {
+      setChecked(true);
+    } else {
+      setChecked(false);
+    }
+    console.log(props.password)    
+    console.log(checked)    
+  }
+
 const Next = () => {
-  history.push('/createaccount5')
+  history.push('/createaccount4')
 }
 
   return (
@@ -32,7 +43,7 @@ const Next = () => {
         <h1>Sign Up</h1>
         
         <div className="con-inputcreateaccount1">
-         <input placeholder="Pick username" type="text" />
+         <input placeholder="Pick username" type="text" onBlur={val => props.setUsername(val.target.value)} />
          <i className="icon">
             <Person />
           </i>
@@ -40,7 +51,7 @@ const Next = () => {
         </div>
         
         <div className="con-inputcreateaccount1">
-         <input placeholder="Password"  type={!visible ? "password" : "text"} />
+         <input placeholder="Password"  type={!visible ? "password" : "text"} onBlur={val => props.setPassword(val.target.value)} />
          <i className="icon">
             <Lock />
           </i>
@@ -50,8 +61,8 @@ const Next = () => {
           <div className="bg"></div>
         </div>
         
-        <div className="con-inputcreateaccount1">
-        <input placeholder="Confirm Password"  type={!cvisible ? "password" : "text"} />
+        <div className={checked ? "con-inputcreateaccount1" : 'invalid'}>
+        <input placeholder="Confirm Password"  type={!cvisible ? "password" : "text"} onChange={(val) => passwordCheck(val)} />
         <i className="icon">
             <Lock />
           </i>
@@ -73,4 +84,27 @@ const Next = () => {
   );
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    password: state.userDetails.password,
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setUsername: data => {
+      dispatch({
+        type: 'SET_USERNAME',
+        username: data
+      })
+    },
+    setPassword: data => {
+      dispatch({
+        type: 'SET_PASSWORD',
+        password: data
+      })
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

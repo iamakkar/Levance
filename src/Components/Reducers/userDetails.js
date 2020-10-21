@@ -8,6 +8,7 @@ var initState = {
     college: false,
     username: '',
     password: '',
+    categories: [],
     instagram: '',
     facebook: '',
     youtube: '',
@@ -42,6 +43,48 @@ const userDetailsReducer = (state = initState, action) => {
         return {
             ...state,
             gender: action.gender
+        }
+    }
+    if (action.type === 'SET_COLLEGE') {
+        return {
+            ...state,
+            college: action.college
+        }
+    }
+    if (action.type === 'SET_USERNAME') {
+        return {
+            ...state,
+            username: action.username
+        }
+    }
+    if (action.type === 'SET_PASSWORD') {
+        return {
+            ...state,
+            password: action.password
+        }
+    }
+    if (action.type === 'SET_INSTAGRAM') {
+        return {
+            ...state,
+            instagram: action.instagram
+        }
+    }
+    if (action.type === 'SET_FACEBOOK') {
+        return {
+            ...state,
+            facebook: action.facebook
+        }
+    }
+    if (action.type === 'SET_YOUTUBE') {
+        return {
+            ...state,
+            youtube: action.youtube
+        }
+    }
+    if (action.type === 'SET_CATEGORIES') {
+        return {
+            ...state,
+            categories: action.categories
         }
     }
     return state
