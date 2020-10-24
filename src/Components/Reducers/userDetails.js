@@ -84,7 +84,8 @@ const userDetailsReducer = (state = initState, action) => {
     if (action.type === 'SET_CATEGORIES') {
         return {
             ...state,
-            categories: action.categories
+            categories: action.categories,
+            
         }
     }
     return state

@@ -19,11 +19,25 @@ const categories = [
   { value: "l", label: "lnop" },
 ];
 
-function App() {
+var x = [];
+var y = [];
+
+function App(props) {
   const history = useHistory();
 
   function Next() {
-      history.push('/createaccount5')
+    x.forEach(item => {
+      y.push(item.value);
+    });
+    x = [];
+    props.setCategories(y);
+    history.push('/createaccount5');
+    console.log(props.categories)
+  }
+
+  function selection(e) {
+    console.log(e)
+    x = e;
   }
 
   return (
@@ -37,7 +51,7 @@ function App() {
             closeMenuOnSelect={false}
             isMulti
             className="select"
-            
+            onChange={val => selection(val)}
           />
           <button className="btn" onClick={Next} >Next</button>
           <span>or</span>
@@ -52,6 +66,12 @@ function App() {
   );
 }
 
+const mapStateToProps = state => {
+  return {
+    categories: state.userDetails.categories
+  }
+}
+
 const mapDispatchToProps = (dispatch) => {
   return {
     setCategories: (data) => {
@@ -63,4 +83,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(undefined, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
