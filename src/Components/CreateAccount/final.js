@@ -1,10 +1,24 @@
 import React from "react";
 import "./final.css";
+import axios from 'axios';
 import {connect} from 'react-redux';
  
 function App(props) {
 
     var college = props.college ? 'Yes' : 'No';
+
+    const submit1 = async () => {
+      axios.post('http://localhost:5000/createaccount', {email: props.email,
+        password: props.password,
+        fullName: props.fullName,
+        username: props.username,
+        phone: props.phone,
+        gender: props.gender,
+        city: props.city,
+        college: college,
+        categories: props.categories
+      }).then(res => console.log(res)).catch((e) => console.log(e))
+    }
     
   return (
     <div className="app">
@@ -51,7 +65,7 @@ function App(props) {
           <div className="bg"></div>
         </div>
         
-        <button className="btn"  >Confirm</button>
+        <button className="btn" onClick={submit1} >Confirm</button>
         
       </div>
     </div>
