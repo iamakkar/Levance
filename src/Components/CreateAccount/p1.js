@@ -16,21 +16,25 @@ const validate = RegExp(/^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/);
 function App(props) {
 
 const [valid, setValid] = useState(true);
+const [validphone, setValidphone] = useState(true);
 
 const history = useHistory();
 
 const Next = () => {
-  console.log(props.name)
-  console.log(props.email)
-  console.log(props.phone)
-  console.log(props.city)
-  console.log(props.gender)
   history.push('/createaccount2')
 }
 
 const emailVerify = (e) => {
   setValid(validate.test(e.target.value));
   console.log(valid)
+}
+
+const phoneVerify = (e) => {
+  setValidphone(false);
+  let x = e.target.value
+  if (x.length >= 10) {
+    setValidphone(true);
+  }
 }
 
 return (
@@ -54,8 +58,8 @@ return (
           <div className="bg"></div>
         </div>
         
-        <div className="con-inputcreateaccount1">
-        <input placeholder="Phone Number" type="tel" onBlur={(val) => props.setPhone(val.target.value)} />
+        <div className={validphone ? "con-inputcreateaccount1" : 'invalid'} >
+        <input placeholder="Phone Number" type="tel" onBlur={(val) => props.setPhone(val.target.value)} onChange={phoneVerify} />
         <i className="icon">
             <PhoneIcon />
           </i>

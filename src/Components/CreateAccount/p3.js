@@ -76,7 +76,7 @@ const Next = () => {
         <span>or</span>
         <div className="afteror">
           
-            <Link to={'/signin'} className="new" >Already have an account</Link>
+            <Link to={'/signin'} className="new">Already have an account</Link>
           
         </div>
       </div>
