@@ -88,6 +88,13 @@ const userDetailsReducer = (state = initState, action) => {
             
         }
     }
+    if (action.type === 'SET_AUTH') {
+        return {
+            ...state,
+            authDone: action.authDone,
+            
+        }
+    }
     return state
 }
 

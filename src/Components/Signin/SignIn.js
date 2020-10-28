@@ -5,10 +5,12 @@ import Lock from "@material-ui/icons/Lock";
 import Eye from "@material-ui/icons/VisibilitySharp";
 import Eyecut from "@material-ui/icons/VisibilityOffSharp";
 import {Link} from 'react-router-dom'
+import {connect} from 'react-redux';
+import axios from 'axios';
 
 const validate = RegExp(/^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/);
 
-function App() {
+function App(props) {
   const [visible, setVisible] = useState(false);
   const [cred, setCred] = useState({ email: "", password: "" });
   const [valid, setValid] = useState(true);
@@ -26,8 +28,13 @@ function App() {
       email: e.target.value,
     });
     setValid(validate.test(cred.email));
-    console.log(cred);
-    console.log(valid);
+  }
+
+  async function submit() {
+   await axios.post('http://localhost:5000/login', cred)
+    .then(res => localStorage.setItem('token', res.data))
+    .then(props.setAuth(true))
+    .catch((e) => console.log(e))
   }
 
   return (
@@ -52,7 +59,7 @@ function App() {
             className="input2"
             placeholder="Password"
             type={!visible ? "password" : "text"}
-            onChange={(val) => setCred({ ...cred, password: val })}
+            onChange={(val) => setCred({ ...cred, password: val.target.value })}
           />
           <i className="icon">
             <Lock />
@@ -62,7 +69,7 @@ function App() {
           </i>
           <div className="bg"></div>
         </div>
-        <button className="btn">Log In</button>
+        <button className="btn" onClick={submit} >Log In</button>
         <span>or</span>
         <div className="afteror">
           <a href="https://hacktoberfest.digitalocean.com" className="new">
@@ -78,4 +85,15 @@ function App() {
   );
 }
 
-export default App;
+const mapDispatchToProps = dispatch => {
+  return {
+    setAuth: data => {
+      dispatch({
+        type: 'SET_AUTH',
+       authDone: data,
+      })
+    }
+  }
+}
+
+export default connect(undefined, mapDispatchToProps)(App);

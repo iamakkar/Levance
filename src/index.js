@@ -19,7 +19,6 @@ import rootReducer from './Components/Reducers/combinedReducer'
 
 const store = createStore(rootReducer);
 
-
 ReactDOM.render((
   <Provider store={store} >
   <BrowserRouter>
@@ -32,7 +31,7 @@ ReactDOM.render((
     <Route exact={true} path='/createaccount4' component={CreateAccount4} />
     <Route exact={true} path='/createaccount5' component={CreateAccount5} />
     <Route exact={true} path='/createaccountfinal' component={CreateAccountFinal} />
-    <ProtectedRoute path='/' exact={true} component={Dashboard} />
+    <ProtectedRoute path='/dash' exact={true} component={Dashboard} />
     <ProtectedRoute component={Dashboard} /> 
   </Switch>
   </BrowserRouter>
