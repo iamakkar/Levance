@@ -6,6 +6,7 @@ import Eye from "@material-ui/icons/VisibilitySharp";
 import Eyecut from "@material-ui/icons/VisibilityOffSharp";
 import {Link, useHistory } from 'react-router-dom';
 import {connect} from 'react-redux';
+import Swal from 'sweetalert2';
 
 function App(props) {
 
@@ -34,7 +35,41 @@ function PasswordShow() {
   }
 
 const Next = () => {
-  history.push('/createaccount4')
+
+  if (props.username === '') {
+    return Swal.fire({
+      title: 'Username Missing',
+      text: 'Please fill the the username',
+      icon: 'warning',
+      showCancelButton: false,
+      showConfirmButton: true,
+      confirmButtonText: 'Okay',
+    })
+  }
+
+  if(!checked) {
+    return Swal.fire({
+      title: `Doesn't Match`,
+      text: `Password and confirm password doesn't match`,
+      icon: 'error',
+      showCancelButton: false,
+      showConfirmButton: true,
+      confirmButtonText: 'Okay',
+    })
+  }
+
+  if (props.password === '') {
+    return Swal.fire({
+      title: 'Too Short',
+      text: 'Please fill at least 6 characters',
+      icon: 'warning',
+      showCancelButton: false,
+      showConfirmButton: true,
+      confirmButtonText: 'Okay',
+    })
+  } else {
+    history.push('/createaccount4')
+  }
 }
 
   return (
@@ -87,6 +122,7 @@ const Next = () => {
 const mapStateToProps = state => {
   return {
     password: state.userDetails.password,
+    username: state.userDetails.username,
   }
 }
 

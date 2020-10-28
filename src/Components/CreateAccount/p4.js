@@ -3,6 +3,7 @@ import "./p4.css";
 import { connect } from "react-redux";
 import { useHistory, Link } from "react-router-dom";
 import Select from "react-select";
+import Swal from 'sweetalert2';
 
 const categories = [
   { value: "a", label: "abcd" },
@@ -30,9 +31,20 @@ function App(props) {
       y.push(item.value);
     });
     x = [];
-    props.setCategories(y);
+    if (y.length > 3 || y.length < 3) {
+      return Swal.fire({
+        title: 'Excess Categories',
+        text: 'Please select 3 categories!',
+        icon: 'warning',
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonText: 'Okay',
+      })
+    } else {
+      props.setCategories(y);
     history.push('/createaccount5');
     console.log(props.categories)
+    }
   }
 
   function selection(e) {

@@ -10,7 +10,7 @@ function App(props) {
     if (get) {
       props.setAuth(true)
     }
-  }, [])
+  })
 
   return (
     <>

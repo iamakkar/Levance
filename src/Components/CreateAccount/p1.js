@@ -10,6 +10,7 @@ import CityIcon from '@material-ui/icons/LocationCity';
 import CircleIcon from '@material-ui/icons/CheckCircle';
 import {Link, useHistory } from 'react-router-dom';
 import {connect} from 'react-redux'
+import Swal from 'sweetalert2';
 
 const validate = RegExp(/^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/);
 
@@ -21,7 +22,40 @@ const [validphone, setValidphone] = useState(true);
 const history = useHistory();
 
 const Next = () => {
-  history.push('/createaccount2')
+  if (!valid) {
+    return Swal.fire({
+      title: 'Check your e-mail',
+      text: 'Please fill a valid email!',
+      icon: 'warning',
+      showCancelButton: false,
+      showConfirmButton: true,
+      confirmButtonText: 'Okay',
+    })
+  }
+
+  if (!validphone) {
+    return Swal.fire({
+      title: 'Check your phone number',
+      text: 'Please fill a valid phone number!',
+      icon: 'warning',
+      showCancelButton: false,
+      showConfirmButton: true,
+      confirmButtonText: 'Okay',
+    })
+  }
+  
+  if (props.fullName === '' || props.email === '' || props.phone === '' || props.city === '' || props.gender === '') {
+    return Swal.fire({
+      title: 'Details Missing',
+      text: 'Please fill all the details',
+      icon: 'warning',
+      showCancelButton: false,
+      showConfirmButton: true,
+      confirmButtonText: 'Okay',
+    })
+  } else {
+    history.push('/createaccount2')
+  }
 }
 
 const emailVerify = (e) => {
