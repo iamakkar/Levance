@@ -31,7 +31,7 @@ function App(props) {
       y.push(item.value);
     });
     x = [];
-    if (y.length > 3 || y.length < 3) {
+    if (y.length > 3) {
       return Swal.fire({
         title: 'Excess Categories',
         text: 'Please select 3 categories!',

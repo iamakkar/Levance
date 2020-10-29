@@ -2,22 +2,38 @@ import React from "react";
 import "./final.css";
 import axios from 'axios';
 import {connect} from 'react-redux';
+import {useHistory} from 'react-router-dom';
+import Swal from 'sweetalert2';
  
 function App(props) {
 
     var college = props.college ? 'Yes' : 'No';
 
+    var history = useHistory();
+
     const submit1 = async () => {
-      axios.post('http://localhost:5000/createaccount', {email: props.email,
+      await axios.post('http://localhost:5000/createaccount', {email: props.email,
         password: props.password,
         fullName: props.fullName,
         username: props.username,
         phone: props.phone,
         gender: props.gender,
         city: props.city,
-        college: college,
+        college: props.college,
         categories: props.categories
-      }).then(res => console.log(res)).catch((e) => console.log(e))
+        
+      }).then(() => {
+        Swal.fire({ 
+          title: 'Successfull',
+          text: 'Yoyr account has been created successfully',
+          icon: 'success',
+          showCancelButton: false,
+          showConfirmButton: true,
+          confirmButtonText: 'Cool',
+        }).then(() => {
+          history.push('/sign')
+        })
+      }).catch((e) => console.log(e))
     }
     
   return (
@@ -82,6 +98,7 @@ const mapStateToProps = state => {
         city: state.userDetails.city, 
         college: state.userDetails.college,
         categories: state.userDetails.categories,
+        password: state.userDetails.password,
     }
 }
  
