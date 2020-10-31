@@ -1,15 +1,13 @@
 import React from "react";
 import "./main.css";
-// import {Link} from 'react-router-dom'
-
-
+import {useHistory} from 'react-router-dom'
 
 function App() {
  
+  const history = useHistory();
+
   return (
     <div class="Home">
-      
- 
       <div class="section1">
         
         <img src={require("./1img.svg")} alt={"Error-404"} />
@@ -40,7 +38,7 @@ function App() {
  
       <div class="section2">
         <div class="section2-lite">
-        <button class="btnhome">I'M INFLUENCER</button>
+        <button class="btnhome" onClick={() => history.push('/createaccount1')} >I'M INFLUENCER</button>
         <br></br>
         <button class="btnhome">I'M BRAND</button>
         </div>

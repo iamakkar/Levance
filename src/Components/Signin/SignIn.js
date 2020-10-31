@@ -4,13 +4,16 @@ import Email from "@material-ui/icons/Email";
 import Lock from "@material-ui/icons/Lock";
 import Eye from "@material-ui/icons/VisibilitySharp";
 import Eyecut from "@material-ui/icons/VisibilityOffSharp";
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import {connect} from 'react-redux';
 import axios from 'axios';
 
 const validate = RegExp(/^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/);
 
 function App(props) {
+
+  const history = useHistory();
+
   const [visible, setVisible] = useState(false);
   const [cred, setCred] = useState({ email: "", password: "" });
   const [valid, setValid] = useState(true);
@@ -31,10 +34,19 @@ function App(props) {
   }
 
   async function submit() {
+    console.log(cred)
+    props.setEmail(cred.email)
    await axios.post('http://localhost:5000/login', cred)
-    .then(res => localStorage.setItem('token', res.data))
-    .then(props.setAuth(true))
+    .then(res => next(res))
     .catch((e) => console.log(e))
+  }
+
+  async function next(x) {
+      if (x) {
+        localStorage.setItem('token', x.data);
+        props.setAuth(true);
+        history.push('/dashboard');
+      }
   }
 
   return (
@@ -92,7 +104,13 @@ const mapDispatchToProps = dispatch => {
         type: 'SET_AUTH',
        authDone: data,
       })
-    }
+    },
+    setEmail: data => {
+      dispatch({
+        type: 'SET_EMAIL',
+       email: data,
+      })
+    },
   }
 }
 

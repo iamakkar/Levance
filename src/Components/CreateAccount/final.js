@@ -31,7 +31,7 @@ function App(props) {
           showConfirmButton: true,
           confirmButtonText: 'Cool',
         }).then(() => {
-          history.push('/sign')
+          history.push('/signin')
         })
       }).catch((e) => console.log(e))
     }

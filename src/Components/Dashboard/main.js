@@ -1,38 +1,60 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "./main.css";
 import Location from "@material-ui/icons/PersonPinCircle";
 import Money from "@material-ui/icons/AccountBalanceWallet";
 import HighlightIcon from "@material-ui/icons/Highlight";
 import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
+import {connect} from 'react-redux'
+import Axios from 'axios';
 
-export default function App() {
+function App(props) {
+
+  const [data, setData] = useState({
+    city: '',
+    fullName: '',
+    username: '',
+    categories: [],
+  });
+
+  useEffect(() => {
+    console.log('gayi');
+    console.log(props.email)
+    Axios.post('http://localhost:5000/getdetails', {emailreq: props.email})
+    .then((res) => setData(res.data))
+    .catch((e) => console.log(e));
+    console.log('gayi fieese');
+  }, [ props.email])
+
+
   return (
     <>
       <div className="containermain">
         <div className="child1">
-          <img src={require("./Unknown.png")} alt={"Error-404"} />
+          <img src={require("./yash.svg")} alt={"Error-404"} />
           <button>Edit Profile</button>
         </div>
         <div className="child2">
-          <h1>Yash Makhija</h1>
+          <h1>{data.fullName}</h1>
           <div className="child2child1">
-            <p>@thesubtlepants</p>
+            <p>@{data.username}</p>
             <div className="seperator"></div>
             <i>
               <Location style={{ color: "grey" }} />
             </i>
-            <p>Panipat, Haryana</p>
+  <p>{data.city}</p>
           </div>
+          
           <div className="child2child2">
             <div className="card">
-              <h2>Cat. 1</h2>
+              <span>{data.categories[0]}</span>
             </div>
             <div className="card">
-              <h2>Cat. 2</h2>
+              <span>{data.categories[1]}</span>
             </div>
             <div className="card">
-              <h2>Cat. 3</h2>
+              <span>{data.categories[2]}</span>
             </div>
+            
           </div>
         </div>
       </div>
@@ -70,3 +92,11 @@ export default function App() {
     </>
   );
 }
+
+const mapStateToProps = state => {
+  return {
+    email: state.userDetails.email
+  }
+}
+
+export default connect(mapStateToProps, undefined)(App)

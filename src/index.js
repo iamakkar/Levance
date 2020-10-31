@@ -14,7 +14,7 @@ import CreateAccount3 from './Components/CreateAccount/p3';
 import CreateAccount4 from './Components/CreateAccount/p4';
 import CreateAccount5 from './Components/CreateAccount/p5';
 import CreateAccountFinal from './Components/CreateAccount/final';
-import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute'
+import ProtectedRoute1 from './Components/ProtectedRoute/ProtectedRoute1'
 import rootReducer from './Components/Reducers/combinedReducer'
 
 const store = createStore(rootReducer);
@@ -32,8 +32,8 @@ ReactDOM.render((
     <Route exact={true} path='/createaccount4' component={CreateAccount4} />
     <Route exact={true} path='/createaccount5' component={CreateAccount5} />
     <Route exact={true} path='/createaccountfinal' component={CreateAccountFinal} />
-    <ProtectedRoute path='/dash' exact={true} component={Dashboard} />
-    <ProtectedRoute component={Dashboard} /> 
+    <ProtectedRoute1 path='/dashboard' exact={true} component={Dashboard} />
+    <ProtectedRoute1 component={Dashboard} />
   </Switch>
   </BrowserRouter>
   </Provider>
