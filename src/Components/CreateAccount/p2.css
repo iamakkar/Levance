@@ -1,0 +1,175 @@
+.App {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  background-repeat: no-repeat;
+  background-image: url("../Signin/background.jpg");
+  background-size: cover;
+}
+
+.wrappercreateaccount2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px 40px;
+  border-radius: 10px;
+  box-shadow: 0px 10px 50px #555;
+  background-color: #ffffff;
+  margin: auto;
+}
+
+.btn {
+  background: black;
+  color: #ffffff;
+  border-radius: 25px;
+  transition: all 0.25s ease;
+  width: 40%;
+  height: 40px;
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+.btn:hover {
+  transform: translate(-12px, -12px);
+}
+
+.btn:hover:after {
+  transform: translate(6px, 6px);
+}
+
+.btn:hover:before {
+  transform: translate(12px, 12px);
+}
+
+.btn::after,
+.btn::before {
+  content: "";
+  position: absolute;
+  opacity: 0.3;
+  background: black;
+  border-radius: inherit;
+  width: 100%;
+  height: 100%;
+  left: 0px;
+  bottom: 0px;
+  z-index: -1;
+  transition: all 0.25s ease;
+}
+
+.afteror {
+  display: flex;
+  position: relative;
+  flex: 1;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: row;
+  margin-top: 5%;
+}
+
+.new {
+  color: maroon;
+  flex: 0 1 auto;
+  font-size: 0.9rem;
+  align-self: auto;
+  margin-right: 5%;
+  margin-left: 5%;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.new:hover {
+  color: blue;
+  text-decoration: underline;
+}
+.college-btn {
+  padding: 6px 20px;
+  border: 2px solid white;
+  background-color: brown;
+  color: white;
+  margin: 17px;
+  font-size: 1em;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* RESPONSIVE STYLES */
+
+@media screen and (max-width: 1000px) {
+  .App {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-repeat: no-repeat;
+    background-image: url("../Signin/background.jpg");
+    background-size: cover;
+  }
+
+  .wrappercreateaccount2 {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px 40px;
+    margin: auto;
+    border-radius: 10px;
+    box-shadow: 0px 10px 50px #555;
+    background-color: #ffffff;
+    width: 70%;
+  }
+
+  .slider {
+    display: inherit;
+    flex-direction: inherit;
+    align-content: center;
+    justify-content: center;
+  }
+
+  .btn {
+    background: black;
+    color: #ffffff;
+    border-radius: 25px;
+    transition: all 0.25s ease;
+    width: 40%;
+    height: 40px;
+    font-family: "Poppins", sans-serif;
+    font-size: 1rem;
+    margin-top: 5%;
+    margin-bottom: 5%;
+  }
+
+  .afteror {
+    display: flex;
+    position: relative;
+    flex: 1;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+    margin-top: 5%;
+  }
+
+  .new {
+    color: maroon;
+    flex: 0 1 auto;
+    font-size: 0.9rem;
+    align-self: auto;
+    /* margin-right: 5%; */
+    /* margin-left: 5%; */
+    white-space: nowrap;
+    text-decoration: none;
+  }
+
+  .new:hover {
+    color: blue;
+    text-decoration: underline;
+  }
+}
