@@ -41,7 +41,7 @@ function App(props) {
             <i>
               <Location style={{ color: "grey" }} />
             </i>
-  <p>{data.city}</p>
+          <p>{data.city}</p>
           </div>
           
           <div className="child2child2">

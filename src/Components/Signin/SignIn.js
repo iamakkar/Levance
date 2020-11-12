@@ -51,7 +51,7 @@ function App(props) {
 
   return (
     <div className="App">
-      <div className="wrappersignin">
+      <div className="wrappersignin" >
         <h1>Sign In</h1>
         <div className={valid || cred.email === "" ? "con-input" : "invalid"}>
           <input
@@ -68,7 +68,6 @@ function App(props) {
         </div>
         <div className="con-input">
           <input
-            className="input2"
             placeholder="Password"
             type={!visible ? "password" : "text"}
             onChange={(val) => setCred({ ...cred, password: val.target.value })}
