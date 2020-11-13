@@ -17,7 +17,7 @@ export default  function App() {
       outDuration: 200,
       preventScrolling: true
     };
-    var instances = M.Sidenav.init(elems, options);
+   M.Sidenav.init(elems, options);
   });
   
 

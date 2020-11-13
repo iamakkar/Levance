@@ -70,7 +70,6 @@ function App(props) {
         </div>
         <div className="con-input">
           <input
-            className="input2"
             placeholder="Password"
             type={!visible ? "password" : "text"}
             onChange={(val) => setCred({ ...cred, password: val.target.value })}
