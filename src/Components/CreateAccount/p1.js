@@ -2192,7 +2192,7 @@ return (
         </RadioGroup>   
         </div>
         
-        <button className="btn" onClick={Next} >Next</button>
+        <button className="buttn" onClick={Next} >Next</button>
         <span>or</span>
         <div className="afteror">
             <Link to={'/signin'} className="new" >Already have an account</Link>

@@ -81,7 +81,7 @@ function App(props) {
           <div className="bg"></div>
         </div>
         
-        <button className="btn" onClick={submit1} >Confirm</button>
+        <button className="buttn" onClick={submit1} >Confirm</button>
         
       </div>
     </div>

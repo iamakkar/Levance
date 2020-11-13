@@ -27,7 +27,7 @@ function App(props) {
             <div style={{marginTop: 5}}>
             <span style={{fontWeight: 'bold'}} >{checked ? 'Yes' : 'No'}</span> 
             </div>      
-        <button className="btn" onClick={Next} >Next</button>
+        <button className="buttn" onClick={Next} >Next</button>
         <span>or</span>
         <div className="afteror">
           <Link to={'/signin'} className="new">

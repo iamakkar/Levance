@@ -89,7 +89,7 @@
   transition: all 0.25s ease;
 }
 
-.btn {
+.buttn {
   background: black;
   color: #ffffff;
   border-radius: 25px;
@@ -102,20 +102,20 @@
   margin-bottom: 5%;
 }
 
-.btn:hover {
+.buttn:hover {
   transform: translate(-12px, -12px);
 }
 
-.btn:hover:after {
+.buttn:hover:after {
   transform: translate(6px, 6px);
 }
 
-.btn:hover:before {
+.buttn:hover:before {
   transform: translate(12px, 12px);
 }
 
-.btn::after,
-.btn::before {
+.buttn::after,
+.buttn::before {
   content: "";
   position: absolute;
   opacity: 0.3;
@@ -224,7 +224,7 @@
     transition: all 0.25s ease;
   }
 
-  .btn {
+  .buttn {
     background: black;
     color: #ffffff;
     border-radius: 25px;

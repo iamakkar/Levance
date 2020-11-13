@@ -52,7 +52,7 @@ function App(props) {
   return (
     <div className="App container-fluid">
       <div className="row">
-        <div className="col s12 offset-m8">
+        <div className="col s12 offset-m9">
       <div className="wrappersignin">
         <h1>Sign In</h1>
         <div className={valid || cred.email === "" ? "con-input" : "invalid"}>
@@ -82,7 +82,7 @@ function App(props) {
           </i>
           <div className="bg"></div>
         </div>
-        <button className="btn" onClick={submit} >Log In</button>
+        <button className="buttn" onClick={submit} >Log In</button>
         <span>or</span>
         <div className="afteror">
           <a href="https://hacktoberfest.digitalocean.com" className="new">

@@ -44,7 +44,7 @@ function App(props) {
 
         
          
-        <button className="btn" onClick={Next} >Next</button>
+        <button className="buttn" onClick={Next} >Next</button>
         <span>or</span>
         <div className="afteror">
           
