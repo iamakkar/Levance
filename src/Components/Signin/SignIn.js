@@ -50,7 +50,9 @@ function App(props) {
   }
 
   return (
-    <div className="App">
+    <div className="App container-fluid">
+      <div className="row">
+        <div className="col s12 offset-m8">
       <div className="wrappersignin">
         <h1>Sign In</h1>
         <div className={valid || cred.email === "" ? "con-input" : "invalid"}>
@@ -92,6 +94,8 @@ function App(props) {
             Forgot password?
           </a>
         </div>
+      </div>
+      </div>
       </div>
     </div>
   );

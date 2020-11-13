@@ -72,7 +72,9 @@ const phoneVerify = (e) => {
 }
 
 return (
-    <div className="app">
+    <div className="app container-fluid">
+      <div className="row">
+        <div className="col m12 s12">
       <div className="wrappercreateaccount1">
         <h1>Sign Up</h1>
         
@@ -2196,6 +2198,8 @@ return (
             <Link to={'/signin'} className="new" >Already have an account</Link>
         </div>
       </div>
+    </div>
+    </div>
     </div>
   );
 }

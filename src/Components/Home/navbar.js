@@ -46,7 +46,7 @@ export default  function App() {
         </div> */}
         <nav>
     <div class="nav-wrapper white">
-      <a href="/home" class="brand-logo"><div class="logo">
+      <a href="/" class="brand-logo"><div class="logo">
         <img src={require("./2.png")} alt={"Error-404"} />
         </div></a>
       <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons black-text">menu</i></a>
