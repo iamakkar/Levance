@@ -54,7 +54,7 @@ function App(props) {
   return (<>
   <Navbar/>
     <div className="AppSignin container-fluid">
-      <div className="row" style={{marginBottom:0}}>
+      <div className="row" style={{marginBottom:'0px'}}>
         <div className="col s12 m7  center-align">
         <img src={require("../Home/influencer.png")} className="influencer_brand_logo_signin" alt={"Error-404"} />
             </div>

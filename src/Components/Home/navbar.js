@@ -47,6 +47,8 @@ function App(props) {
       </ul>
     </div>
   </nav>
+  
+  </div>
 
   <ul class="sidenav" id="mobile-demo">
     <li><Link class='link' to={'/createaccount1'} >
@@ -62,7 +64,6 @@ function App(props) {
                 Sign In
                 </Link></li>
   </ul>
-      </div>
       </div>
   )
 
