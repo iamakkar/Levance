@@ -7,6 +7,8 @@ import Eyecut from "@material-ui/icons/VisibilityOffSharp";
 import {Link, useHistory} from 'react-router-dom'
 import {connect} from 'react-redux';
 import axios from 'axios';
+import Logo from '../../logo/Levance.svg'
+import Navbar from '../Home/navbar'
 
 const validate = RegExp(/^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/);
 
@@ -30,7 +32,7 @@ function App(props) {
       ...cred,
       email: e.target.value,
     });
-    setValid(validate.test(cred.email));
+    setValid(validate.test(e.target.value));
   }
 
   async function submit() {
@@ -49,13 +51,17 @@ function App(props) {
       }
   }
 
-  return (
-    <div className="App container-fluid">
-      <div className="row">
-        <div className="col s12 offset-m9">
+  return (<>
+  <Navbar/>
+    <div className="AppSignin container-fluid">
+      <div className="row" style={{marginBottom:0}}>
+        <div className="col s12 m7  center-align">
+        <img src={require("../Home/influencer.png")} className="influencer_brand_logo_signin" alt={"Error-404"} />
+            </div>
+        <div className="col s12 m5">
       <div className="wrappersignin">
         <h1>Sign In</h1>
-        <div className={valid || cred.email === "" ? "con-input" : "invalid"}>
+        <div className={valid || cred.email === "" ? "con-inputSignin" : "invalidSignin"}>
           <input
             name="email"
             placeholder="Email"
@@ -68,7 +74,7 @@ function App(props) {
           </i>
           <div className="bg"></div>
         </div>
-        <div className="con-input">
+        <div className="con-inputSignin">
           <input
             placeholder="Password"
             type={!visible ? "password" : "text"}
@@ -83,6 +89,7 @@ function App(props) {
           <div className="bg"></div>
         </div>
         <button className="buttn" onClick={submit} >Log In</button>
+        <br/>
         <span>or</span>
         <div className="afteror">
           <a href="https://hacktoberfest.digitalocean.com" className="new">
@@ -97,6 +104,7 @@ function App(props) {
       </div>
       </div>
     </div>
+    </>
   );
 }
 

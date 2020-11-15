@@ -5,6 +5,7 @@ import Youtube from "@material-ui/icons/YouTube";
 import Facebook from "@material-ui/icons/Facebook";
 import {Link, useHistory } from 'react-router-dom';
 import {connect} from 'react-redux';
+import Navbar from '../Home/navbar';
 
 function App(props) {
     const history = useHistory();
@@ -14,10 +15,14 @@ function App(props) {
     }
       
   return (
-    <div className="app">
+    <>
+    <Navbar/>
+    <div className="appcreateaccount1 container-fluid">
+      <div className="row" style={{marginBottom:"0px"}}>
+        <div className="col s12 m12">
       <div className="wrappercreateaccount1">
-        <h1>Sign Up</h1>
-        <h3>It's Time to connect Socially</h3>
+        <h1   style={{marginTop:"10px"}}>Sign Up</h1>
+        <h4>It's Time to connect Socially</h4>
         <div className="con-inputcreateaccount1">
          <input placeholder="Instagram (profile url)" type="text" onBlur={val => props.setInstagram(val.target.value)} />
          <i className="icon">
@@ -52,7 +57,10 @@ function App(props) {
           
         </div>
       </div>
+      </div>
+      </div>
     </div>
+    </>
   );
 }
 

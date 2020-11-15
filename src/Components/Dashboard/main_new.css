@@ -77,8 +77,8 @@
 }*/
 .profilePic
 {
-  width: 20vw;
-  height: 20vw;
+  width: 200px;
+  height: 200px;
   border-radius: 50%;
   margin-top: -70px;
   border: 6px solid white;

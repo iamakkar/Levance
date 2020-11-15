@@ -10,7 +10,7 @@
   background-size: cover;
 }
 
-.wrappercreateaccount1 {
+.wrappercreateaccountfinal {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -22,7 +22,7 @@
   margin: auto;
 }
 
-.con-inputcreateaccount1 {
+.con-inputcreateaccountfinal {
   background: rgb(242, 243, 247);
   display: flex;
   align-items: center;
@@ -35,7 +35,7 @@
   margin: 10px;
 }
 
-.con-inputcreateaccount1 input {
+.con-inputcreateaccountfinal input {
   border: 0px;
   background: transparent;
   outline: none;
@@ -46,21 +46,21 @@
   transition: all 0.25s ease;
 }
 
-.con-inputcreateaccount1 input:focus {
+.con-inputcreateaccountfinal input:focus {
   padding-left: 5px;
   padding-right: 0px;
 }
 
-.con-inputcreateaccount1 input:focus ~ .bg {
+.con-inputcreateaccountfinal input:focus ~ .bg {
   border: 0.8px solid #000000;
 }
 
-.con-inputcreateaccount1 input:focus ~ i {
+.con-inputcreateaccountfinal input:focus ~ i {
   transform: translate(0, -8px);
   box-shadow: 0px, 8px, 20px, 0px rgba(0, 0, 0, 15);
 }
 
-.con-inputcreateaccount1 i.icon {
+.con-inputcreateaccountfinal i.icon {
   order: -1;
   background: white;
 
@@ -127,6 +127,7 @@
   bottom: 0px;
   z-index: -1;
   transition: all 0.25s ease;
+  overflow: hidden;
 }
 
 /* RESPONSIVE STYLES */
@@ -144,7 +145,7 @@
     background-size: cover;
   }
 
-  .wrappercreateaccount1 {
+  .wrappercreateaccountfinal {
     display: flex;
     justify-content: center;
     align-self: center;
@@ -158,7 +159,7 @@
     width: 70%;
   }
 
-  .con-inputcreateaccount1 {
+  .con-inputcreateaccountfinal {
     background: rgb(242, 243, 247);
     display: flex;
     align-items: center;
@@ -170,7 +171,7 @@
     height: 11%;
   }
 
-  .con-inputcreateaccount1 input {
+  .con-inputcreateaccountfinal input {
     border: 0px;
     background: transparent;
     outline: none;
@@ -181,21 +182,21 @@
     transition: all 0.25s ease;
   }
 
-  .con-inputcreateaccount1 input:focus {
+  .con-inputcreateaccountfinal input:focus {
     padding-left: 5px;
     padding-right: 0px;
   }
 
-  .con-inputcreateaccount1 input:focus ~ .bg {
+  .con-inputcreateaccountfinal input:focus ~ .bg {
     border: 0.8px solid #000000;
   }
 
-  .con-inputcreateaccount1 input:focus ~ i {
+  .con-inputcreateaccountfinal input:focus ~ i {
     transform: translate(0, -8px);
     box-shadow: 0px, 8px, 20px, 0px rgba(0, 0, 0, 15);
   }
 
-  .con-inputcreateaccount1 i.icon {
+  .con-inputcreateaccountfinal i.icon {
     order: -1;
     background: white;
 

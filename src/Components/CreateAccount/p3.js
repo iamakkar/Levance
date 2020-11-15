@@ -7,7 +7,7 @@ import Eyecut from "@material-ui/icons/VisibilityOffSharp";
 import {Link, useHistory } from 'react-router-dom';
 import {connect} from 'react-redux';
 import Swal from 'sweetalert2';
-
+import Navbar from '../Home/navbar';
 function App(props) {
 
 const history = useHistory();
@@ -72,8 +72,12 @@ const Next = () => {
   }
 }
 
-  return (
-    <div className="app">
+  return (<>
+  <Navbar/>
+    <div className="appcreateaccount1 container-fluid">
+      <div className="row">
+        <div className="col s12 m12">
+          
       <div className="wrappercreateaccount1">
         <h1>Sign Up</h1>
         
@@ -115,7 +119,11 @@ const Next = () => {
           
         </div>
       </div>
+      
+      </div>
+      </div>
     </div>
+    </>
   );
 }
 

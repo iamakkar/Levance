@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { useHistory, Link } from "react-router-dom";
 import Select from "react-select";
 import Swal from 'sweetalert2';
+import Navbar from '../Home/navbar';
 
 const categories = [
   { value: "a", label: "abcd" },
@@ -54,10 +55,14 @@ function App(props) {
 
   return (
     <>
-      <div className="App">
-        <div className="wrappercreateaccount4">
-          <h1>Sign Up</h1>
-          <h3>Select 3 Categories</h3>
+    <Navbar/>
+      <div className="appcreateaccount1 container-fluid">
+        <div className="row">
+          <div className="col s12 m12">
+            
+        <div className="wrappercreateaccount1">
+          <h1 style={{marginTop:"10px"}}>Sign Up</h1>
+          <h4 className="center-align">Select 3 Categories</h4>
           <Select
             options={categories}
             closeMenuOnSelect={false}
@@ -74,6 +79,9 @@ function App(props) {
           </div>
         </div>
       </div>
+      
+      </div>
+        </div>
     </>
   );
 }

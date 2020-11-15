@@ -2,8 +2,9 @@ import React from "react";
 import "./navbar.css";
 import {Link} from 'react-router-dom'
 import M from 'materialize-css'
+import {connect} from 'react-redux'
 
-export default  function App() {
+function App(props) {
   document.addEventListener("DOMContentLoaded", function() {
     var elems = document.querySelectorAll(".sidenav");
     var options = {
@@ -19,31 +20,11 @@ export default  function App() {
     };
    M.Sidenav.init(elems, options);
   });
-  
+  console.log(props)
 
   return (
     <div>
-        {/* <div class="logo">
-        <img src={require("./2.png")} alt={"Error-404"} />
-        </div>
-        <div class="items">
-          <ul>
-            <li class="item"><span>
-                <Link class='link' to={'/createaccount1'} >
-                I'm Influencer
-                </Link>
-                </span>
-                </li>
-            <li class="item"><span>I'm Brand</span></li>
-            <li class="item"><span>Contact Us</span></li>
-          </ul>
-          <div className='signin' >
-              <Link className='button' to={'/signin'} >
-              Sign In
-              </Link>
-              
-              </div>
-        </div> */}
+        <div className="navbar-fixed">
         <nav>
     <div class="nav-wrapper white">
       <a href="/" class="brand-logo"><div class="logo">
@@ -82,7 +63,18 @@ export default  function App() {
                 </Link></li>
   </ul>
       </div>
+      </div>
   )
 
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    setAuth: data => dispatch({
+      type: 'SET_AUTH',
+      authDone: data
+    })
+  }
+}
+
+export default connect(undefined, mapDispatchToProps)(App)

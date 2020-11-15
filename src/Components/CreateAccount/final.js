@@ -38,45 +38,45 @@ function App(props) {
     
   return (
     <div className="app">
-      <div className="wrappercreateaccount1">
+      <div className="wrappercreateaccountfinal">
         <h1>Confirm Details</h1>
         
-        <div className="con-inputcreateaccount1">
+        <div className="con-inputcreateaccountfinal">
   <label>{`Name : ${props.fullName}`}</label>
           <div className="bg"></div>
         </div>
  
-        <div className="con-inputcreateaccount1">
+        <div className="con-inputcreateaccountfinal">
           <label>{`Username : @${props.username}`}</label>
           <div className="bg"></div>
         </div>
         
-        <div className="con-inputcreateaccount1">
+        <div className="con-inputcreateaccountfinal">
           <label>{`Phone No : ${props.phone}`}</label>
           <div className="bg"></div>
         </div>
         
-        <div className="con-inputcreateaccount1">
+        <div className="con-inputcreateaccountfinal">
           <label>{`Email : ${props.email}`} </label>
           <div className="bg"></div>
         </div>
  
-        <div className="con-inputcreateaccount1">
+        <div className="con-inputcreateaccountfinal">
           <label>{`Gender : ${props.gender}`} </label>
           <div className="bg"></div>
         </div>
  
-        <div className="con-inputcreateaccount1">
+        <div className="con-inputcreateaccountfinal">
           <label>{`City : ${props.city}`}</label>
           <div className="bg"></div>
         </div>
  
-        <div className="con-inputcreateaccount1">
+        <div className="con-inputcreateaccountfinal">
           <label>{`Are you in College : ${college}`} </label>
           <div className="bg"></div>
         </div>
 
-        <div className="con-inputcreateaccount1">
+        <div className="con-inputcreateaccountfinal">
           <label>{`Prefered Categories : ${props.categories}`} </label>
           <div className="bg"></div>
         </div>

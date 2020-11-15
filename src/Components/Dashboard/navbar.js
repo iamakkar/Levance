@@ -13,7 +13,7 @@ async function logout() {
   await props.setAuth(false);
   history.push('/')
 }
-
+console.log(props.setAuth)
   return (
     <div className="navbarhome">
         <div className="logo">

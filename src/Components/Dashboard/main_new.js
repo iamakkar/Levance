@@ -1,8 +1,20 @@
 import React from 'react'
 import './main_new.css'
 import Location from "@material-ui/icons/PersonPinCircle";
+import M from 'materialize-css'
 
 function App() {
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('.modal');
+        var instances = M.Modal.init(elems);
+    });
+
+
+    const handleChange = () => {
+        M.toast({ html: 'Done here' })
+    }
     return (
         <>
             {/* <div class="main">
@@ -73,9 +85,9 @@ function App() {
                             Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                             Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
                                 fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                            <button class="btn waves-effect waves-light right" type="submit" name="action">Accept
+                            <a class="btn waves-effect waves-light right modal-trigger" href="#modal1" >Accept
     <i class="material-icons right">send</i>
-                            </button>
+                            </a>
 
                         </div>
                         <div className="campaign">
@@ -85,9 +97,9 @@ function App() {
                             Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                             Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
                                 fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                <button class="btn waves-effect waves-light right" type="submit" name="action">Accept
+                            <a class="btn waves-effect waves-light right modal-trigger" href="#modal1"  name="action">Accept
     <i class="material-icons right">send</i>
-                            </button>
+                            </a>
                         </div>
                         <div className="campaign">
                             <h3>Brand</h3>
@@ -96,9 +108,9 @@ function App() {
                             Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                             Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
                                 fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                <button class="btn waves-effect waves-light right" type="submit" name="action">Accept
+                            <a class="btn waves-effect waves-light right modal-trigger" href="#modal1"  name="action">Accept
     <i class="material-icons right">send</i>
-                            </button>
+                            </a>
                         </div>
                         <div className="campaign">
                             <h3>Brand</h3>
@@ -107,11 +119,22 @@ function App() {
                             Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                             Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
                                 fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                <button class="btn waves-effect waves-light right" type="submit" name="action">Accept
+                            <a class="btn waves-effect waves-light right modal-trigger" href="#modal1"  name="action">Accept
     <i class="material-icons right">send</i>
-                            </button>
+                            </a>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div id="modal1" class="modal">
+                <div class="modal-content">
+                    <h4>Levance</h4>
+                    <p>Are you sure ?</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-close waves-effect waves-green btn-flat" onClick={handleChange}>Agree</a>
+                    <a href="#!" class="modal-close waves-effect waves-red btn-flat"  >Cancel</a>
+
                 </div>
             </div>
         </>

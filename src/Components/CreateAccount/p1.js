@@ -11,6 +11,7 @@ import CircleIcon from '@material-ui/icons/CheckCircle';
 import {Link, useHistory } from 'react-router-dom';
 import {connect} from 'react-redux'
 import Swal from 'sweetalert2';
+import Navbar from '../Home/navbar';
 
 const validate = RegExp(/^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/);
 
@@ -72,11 +73,13 @@ const phoneVerify = (e) => {
 }
 
 return (
-    <div className="app container-fluid">
-      <div className="row">
+  <>
+  <Navbar/>
+    <div className="appcreateaccount1 container-fluid">
+      <div className="row" style={{marginBottom:"0"}}>
         <div className="col m12 s12">
       <div className="wrappercreateaccount1">
-        <h1>Sign Up</h1>
+        <h1 style={{marginTop:"10px"}}>Sign Up</h1>
         
         <div className="con-inputcreateaccount1">
          <input placeholder="Full Name" type="text" onBlur={(val) => props.setName(val.target.value)} />
@@ -2182,9 +2185,6 @@ return (
         </div>
         <div className="con-input">
 
-              <i className="icon">
-                  <CircleIcon />
-                </i>
                 <RadioGroup aria-label="gender" name="gender1" row onChange={val => props.setGender(val.target.value)}>
         <FormControlLabel value="female" control={<Radio />} label="Female" />
         <FormControlLabel value="male" control={<Radio />} label="Male" />
@@ -2201,6 +2201,7 @@ return (
     </div>
     </div>
     </div>
+    </>
   );
 }
 

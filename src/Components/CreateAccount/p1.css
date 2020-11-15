@@ -1,11 +1,12 @@
-.app {
+.appcreateaccount1{
   width: 100%;
-  
+  height: 100vh;
   justify-content: center;
   align-items: flex-end;
   background-repeat: no-repeat;
   background-image: url("../Signin/background.jpg");
   background-size: cover;
+  overflow: hidden;
 }
 
 .wrappercreateaccount1 {
@@ -18,6 +19,8 @@
   box-shadow: 0px 10px 50px #555;
   background-color: #ffffff;
   margin: auto;
+  margin-top: 2vh;
+  width: 400px;
 }
 
 .con-inputcreateaccount1 {
@@ -77,12 +80,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 5px;
-  border-radius: 12px;
-  position: relative;
-  width: 300px;
-  height: 7%;
-  margin: 10px;
+  
 }
 
 .invalid input {
@@ -91,15 +89,10 @@
   border-color: red;
   font-size: 1rem;
   font-family: "Poppins", sans-serif;
-  margin-left: 8px;
-  width: 260px;
+  
   transition: all 0.25s ease;
 }
 
-.invalid input:focus {
-  padding-left: 5px;
-  padding-right: 0px;
-}
 
 .invalid input:focus ~ .bg {
   border: 1px solid red;
@@ -214,21 +207,22 @@
 
 select.city {
   margin: auto;
+  display: block!important;
 }
 
 /* RESPONSIVE STYLES */
 
 @media screen and (max-width: 1000px) {
-  .App {
+  .appcreateaccount1{
     
     width: 100%;
-    display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     background-repeat: no-repeat;
     background-image: url("../Signin/background.jpg");
     background-size: cover;
+    height: 100vh;
+    
   }
 
   .wrappercreateaccount1 {
@@ -237,12 +231,13 @@ select.city {
     align-self: center;
     align-items: center;
     flex-direction: column;
-    padding: 20px 40px;
+    padding: 10px 30px;
     margin: auto;
     border-radius: 10px;
     box-shadow: 0px 10px 50px #555;
     background-color: #ffffff;
-    width: 70%;
+    width: 100%;
+    margin-top: 6vh;
   }
 
   .con-inputcreateaccount1 {
@@ -253,7 +248,7 @@ select.city {
     padding: 5px;
     border-radius: 12px;
     position: relative;
-    width: 90%;
+    width: 100%;
     height: 11%;
   }
 
@@ -360,5 +355,6 @@ select.city {
 
   select.city {
     margin: auto;
+    display: block;
   }
 }
