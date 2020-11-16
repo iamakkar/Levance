@@ -6,7 +6,7 @@ import {createStore} from 'redux';
 import {Provider} from 'react-redux'
 import {Switch, BrowserRouter, Route} from 'react-router-dom'
 import Home from './Components/Home/wrapper';
-import Dashboard from "./Components/Dashboard/main_new";
+import Dashboard from "./Components/Dashboard/wrapper";
 import SignIn from './Components/Signin/SignIn'
 import CreateAccount1 from './Components/CreateAccount/p1';
 import CreateAccount2 from './Components/CreateAccount/p2';
@@ -18,7 +18,6 @@ import ProtectedRoute1 from './Components/ProtectedRoute/ProtectedRoute1'
 import rootReducer from './Components/Reducers/combinedReducer'
 
 const store = createStore(rootReducer);
-
 
 ReactDOM.render((
   <Provider store={store} >

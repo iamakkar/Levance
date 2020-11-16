@@ -36,16 +36,15 @@ function App(props) {
   }
 
   async function submit() {
-    console.log(cred)
     props.setEmail(cred.email)
-   await axios.post('http://localhost:5000/login', cred)
+    await axios.post('http://localhost:5000/login', cred)
     .then(res => next(res))
     .catch((e) => console.log(e))
   }
 
   async function next(x) {
       if (x) {
-        localStorage.setItem('token', x.data);
+        await localStorage.setItem('token', x.data);
         props.setAuth(true);
         history.push('/dashboard');
       }
