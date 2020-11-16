@@ -54,7 +54,7 @@ function App(props) {
     <li><Link class='link' to={'/createaccount1'} >
                 I'm Influencer
                 </Link></li>
-    <li><Link class='link' to={'#'} >
+    <li><Link class='link' to={'/dashboard'} >
                 I'm Brand
                 </Link></li>
     <li><Link class='link' to={'#'} >
