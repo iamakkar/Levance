@@ -9,6 +9,11 @@ import {createStore} from 'redux';
 
 const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
+const token = localStorage.getItem('token')
+if (token) {
+  store.dispatch({type: 'SET_AUTH', authDone: true})
+}
+
 ReactDOM.render((
   <Provider store={store} >
   <App />

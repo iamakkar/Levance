@@ -10,17 +10,8 @@ import CreateAccount4 from './Components/CreateAccount/p4';
 import CreateAccount5 from './Components/CreateAccount/p5';
 import CreateAccountFinal from './Components/CreateAccount/final';
 import ProtectedRoute1 from './Components/ProtectedRoute/ProtectedRoute1'
-import {connect} from 'react-redux'
 
-function App(props) {
-
-    React.useEffect(() => {
-        console.log('call gayi');
-        console.log(props.authDone);
-        if(localStorage.getItem('token')) {
-          props.setAuth(true);
-        }
-      },[props.authDone])
+export default function App() {
 
     return (
         
@@ -42,21 +33,3 @@ function App(props) {
     )
 }
 
-const mapStateToProps = state => {
-    return {
-      authDone: state.userDetails.authDone
-    }
-  }
-
-const mapDispatchToProps = dispatch => {
-    return {
-      setAuth: data => {
-        dispatch({
-          type: 'SET_AUTH',
-          authDone: data
-        })
-      }
-    }
-  }
-
-export default connect(mapStateToProps, mapDispatchToProps)(App)
