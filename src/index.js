@@ -33,7 +33,6 @@ ReactDOM.render((
     <Route exact={true} path='/createaccount5' component={CreateAccount5} />
     <Route exact={true} path='/createaccountfinal' component={CreateAccountFinal} />
     <ProtectedRoute1 path='/dashboard' exact={true} component={Dashboard} />
-    <ProtectedRoute1 component={Dashboard} />
   </Switch>
   </BrowserRouter>
   </Provider>

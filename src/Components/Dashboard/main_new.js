@@ -17,42 +17,7 @@ function App() {
     }
     return (
         <>
-            {/* <div class="main">
-            <div className='db_rect' ></div>
-        <div className='db_app'>
-            <div className='db_child1' >
-                <div className='db_child1_child1'></div>
-                <img src={require("./yash.svg")} alt={"Error-404"} />
-            </div>
-            <div className='db_child2'>
-                <div className='db_child2_child1'>
-                <h2>Full Name</h2>
-                <p>@username</p>
-                <p><Location />Address</p>
-                <div class='chip' style={{marginTop: 10 ,border: 'aliceblue', borderWidth: 1}} >Category 1</div>
-                <div class='chip' style={{marginTop: 10 ,border: 'aliceblue', borderWidth: 1}} >Category 2</div>
-                <div class='chip' style={{marginTop: 10 ,border: 'aliceblue', borderWidth: 1}} >Category 3</div>
-                </div>
-            </div>
-        </div>
-        </div> */}
-            {/* <div className="container profileBox">
-                <header className=" imageBackground">
-
-                </header>
-                <div className="row">
-                    <div className="col s12 m5 center-align">
-                        <img src="https://images.pexels.com/photos/1804796/pexels-photo-1804796.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" className="profilePic" />
-                        <h4>Name</h4>
-                        <p>@Username</p>
-                        <p><Location />Somewhere in this world</p>
-                        <div className="categories">Category 1</div>
-                        <div className="categories">Category 2</div>
-                        <div className="categories">Category 3</div>
-                    </div>
-                </div>
-            </div>
-    */}
+       
             <div className="container-fluid">
                 <div className="row" style={{ marginBottom: "0px" }}>
                     <div className="col s12 m12 db_rect">
@@ -60,7 +25,11 @@ function App() {
                 </div>
                 <div className="row" style={{ marginBottom: "0px" }}>
                     <div className="col s12 m3 center-align profileSide">
-                        <img src="https://images.pexels.com/photos/1804796/pexels-photo-1804796.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" className="profilePic" />
+                        <div className="profilePic">
+                        <img src="https://images.pexels.com/photos/1804796/pexels-photo-1804796.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" className="profileImage" />
+                        <input type='file' className="profileImageChange" id='profileImageChange'/>
+                        <label for='profileImageChange' className='profileImageChangeLabel'>Change profile image</label>
+                        </div>
                         <h4>Name</h4>
                         <p>@Username</p>
                         <p><Location />Somewhere in this world</p>
