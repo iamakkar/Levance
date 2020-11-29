@@ -7,18 +7,22 @@ import Swal from 'sweetalert2';
 import Navbar from '../Home/navbar';
 
 const categories = [
-  { value: "a", label: "abcd" },
-  { value: "b", label: "bcde" },
-  { value: "c", label: "cdef" },
-  { value: "d", label: "defg" },
-  { value: "e", label: "efgh" },
-  { value: "f", label: "fghi" },
-  { value: "g", label: "ghij" },
-  { value: "h", label: "hijk" },
-  { value: "i", label: "ijkl" },
-  { value: "j", label: "jklm" },
-  { value: "k", label: "klmn" },
-  { value: "l", label: "lnop" },
+  { value: "Beauty", label: "Beauty" },
+  { value: "Fashion", label: "Fashion" },
+  { value: "Fitness", label: "Fitness" },
+  { value: "Lifestyle", label: "Lifestyle" },
+  { value: "Food", label: "Food" },
+  { value: "Travel", label: "Travel" },
+  { value: "Tech", label: "Tech" },
+  { value: "Wedding", label: "Wedding" },
+  { value: "Entertainment", label: "Entertainment" },
+  { value: "Decor", label: "Decor" },
+  { value: "Parenting", label: "Parenting" },
+  { value: "Photography", label: "Photography" },
+  { value: "Design", label: "Design" },
+  { value: "Luxury", label: "Luxury" },
+  { value: "DIY", label: "DIY" },
+  { value: "Repost", label: "Repost" },
 ];
 
 var x = [];

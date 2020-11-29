@@ -2,41 +2,72 @@ import React from "react";
 import "./navbar.css";
 import {connect} from 'react-redux';
 import {useHistory} from 'react-router-dom'
-
+import {Link} from 'react-router-dom'
 
 function App(props) {
 
 const history = useHistory()
 
-async function logout() {
-  await localStorage.removeItem('token');
-  await props.setAuth(false);
-  history.push('/')
+
+const changeAuthentication = () =>{
+  localStorage.removeItem('token')
+  localStorage.removeItem('user')
+  props.setAuth(false);
+  window.location.href="/";
 }
 console.log(props.setAuth)
   return (
-    <div className="navbarhome">
-        <div className="logo">
-        <img src={require("../../logo/Levance.svg")} alt={"Error-404"} />
-        </div>
-        <div className="items">
-          <ul>
-            <li className="item"><span>
-                
-                Profile
+    <div>
+        <div className="navbar-fixed">
+        <nav>
+    <div class="nav-wrapper white">
+      <a href="/" class="brand-logo"><div class="logo">
+        <img src={require("../Home/2.png")} alt={"Error-404"} />
+        </div></a>
+      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons black-text">menu</i></a>
+      <ul class="right hide-on-med-and-down">
+        {props.isAuthenticated?
+        <>
+        <li><Link class='link' to='/dashboard'>Dashboard</Link></li>
+<li><Link class='link' to={'#'} >
+        Contact Us
+        </Link></li>
+        <li>
+          <Link className='link' onClick={changeAuthentication}>Sign Out</Link>
+        </li></>:
+        <><li><Link class='link' to={'/createaccount1'} >
+        I'm Influencer
+        </Link></li>
+<li><Link class='link' to={'#'} >
+        I'm Brand
+        </Link></li>
+<li><Link class='link' to={'#'} >
+        Contact Us
+        </Link></li>
+<li><Link class='link' to={'/signin'} >
+        Sign In
+        </Link></li></>
+        }
+      </ul>
+    </div>
+  </nav>
+  
+  </div>
 
-                </span>
-                </li>
-            <li className="item"><span>Campaigns</span></li>
-            {/* <li className="item"><span>Contact Us</span></li> */}
-          </ul>
-          <div className='logout' >
-             <div className="button" onClick={logout} > 
-             Logout 
-              </div>
-              
-              </div>
-        </div>
+  <ul class="sidenav" id="mobile-demo">
+    <li><Link class='link' to={'/createaccount1'} >
+                I'm Influencer
+                </Link></li>
+    <li><Link class='link' to={'/dashboard'} >
+                I'm Brand
+                </Link></li>
+    <li><Link class='link' to={'#'} >
+                Contact Us
+                </Link></li>
+    <li><Link class='link' to={'/signin'} >
+                Sign In
+                </Link></li>
+  </ul>
       </div>
   )
 }
@@ -50,5 +81,10 @@ const mapDispatchToProps = dispatch => {
     })
   }
 }
+const mapStateToProps = state => {
+  return {
+      isAuthenticated: state.userDetails.authDone
+  }
+}
 
-export default connect(undefined, mapDispatchToProps)(App)
+export default connect( mapStateToProps,mapDispatchToProps)(App)

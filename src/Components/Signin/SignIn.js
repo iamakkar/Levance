@@ -10,6 +10,7 @@ import axios from 'axios';
 import Logo from '../../logo/Levance.svg'
 import Navbar from '../Home/navbar'
 
+
 const validate = RegExp(/^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/);
 
 function App(props) {
@@ -36,18 +37,20 @@ function App(props) {
   }
 
   async function submit() {
-    console.log(cred)
     props.setEmail(cred.email)
-   await axios.post('http://localhost:5000/login', cred)
+    await axios.post('/login', cred)
     .then(res => next(res))
     .catch((e) => console.log(e))
   }
 
   async function next(x) {
+    console.log(x)
       if (x) {
-        localStorage.setItem('token', x.data);
+        await localStorage.setItem('token', x.data.token);
+        // await localStorage.setItem('user',JSON.stringify(x.data.user));
+        
         props.setAuth(true);
-        history.push('/dashboard');
+        window.location.href='/dashboard';
       }
   }
 
@@ -122,6 +125,7 @@ const mapDispatchToProps = dispatch => {
        email: data,
       })
     },
+   
   }
 }
 

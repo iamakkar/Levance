@@ -4,7 +4,10 @@ import "./wrapper.css";
 import MainNew from './main_new'
 // import Main from "./main";
 
-export default function App() {
+
+function App() {
+
+  
   return (
     <>
       <div className="main">
@@ -14,3 +17,6 @@ export default function App() {
     </>
   );
 }
+
+
+export default App

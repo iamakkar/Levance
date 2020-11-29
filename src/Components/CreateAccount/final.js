@@ -12,7 +12,7 @@ function App(props) {
     var history = useHistory();
 
     const submit1 = async () => {
-      await axios.post('http://localhost:5000/createaccount', {email: props.email,
+      await axios.post('/createaccount', {email: props.email,
         password: props.password,
         fullName: props.fullName,
         username: props.username,

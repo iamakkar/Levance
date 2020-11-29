@@ -29,7 +29,7 @@ function App() {
     var studentsNo = document.getElementById("studentsNo").getBoundingClientRect();
 
     var expertsNo = document.getElementById("expertsNo").getBoundingClientRect();
-    console.log(Math.floor(eventsNo.top - window.scrollY))
+   
     if (Math.floor(eventsNo.top - window.scrollY) <= 0 && Math.floor(eventsNo.top - window.scrollY) >= -100) {
       var x = 200;
       var s = setInterval(() => {
@@ -94,10 +94,10 @@ function App() {
       </div>
       {/* <hr></hr>- */}
 
-      <div class="container-fluid  blue lighten-2">
+      <div class="container-fluid" style={{backgroundColor:"rgb(88, 211, 230)"}}>
         <div className="row section2_upperRow">
           <div className="col s12">
-            <h1 className="center-align" data-aos="fade-up">Sign Up as </h1>
+            <h1 className="center-align" data-aos="fade-up">Sign Up</h1>
           </div>
         </div>
         <div class="row section2_middleRow_edit">

@@ -3,66 +3,9 @@
 .db_rect {
   
   background: #4c4a79;
-  height: 17vh;
+  height: 8.7vh;
 }
 
-.db_child1 {
-  display: flex;
-  flex-direction: column;
-  height: 22vh;
-  width: 100%;
-}
-
-.db_child1 img {
-  width: 17vh;
-  height: 17vh;
-  margin: 0;
-  position: absolute;
-  top: 8vh;
-  left: 7.5%;
-  z-index: 50;
-}
-
-.db_child1_child1 {
-  height: 15vh;
-  width: 100%;
-  background: linear-gradient(to left, #58d3e5, #4c4a79);
-}
-.db_child2 {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 25%;
-  margin-top: 4%;
-}
-
-.db_child2 h2 {
-  font-family: "Poppins", sans-serif;
-  font-weight: bold;
-  margin-bottom: 0;
-  margin-top: 0;
-  text-align: center;
-  color: aliceblue;
-}
-
-.db_child2_child1 {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-top: 0;
-}
-
-.db_child2_child1 p {
-  color: aliceblue;
-  font-size: 1.4rem;
-  margin-top: 4px;
-  margin-bottom: 4px;
-  text-align: center;
-} 
-
- 
 
 
 
@@ -81,7 +24,7 @@
   height: 200px;
   border-radius: 50%;
   margin: auto;
-  margin-top: -70px;
+  margin-top: -50px;
   border: 6px solid white;
   z-index: 1;
   box-shadow: 0 0 7px;
@@ -137,7 +80,7 @@
 .profileSide
 {
   background: linear-gradient(to left, #58d3e5, #4c4a79);
-  height: 82.7vh;
+  height: 82.8vh;
   box-shadow: inset 0 0 5px;
 }
 .campaignBox
