@@ -11,7 +11,6 @@ const history = useHistory()
 
 const changeAuthentication = () =>{
   localStorage.removeItem('token')
-  localStorage.removeItem('user')
   props.setAuth(false);
   window.location.href="/";
 }

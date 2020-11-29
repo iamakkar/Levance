@@ -9,7 +9,8 @@ import {connect} from 'react-redux';
 import axios from 'axios';
 import Logo from '../../logo/Levance.svg'
 import Navbar from '../Home/navbar'
-
+import M from "materialize-css"
+import {BASE_URL} from "../../Config/config.json"
 
 const validate = RegExp(/^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/);
 
@@ -38,14 +39,18 @@ function App(props) {
 
   async function submit() {
     props.setEmail(cred.email)
-    await axios.post('/login', cred)
+    await axios.post(BASE_URL+'/login', cred)
     .then(res => next(res))
     .catch((e) => console.log(e))
   }
 
   async function next(x) {
     console.log(x)
-      if (x) {
+    if(x.data.Error)
+    {
+      M.toast({html:x.data.Error})
+    }
+      else{
         await localStorage.setItem('token', x.data.token);
         // await localStorage.setItem('user',JSON.stringify(x.data.user));
         

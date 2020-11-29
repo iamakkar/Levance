@@ -4,7 +4,8 @@ import axios from 'axios';
 import {connect} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 import Swal from 'sweetalert2';
- 
+import {BASE_URL} from "../../Config/config.json"
+import Navbar from '../Home/navbar'
 function App(props) {
 
     var college = props.college ? 'Yes' : 'No';
@@ -12,7 +13,7 @@ function App(props) {
     var history = useHistory();
 
     const submit1 = async () => {
-      await axios.post('/createaccount', {email: props.email,
+      await axios.post(BASE_URL+'/createaccount', {email: props.email,
         password: props.password,
         fullName: props.fullName,
         username: props.username,
@@ -36,7 +37,8 @@ function App(props) {
       }).catch((e) => console.log(e))
     }
     
-  return (
+  return (<>
+  <Navbar/>
     <div className="app">
       <div className="wrappercreateaccountfinal">
         <h1>Confirm Details</h1>
@@ -80,11 +82,12 @@ function App(props) {
           <label>{`Prefered Categories : ${props.categories}`} </label>
           <div className="bg"></div>
         </div>
-        
+        <p>By signing up, you accept our <a href="/termsandconditions">Terms {'&'} Conditions</a> and <a href="/privacypolicy">Privacy Policy</a></p>
         <button className="buttn" onClick={submit1} >Confirm</button>
         
       </div>
     </div>
+    </>
   );
 }
 

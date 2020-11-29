@@ -1,6 +1,6 @@
 import React from "react";
 import "./main.css";
-import { useHistory } from 'react-router-dom'
+import { useHistory,Link } from 'react-router-dom'
 import InstagramIcon from '@material-ui/icons/Instagram';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import YoutubeIcon from '@material-ui/icons/YouTube';
@@ -9,56 +9,56 @@ import M from "materialize-css"
 function App() {
 
   const history = useHistory();
-  document.addEventListener('DOMContentLoaded', function () {
-    var elems = document.querySelectorAll('.carousel');
-    M.Carousel.init(elems, {
-      fullWidth: false,
-      indicators: true
-    });
+  // document.addEventListener('DOMContentLoaded', function () {
+  //   var elems = document.querySelectorAll('.carousel');
+  //   M.Carousel.init(elems, {
+  //     fullWidth: false,
+  //     indicators: true
+  //   });
 
-    var el = document.querySelector(".carousel");
-    var l = M.Carousel.getInstance(el);
-    setInterval(() => {
-      l.next();
-    }, 3000);
+  //   var el = document.querySelector(".carousel");
+  //   var l = M.Carousel.getInstance(el);
+  //   setInterval(() => {
+  //     l.next();
+  //   }, 3000);
 
-  });
-  window.onscroll = function () {
-    var eventsNo = document.getElementById("eventsNo").getBoundingClientRect();
+  // });
+  // window.onscroll = function () {
+  //   var eventsNo = document.getElementById("eventsNo").getBoundingClientRect();
 
-    var studentsNo = document.getElementById("studentsNo").getBoundingClientRect();
+  //   var studentsNo = document.getElementById("studentsNo").getBoundingClientRect();
 
-    var expertsNo = document.getElementById("expertsNo").getBoundingClientRect();
+  //   var expertsNo = document.getElementById("expertsNo").getBoundingClientRect();
    
-    if (Math.floor(eventsNo.top - window.scrollY) <= 0 && Math.floor(eventsNo.top - window.scrollY) >= -100) {
-      var x = 200;
-      var s = setInterval(() => {
-        document.getElementById("eventsNo").innerText = "+" + x;
-        x = x + 1;
-        if (x > 500)
-          clearInterval(s);
-      }, 5);
-    }
-    if (Math.floor(studentsNo.top - window.scrollY) <= 0 && Math.floor(studentsNo.top - window.scrollY) >= -100) {
-      var y = 500;
-      var p = setInterval(() => {
+  //   if (Math.floor(eventsNo.top - window.scrollY) <= 0 && Math.floor(eventsNo.top - window.scrollY) >= -100) {
+  //     var x = 200;
+  //     var s = setInterval(() => {
+  //       document.getElementById("eventsNo").innerText = "+" + x;
+  //       x = x + 1;
+  //       if (x > 500)
+  //         clearInterval(s);
+  //     }, 5);
+  //   }
+  //   if (Math.floor(studentsNo.top - window.scrollY) <= 0 && Math.floor(studentsNo.top - window.scrollY) >= -100) {
+  //     var y = 500;
+  //     var p = setInterval(() => {
 
-        document.getElementById("studentsNo").innerText = "+" + y;
-        y = y + 1;
-        if (y > 900)
-          clearInterval(p);
-      }, 1.25);
-    }
-    if (Math.floor(expertsNo.top - window.scrollY) <= 0 && Math.floor(expertsNo.top - window.scrollY) >= -100) {
-      var z = 400;
-      var t = setInterval(() => {
-        document.getElementById("expertsNo").innerText = "+" + z;
-        z = z + 1;
-        if (z > 750)
-          clearInterval(t);
-      }, 2.5);
-    }
-  }
+  //       document.getElementById("studentsNo").innerText = "+" + y;
+  //       y = y + 1;
+  //       if (y > 900)
+  //         clearInterval(p);
+  //     }, 1.25);
+  //   }
+  //   if (Math.floor(expertsNo.top - window.scrollY) <= 0 && Math.floor(expertsNo.top - window.scrollY) >= -100) {
+  //     var z = 400;
+  //     var t = setInterval(() => {
+  //       document.getElementById("expertsNo").innerText = "+" + z;
+  //       z = z + 1;
+  //       if (z > 750)
+  //         clearInterval(t);
+  //     }, 2.5);
+  //   }
+  // }
 
 
 
@@ -143,7 +143,7 @@ function App() {
 
       </div>
 
-      <div class="container-fluid  blue lighten-2">
+      {/* <div class="container-fluid  blue lighten-2">
         <div className="row section2_upperRow">
           <div className="col s12">
             <h1 className="center-align" data-aos="fade-up">Daily Engagement</h1>
@@ -203,7 +203,9 @@ function App() {
           </div>
         </div>
       </div>
-      <div className="container">
+       */}
+      
+      {/* <div className="container">
       <div className="row section2_upperRow">
           <div className="col s12">
             <h1 className="center-align" data-aos="fade-up">Reviews</h1>
@@ -238,6 +240,30 @@ function App() {
 
               </div>
             </div>
+          </div>
+        </div>
+      </div> */}
+      <div className="container-fluid" style={{backgroundColor:"rgb(88, 211, 230)"}}>
+        <div className="row">
+          <div className="col m6 s12 center-align">
+            <ul className="white-text">
+
+              <li><h5><Link to="/signin" className="white-text">Sign In</Link></h5></li>
+              
+              <li><h5><Link to="/createaccount1" className="white-text">Sign Up</Link></h5></li>
+              <li><h5><a href="mailto:levancemarketing@gmail.com" className="white-text">Contact Us</a></h5></li>
+            </ul>
+
+          </div>
+          <div className="col m6 s12 center-align">
+          <a href="/" class="brand-logo-footer"><div class="logo">
+        <img src={require("../../logo/Levance4.png")}  alt={"Error-404"} />
+        </div></a>
+          </div>
+        </div>
+        <div className="row" style={{backgroundColor:"#4c4b77",marginBottom:"0"}}>
+          <div className="col s12 m12">
+          <p className="center-align white-text">&#169; Copyrights retained by Levance</p>
           </div>
         </div>
       </div>

@@ -32,10 +32,12 @@ function App(props) {
   const history = useHistory();
 
   function Next() {
+    y=[]
     x.forEach(item => {
       y.push(item.value);
     });
     x = [];
+    console.log(y)
     if (y.length > 3) {
       return Swal.fire({
         title: 'Excess Categories',
@@ -53,7 +55,7 @@ function App(props) {
   }
 
   function selection(e) {
-    console.log(e)
+
     x = e;
   }
 

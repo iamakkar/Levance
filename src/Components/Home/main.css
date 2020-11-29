@@ -17,6 +17,10 @@
   margin-top: 8%;
   /* border: 2px solid black; */
 }
+.brand-logo-footer img{
+  width: 100%;
+  object-fit: contain;
+}
 .p1 {
   align-self: flex-start;
   font-size: 2.8rem;

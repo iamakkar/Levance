@@ -3,7 +3,7 @@ import "./navbar.css";
 import {Link,useHistory} from 'react-router-dom'
 import M from 'materialize-css'
 import {connect} from 'react-redux'
-
+import {Button} from "react-materialize"
 function App(props) {
   const history = useHistory();
   document.addEventListener("DOMContentLoaded", function() {
@@ -46,12 +46,12 @@ const changeAuthentication = () =>{
         <li>
           <Link className='link' onClick={changeAuthentication}>Sign Out</Link>
         </li></>:
-        <><li><Link class='link' to={'/createaccount1'} >
+        <><li><Button style={{backgroundColor:"#4c4b77"}}><Link class='link' to={'/createaccount1'} style={{color:"white"}}>
         I'm Influencer
-        </Link></li>
-<li><Link class='link' to={'#'} >
+        </Link></Button></li>
+<li><Button style={{backgroundColor:"#4c4b77",marginLeft:"5px"}}><Link class='link'  style={{color:"white"}} to={'#'} >
         I'm Brand
-        </Link></li>
+        </Link></Button></li>
 <li><Link class='link' to={'#'} >
         Contact Us
         </Link></li>
