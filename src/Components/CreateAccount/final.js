@@ -13,6 +13,17 @@ function App(props) {
     var history = useHistory();
 
     const submit1 = async () => {
+      if(props.password==""||props.fullName==""||props.username==""||props.phone==""||props.gender==""||props.city==""||props.categories.length==0)
+      {
+        return Swal.fire({
+          title: 'Details Missing',
+          text: 'Please fill all the details',
+          icon: 'warning',
+          showCancelButton: false,
+          showConfirmButton: true,
+          confirmButtonText: 'Okay',
+        })
+      }else{
       await axios.post(BASE_URL+'/createaccount', {email: props.email,
         password: props.password,
         fullName: props.fullName,
@@ -34,7 +45,7 @@ function App(props) {
         }).then(() => {
           history.push('/signin')
         })
-      }).catch((e) => console.log(e))
+      }).catch((e) => console.log(e))}
     }
     
   return (<>
@@ -82,7 +93,7 @@ function App(props) {
           <label>{`Prefered Categories : ${props.categories}`} </label>
           <div className="bg"></div>
         </div>
-        <p>By signing up, you accept our <a href="/termsandconditions">Terms {'&'} Conditions</a> and <a href="/privacypolicy">Privacy Policy</a></p>
+        <p>By signing up, you accept our <a href={require("../../Config/Terms_&_Conditions.pdf")} target="_blank">Terms {'&'} Conditions</a> and <a href={require("../../Config/Privacy_Policy.pdf")} target="_blank">Privacy Policy</a></p>
         <button className="buttn" onClick={submit1} >Confirm</button>
         
       </div>

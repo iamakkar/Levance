@@ -3,7 +3,7 @@ import "./navbar.css";
 import {Link,useHistory} from 'react-router-dom'
 import M from 'materialize-css'
 import {connect} from 'react-redux'
-import {Button} from "react-materialize"
+import {Button,NavItem,Navbar,Icon} from "react-materialize"
 function App(props) {
   const history = useHistory();
   document.addEventListener("DOMContentLoaded", function() {
@@ -21,64 +21,99 @@ function App(props) {
     };
    M.Sidenav.init(elems, options);
   });
-  console.log(props)
+  
 const changeAuthentication = () =>{
   localStorage.removeItem('token')
   props.setAuth(false);
-  history.push('/')
+  window.location.href="/"
 }
   return (
     <div>
-        <div className="navbar-fixed">
-        <nav>
-    <div class="nav-wrapper white">
-      <a href="/" class="brand-logo"><div class="logo">
-        <img src={require("./2.png")} alt={"Error-404"} />
-        </div></a>
-      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons black-text">menu</i></a>
-      <ul class="right hide-on-med-and-down">
-        {props.isAuthenticated?
-        <>
-        <li><Link class='link' to='/dashboard'>Dashboard</Link></li>
-<li><Link class='link' to={'#'} >
-        Contact Us
-        </Link></li>
-        <li>
-          <Link className='link' onClick={changeAuthentication}>Sign Out</Link>
-        </li></>:
-        <><li><Button style={{backgroundColor:"#4c4b77"}}><Link class='link' to={'/createaccount1'} style={{color:"white"}}>
-        I'm Influencer
-        </Link></Button></li>
-<li><Button style={{backgroundColor:"#4c4b77",marginLeft:"5px"}}><Link class='link'  style={{color:"white"}} to={'#'} >
-        I'm Brand
-        </Link></Button></li>
-<li><Link class='link' to={'#'} >
-        Contact Us
-        </Link></li>
-<li><Link class='link' to={'/signin'} >
-        Sign In
-        </Link></li></>
-        }
-      </ul>
-    </div>
-  </nav>
-  
-  </div>
 
-  <ul class="sidenav" id="mobile-demo">
-    <li><Link class='link' to={'/createaccount1'} >
-                I'm Influencer
-                </Link></li>
-    <li><Link class='link' to={'/dashboard'} >
-                I'm Brand
-                </Link></li>
-    <li><Link class='link' to={'#'} >
-                Contact Us
-                </Link></li>
-    <li><Link class='link' to={'/signin'} >
-                Sign In
-                </Link></li>
-  </ul>
+{!props.isAuthenticated?<Navbar
+  alignLinks="right"
+  brand={<a href="/" class="brand-logo"><div class="logo">
+  <img src={require("./2.png")} alt={"Error-404"} />
+  </div></a>}
+  id="mobile-nav"
+  menuIcon={<Icon className="black-text">menu</Icon>}
+  options={{
+    draggable: true,
+    edge: 'left',
+    inDuration: 250,
+    onCloseEnd: null,
+    onCloseStart: null,
+    onOpenEnd: null,
+    onOpenStart: null,
+    outDuration: 200,
+    preventScrolling: true
+  }}
+  className="white black-text"
+>
+  <NavItem>
+  <Button style={{backgroundColor:"#4c4b77"}}><Link class='link' to={'/createaccount1'} style={{color:"white"}}>
+        I'm Influencer
+        </Link></Button>
+  </NavItem>
+  <NavItem>
+  <Button style={{backgroundColor:"#4c4b77"}}><Link class='link'  style={{color:"white"}} to={'#'} >
+        I'm Brand
+        </Link></Button>
+  </NavItem>
+  <NavItem>
+  <a href="mailto:levancemarketing@gmail.com" class='link' >
+        Contact Us
+        </a>
+  </NavItem>
+  <NavItem>
+    <Link class='link' to={'/signin'} >
+        Sign In
+        </Link>
+  </NavItem>
+</Navbar>:
+<Navbar
+  alignLinks="right"
+  brand={<a href="/" class="brand-logo"><div class="logo">
+  <img src={require("./2.png")} alt={"Error-404"} />
+  </div></a>}
+  id="mobile-nav"
+  fixed={true}
+  menuIcon={<Icon className="black-text">menu</Icon>}
+  options={{
+    draggable: true,
+    edge: 'left',
+    inDuration: 250,
+    onCloseEnd: null,
+    onCloseStart: null,
+    onOpenEnd: null,
+    onOpenStart: null,
+    outDuration: 200,
+    preventScrolling: true
+    
+  }}
+  className="white black-text"
+  
+>
+  <NavItem>
+    <Link to="/dashboard" class="link">
+      Dashboard
+    </Link>
+  </NavItem>
+  <NavItem>
+  <a href="mailto:levancemarketing@gmail.com" class='link' >
+        Contact Us
+        </a>
+  </NavItem>
+  <NavItem>
+  <Link className='link' onClick={changeAuthentication}>Sign Out</Link>
+  </NavItem>
+</Navbar>
+}
+
+
+
+
+
       </div>
   )
 

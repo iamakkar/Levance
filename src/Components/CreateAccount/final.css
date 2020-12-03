@@ -15,7 +15,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding: 20px 40px;
+  padding: 10px 40px;
   border-radius: 10px;
   box-shadow: 0px 10px 50px #555;
   background-color: #ffffff;
@@ -151,12 +151,12 @@
     align-self: center;
     align-items: center;
     flex-direction: column;
-    padding: 20px 40px;
+    padding: 0 20px;
     margin: auto;
     border-radius: 10px;
     box-shadow: 0px 10px 50px #555;
     background-color: #ffffff;
-    width: 70%;
+    width: 85%;
   }
 
   .con-inputcreateaccountfinal {
