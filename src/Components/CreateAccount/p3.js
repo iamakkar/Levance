@@ -36,6 +36,7 @@ function PasswordShow() {
       }
     }).then(res=>{
       setCheckUsername(res.data.message);
+      console.log(res.data.message)
     })}
     catch(err){
       console.log(err)
