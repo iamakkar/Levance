@@ -2,13 +2,14 @@ import React, { Component, useState } from 'react'
 import './main_new.css'
 import Location from "@material-ui/icons/PersonPinCircle";
 import M from 'materialize-css'
-import Navbar from "./navbar"
+import Navbar from "../Home/navbar"
 import axios from 'axios';
 import { connect } from 'react-redux'
 import { useEffect } from 'react';
 import Switch from "react-switch";
 import { Modal, Button, TextInput } from "react-materialize"
 import Select from "react-select";
+import Swal from 'sweetalert2';
 import { BASE_URL } from "../../Config/config.json";
 
 function App(props) {
@@ -140,8 +141,20 @@ function App(props) {
     updateProfile.categories = updatedCategories.map(category => {
       return category.value;
     })
-
-    const res = await axios({
+    if(updateProfile.categories.length>3)
+    {
+      return Swal.fire({
+        title: 'Categories Error',
+        text: 'Atmost 3 categories allowed',
+        icon: 'warning',
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonText: 'Okay',
+      })
+    }
+    else{
+      setLoader(true)
+    const result = await axios({
       url: BASE_URL + "/updateprofile",
       method: "PUT",
       data: updateProfile
@@ -150,8 +163,44 @@ function App(props) {
         'authorization': `Bearer ${localStorage.token}`
       }
     })
+    setLoader(false)
+    if(result.data.error)
+    {
+      M.toast({html:"Error occurred"})
+    }
+    else{
+      M.toast({html:"Updated Successfully"})
+      document.getElementById("updateModal").click();
+    const res = await axios({
+      url: BASE_URL + "/getdetails",
+      method: "GET",
+      headers: {
+        'authorization': `Bearer ${localStorage.token}`
+      }
+    })
+    {
+      const user = res.data;
+      props.setEmail(user.email);
+      props.setName(user.fullName);
+      props.setCity(user.city);
+      props.setUsername(user.username);
+      props.setCategories(user.categories);
+      
+      setUser(user)
+      setUpdatedProfile(user);
+      var x = [];
+      user.categories.map(category => {
+        var y = { value: category, label: category };
+        x.push(y);
+      })
+      setUpdatedCategories(x);
+    }
+  }
+
+
+
     
-    setUser(res.data)
+  }
   }
   useEffect(() => {
 
@@ -220,23 +269,37 @@ function App(props) {
 
             <div className="container-fluid">
               <div className="row">
-                {
+                <div className="col s12 m12">
+                  {
                   user.categories.map(item => {
                     return (
-                      <div className="col s12 m4">
+                      
                         <div className="categories">{item}</div>
-                      </div>
+                      
                     )
                   })
 
                 }
+                </div>
               </div>
             </div>
 
 
             <Modal
-              actions={[<Button onClick={updateDetails} disabled={inputError}>Submit</Button>,
-              <Button flat modal="close" node="button" waves="green">Close</Button>
+              actions={[
+                <>{loader&&<div class="left preloader-wrapper small active" style={{marginTop:"10px"}}>
+                <div class="spinner-layer spinner-yellow-only">
+                  <div class="circle-clipper left">
+                    <div class="circle"></div>
+                  </div><div class="gap-patch">
+                    <div class="circle"></div>
+                  </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                  </div>
+                </div>
+              </div>}</>,
+              <Button onClick={updateDetails} disabled={inputError} style={{marginRight:"5px"}}>Submit</Button>,
+              <Button flat modal="close" id="updateModal" node="button" waves="green">Close</Button>
               ]}
               bottomSheet={false}
               fixedFooter={false}
@@ -257,7 +320,7 @@ function App(props) {
                 startingTop: '4%'
               }}
               root={document.body}
-              trigger={<Button node="button">Edit Profile</Button>}
+              trigger={<Button node="button" style={{marginBottom:"10px"}}>Edit Profile</Button>}
             >
               <TextInput
                 id="TextInput-1"
@@ -268,7 +331,7 @@ function App(props) {
               />
               <h6>Are you in college ?</h6>
               <Switch onChange={() => setUpdatedProfile({
-                ...setUpdatedProfile,
+                ...updateProfile,
                 college: !updateProfile.college
               })} checked={updateProfile.college} />
               <div style={{ marginTop: 5 }}>
@@ -276,21 +339,21 @@ function App(props) {
               </div>
               <TextInput
                 id="TextInput-2"
-                label="Facebook"
+                label="Facebook Url"
                 value={updateProfile.facebook}
                 name="facebook"
                 onChange={updateChange}
               />
               <TextInput
                 id="TextInput-3"
-                label="Instagram"
+                label="Instagram Url"
                 value={updateProfile.instagram}
                 name="instagram"
                 onChange={updateChange}
               />
               <TextInput
                 id="TextInput-4"
-                label="Youtube"
+                label="Youtube Url"
                 value={updateProfile.youtube}
                 name="youtube"
                 onChange={updateChange}
@@ -306,7 +369,7 @@ function App(props) {
                   
                 }}
               />
-              {updatedCategories.length != 3 && <p class="red-text">Select only 3 categories</p>}
+              {(updatedCategories.length > 3||updatedCategories.length==0) && <p class="red-text">Select atmost 3 categories</p>}
             </Modal>
 
 
@@ -327,7 +390,7 @@ function App(props) {
 
               </div>)
             })} */}
-            <h5> Currently we don't have any campaign for your category. We'll inform you as soon as posssible via mail.</h5>
+            <h5> Currently we don't have any campaign for your category. We'll inform you as soon as possible via mail.</h5>
           </div>
         </div>
       </div>

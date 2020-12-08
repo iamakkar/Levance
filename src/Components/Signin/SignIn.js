@@ -21,7 +21,7 @@ function App(props) {
   const [visible, setVisible] = useState(false);
   const [cred, setCred] = useState({ email: "", password: "" });
   const [valid, setValid] = useState(true);
-
+  const [loader,setLoader] = useState(false);
   function PasswordShow() {
     if (!visible) setVisible(true);
     else {
@@ -38,13 +38,15 @@ function App(props) {
   }
 
   async function submit() {
+    setLoader(true)
     props.setEmail(cred.email)
     await axios.post(BASE_URL+'/login', cred)
     .then(res => next(res))
-    .catch((e) => console.log(e))
+    .catch((e) => {console.log(e);setLoader(false)})
   }
 
   async function next(x) {
+    setLoader(false)
     console.log(x)
     if(x.data.Error)
     {
@@ -55,7 +57,7 @@ function App(props) {
         // await localStorage.setItem('user',JSON.stringify(x.data.user));
         
         props.setAuth(true);
-        window.location.href='/dashboard';
+        history.push("/dashboard")
       }
   }
 
@@ -64,7 +66,7 @@ function App(props) {
     <div className="AppSignin container-fluid">
       <div className="row" style={{marginBottom:'0px'}}>
         <div className="col s12 m7  center-align">
-        <img src={require("../Home/influencer.png")} className="influencer_brand_logo_signin" alt={"Error-404"} />
+        {/* <img src={require("../../logo/Levance3.png")} className="influencer_brand_logo_signin hide-on-med-and-down" alt={"Error-404"} /> */}
             </div>
         <div className="col s12 m5">
       <div className="wrappersignin">
@@ -96,15 +98,28 @@ function App(props) {
           </i>
           <div className="bg"></div>
         </div>
+
+        {loader&&<div class="preloader-wrapper small active" style={{marginTop:"10px"}}>
+              <div class="spinner-layer spinner-blue-only">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div><div class="gap-patch">
+                  <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                  <div class="circle"></div>
+                </div>
+              </div>
+            </div>}
+        <br/>
         <button className="buttn" onClick={submit} >Log In</button>
         <br/>
         <span>or</span>
         <div className="afteror">
-          <a href="https://hacktoberfest.digitalocean.com" className="new">
+          <a className="new">
             <Link to={'/createaccount1'} className='new' >Create an account</Link>
           </a>
           <div className="seperator"></div>
-          <a href="https://hacktoberfest.digitalocean.com" className="new">
+          <a href="#" className="new">
             Forgot password?
           </a>
         </div>

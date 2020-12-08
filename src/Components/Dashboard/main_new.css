@@ -76,6 +76,8 @@
   border-radius: 20px;
   font-size: 0.7em;
   margin: 1vh;
+  width: 30%;
+  display: inline-block;
 } 
 .profileSide
 {
