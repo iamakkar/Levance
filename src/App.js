@@ -10,8 +10,6 @@ import CreateAccount4 from './Components/CreateAccount/p4';
 import CreateAccount5 from './Components/CreateAccount/p5';
 import CreateAccountFinal from './Components/CreateAccount/final';
 import ProtectedRoute1 from './Components/ProtectedRoute/ProtectedRoute1'
-import privacy from "./Components/PrivacyPolicy/privacypolicy"
-import Terms from "./Components/terms_and_conditions/terms"
 import {connect} from 'react-redux';
 
 function App(props) {
@@ -26,8 +24,6 @@ function App(props) {
     <Route exact={true} path='/createaccount4' component={CreateAccount4} />
     <Route exact={true} path='/createaccount5' component={CreateAccount5} />
     <Route exact={true} path='/createaccountfinal' component={CreateAccountFinal} />
-    <Route exact={true} path="/privacypolicy" component={privacy}/>
-    <Route exact={true} path="/termsandconditions" component={Terms}/>
     <ProtectedRoute1 path='/dashboard' exact={true} component={Dashboard} />
     <ProtectedRoute1 component={Dashboard} />
   </Switch>
@@ -36,8 +32,6 @@ function App(props) {
       <BrowserRouter>
   <Switch>
     <Route exact={true} path='/' component={Home} />
-    <Route exact={true} path="/privacypolicy" component={privacy}/>
-    <Route exact={true} path="/termsandconditions" component={Terms}/>
     <ProtectedRoute1 path='/dashboard' exact={true} component={Dashboard} />
     <ProtectedRoute1 component={Dashboard} />
   </Switch>
