@@ -58,7 +58,7 @@ const Next = () => {
     })
   }
 
-  if (props.password === '') {
+  if (props.password.length <= 6) {
     return Swal.fire({
       title: 'Too Short',
       text: 'Please fill at least 6 characters',

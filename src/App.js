@@ -12,10 +12,10 @@ import CreateAccountFinal from './Components/CreateAccount/final';
 import ProtectedRoute1 from './Components/ProtectedRoute/ProtectedRoute1'
 import privacy from "./Components/PrivacyPolicy/privacypolicy"
 import Terms from "./Components/terms_and_conditions/terms"
-export default function App() {
+import {connect} from 'react-redux';
 
-    return (
-        
+function App(props) {
+    return !props.authDone ? (
   <BrowserRouter>
   <Switch>
     <Route exact={true} path='/' component={Home} />
@@ -32,7 +32,23 @@ export default function App() {
     <ProtectedRoute1 component={Dashboard} />
   </Switch>
   </BrowserRouter>
-  
+    ) : (
+      <BrowserRouter>
+  <Switch>
+    <Route exact={true} path='/' component={Home} />
+    <Route exact={true} path="/privacypolicy" component={privacy}/>
+    <Route exact={true} path="/termsandconditions" component={Terms}/>
+    <ProtectedRoute1 path='/dashboard' exact={true} component={Dashboard} />
+    <ProtectedRoute1 component={Dashboard} />
+  </Switch>
+  </BrowserRouter>
     )
 }
 
+const mapStateToProps = state => {
+  return {
+    authDone: state.userDetails.authDone
+  }
+}
+
+export default connect(mapStateToProps, undefined)(App)

@@ -4,6 +4,7 @@ import Instagram from '@material-ui/icons/Instagram';
 import Youtube from "@material-ui/icons/YouTube";
 import Facebook from "@material-ui/icons/Facebook";
 import {Link, useHistory } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import {connect} from 'react-redux';
 import Navbar from '../Home/navbar';
 
@@ -11,7 +12,18 @@ function App(props) {
     const history = useHistory();
 
     const Next = () => {
-        history.push('/createaccountfinal')
+        if(props.instagram === '' && props.facebook === '' && props.youtube === '' ) {
+          return Swal.fire({
+            title: 'Empty Details',
+            text: 'Please fill at least 1 social media handle!',
+            icon: 'warning',
+            showCancelButton: false,
+            showConfirmButton: true,
+            confirmButtonText: 'Okay',
+          })
+        } else {
+          history.push('/createaccountfinal')
+        }
     }
       
   return (
@@ -24,7 +36,7 @@ function App(props) {
         <h1   style={{marginTop:"10px"}}>Sign Up</h1>
         <h4>It's Time to connect Socially</h4>
         <div className="con-inputcreateaccount1">
-         <input placeholder="Instagram (profile url)" type="text" onBlur={val => props.setInstagram(val.target.value)} />
+         <input placeholder="Instagram (profile url)" type="text" onChange={val => props.setInstagram(val.target.value)} />
          <i className="icon">
             <Instagram />
           </i>
@@ -32,7 +44,7 @@ function App(props) {
         </div>
 
         <div className="con-inputcreateaccount1">
-         <input placeholder="Facebook (profile url)" type="text" onBlur={val => props.setFacebook(val.target.value)} />
+         <input placeholder="Facebook (profile url)" type="text" onChange={val => props.setFacebook(val.target.value)} />
          <i className="icon">
             <Facebook />
           </i>
@@ -40,7 +52,7 @@ function App(props) {
         </div>
 
         <div className="con-inputcreateaccount1">
-         <input placeholder="Youtube (channel url)" type="text" onBlur={val => props.setYoutube(val.target.value)} />
+         <input placeholder="Youtube (channel url)" type="text" onChange={val => props.setYoutube(val.target.value)} />
          <i className="icon">
             <Youtube />
           </i>
@@ -62,6 +74,14 @@ function App(props) {
     </div>
     </>
   );
+}
+
+const mapStateToProps = state => {
+  return {
+  instagram: state.userDetails.instagram,
+  facebook: state.userDetails.facebook,
+  youtube: state.userDetails.youtube,
+}
 }
 
 const mapDispatchToProps = dispatch => {
@@ -87,4 +107,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(undefined, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

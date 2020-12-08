@@ -38,10 +38,10 @@ function App(props) {
     });
     x = [];
     console.log(y)
-    if (y.length > 3) {
+    if (y.length > 3 || y.length === 0) {
       return Swal.fire({
         title: 'Excess Categories',
-        text: 'Please select 3 categories!',
+        text: 'Please select 1 categories!',
         icon: 'warning',
         showCancelButton: false,
         showConfirmButton: true,

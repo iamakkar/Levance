@@ -13,7 +13,7 @@ import {connect} from 'react-redux'
 import Swal from 'sweetalert2';
 import Navbar from '../Home/navbar';
 
-const validate = RegExp(/^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/);
+const validate = RegExp(/^[.a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/);
 
 function App(props) {
 
@@ -67,7 +67,7 @@ const emailVerify = (e) => {
 const phoneVerify = (e) => {
   setValidphone(false);
   let x = e.target.value
-  if (x.length >= 10) {
+  if (x.length == 10) {
     setValidphone(true);
   }
 }

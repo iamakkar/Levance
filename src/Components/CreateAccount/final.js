@@ -6,6 +6,7 @@ import {useHistory} from 'react-router-dom';
 import Swal from 'sweetalert2';
 import {BASE_URL} from "../../Config/config.json"
 import Navbar from '../Home/navbar'
+
 function App(props) {
 
     var college = props.college ? 'Yes' : 'No';
