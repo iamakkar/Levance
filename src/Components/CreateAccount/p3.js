@@ -8,6 +8,9 @@ import {Link, useHistory } from 'react-router-dom';
 import {connect} from 'react-redux';
 import Swal from 'sweetalert2';
 import Navbar from '../Home/navbar';
+import axios from 'axios'
+import { BASE_URL } from "../../Config/config.json";
+
 function App(props) {
 
 const history = useHistory();
@@ -15,7 +18,7 @@ const history = useHistory();
 const [visible, setVisible] = useState(false);
 const [cvisible, setCVisible] = useState(false);
 const [checked, setChecked] = useState(true);
-
+const [check_username,setCheckUsername] = useState(false)
 function PasswordShow() {
     setVisible(!visible)
   }
@@ -23,15 +26,27 @@ function PasswordShow() {
   function ConfirmPasswordShow() {
     setCVisible(!cvisible)
   }
-
+  const checkUsername = (e) =>{
+    try{
+    axios({
+      url:BASE_URL+"/checkusername",
+      method:"POST",
+      data:{
+        "username":e.target.value
+      }
+    }).then(res=>{
+      setCheckUsername(res.data.message);
+    })}
+    catch(err){
+      console.log(err)
+    }
+  }
   function passwordCheck(e) {
     if (e.target.value === props.password ) {
       setChecked(true);
     } else {
       setChecked(false);
-    }
-    console.log(props.password)    
-    console.log(checked)    
+    } 
   }
 
 const Next = () => {
@@ -58,7 +73,7 @@ const Next = () => {
     })
   }
 
-  if (props.password.length <= 6) {
+  if (props.password.length < 6) {
     return Swal.fire({
       title: 'Too Short',
       text: 'Please fill at least 6 characters',
@@ -82,13 +97,13 @@ const Next = () => {
         <h1>Sign Up</h1>
         
         <div className="con-inputcreateaccount1">
-         <input placeholder="Pick username" type="text" onBlur={val => props.setUsername(val.target.value)} />
+         <input placeholder="Pick username" type="text" onBlur={val => {props.setUsername(val.target.value);}} onChange={val=>checkUsername(val)} />
          <i className="icon">
             <Person />
           </i>
           <div className="bg"></div>
         </div>
-        
+        {check_username&&<p style={{color:"red"}}>Username already exists</p>}
         <div className="con-inputcreateaccount1">
          <input placeholder="Password"  type={!visible ? "password" : "text"} onBlur={val => props.setPassword(val.target.value)} />
          <i className="icon">
@@ -111,7 +126,7 @@ const Next = () => {
           <div className="bg"></div>
         </div>
         
-        <button className="buttn" onClick={Next} >Next</button>
+        <button className="buttn" onClick={Next} disabled={check_username} >Next</button>
         <span>or</span>
         <div className="afteror">
           

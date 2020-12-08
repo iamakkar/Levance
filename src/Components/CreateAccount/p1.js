@@ -90,7 +90,7 @@ return (
         </div>
         
         <div className={valid || props.email === "" ? "con-inputcreateaccount1" : "invalid"}>
-         <input placeholder="Email" type="text" onBlur={(val) => props.setEmail(val.target.value)} onChange={emailVerify} />
+         <input placeholder="Email" type="text"  onBlur={(val) => props.setEmail(val.target.value)} onChange={emailVerify} />
          <i className="icon">
             <EmailIcon />
           </i>
