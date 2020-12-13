@@ -47,7 +47,7 @@ function App(props) {
 
   async function next(x) {
     setLoader(false)
-    console.log(x)
+    
     if(x.data.Error)
     {
       M.toast({html:x.data.Error})

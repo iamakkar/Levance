@@ -19,18 +19,21 @@ function App(props) {
     const [hashotpserver,setHashotpserver] = useState("")
     const [waitotp,setwaitotp] = useState(false)
     const [token,setToken] = useState("")
+    const [loader,setLoader] = useState(false);
     const [password,setPassword] = useState({
       password:"",
       confirmPassword:""
     })
     
     const EmailOtpsent = ()=>{
+      setLoader(true)
         try{
         axios({
             url:BASE_URL+"/forgotpasswordotp",
             method:"POST",
             data:{"email":email}
         }).then(res=>{
+          setLoader(false)
             if(res.data.error)
             return M.toast({html:res.data.error})
             
@@ -40,6 +43,7 @@ function App(props) {
         })}
         catch(err){
             console.log(err)
+            setLoader(false)
         }
     }
     const createhash = (e)=>{
@@ -107,14 +111,24 @@ function App(props) {
         <h1   style={{marginTop:"10px"}}>Forgot Password</h1>
         
         {!waitotp&&<div className="con-inputcreateaccount1">
-         <input placeholder="Enter email id" type="text" disabled={waitotp} onChange={(val)=>setEmail(val.target.value)}/>
+         <input placeholder="Enter email id" type="email" disabled={waitotp} onChange={(val)=>setEmail(val.target.value)}/>
          <i className="icon">
              <EmailIcon/>
             
           </i>
           <div className="bg"></div>
         </div>}
-
+        {loader&&<div class="preloader-wrapper small active" style={{marginTop:"10px"}}>
+              <div class="spinner-layer spinner-blue-only">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div><div class="gap-patch">
+                  <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                  <div class="circle"></div>
+                </div>
+              </div>
+            </div>}
         {!waitotp&&<button className="buttn" onClick={EmailOtpsent} >Submit</button>}
         {waitotp&&!verifyotp&&<div className="con-inputcreateaccount1">
          <input placeholder="OTP" type="password" disabled={verifyotp} onChange={(e)=>{createhash(e)}} />
