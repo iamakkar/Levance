@@ -14,6 +14,7 @@ function App(props) {
     var history = useHistory();
 
     const submit1 = async () => {
+      
       if(props.password==""||props.fullName==""||props.username==""||props.phone==""||props.gender==""||props.city==""||props.categories.length==0)
       {
         return Swal.fire({
@@ -33,12 +34,26 @@ function App(props) {
         gender: props.gender,
         city: props.city,
         college: props.college,
-        categories: props.categories
-        
-      }).then(() => {
+        categories: props.categories,
+        facebook:props.facebook,
+        instagram:props.instagram,
+        youtube:props.youtube,
+      }).then((res) => {
+        if(res.data.error)
+        Swal.fire({ 
+          title: 'Error',
+          text: 'Email ID already exists',
+          icon: 'warning',
+          showCancelButton: false,
+          showConfirmButton: true,
+          confirmButtonText: 'Okay',
+        }).then(() => {
+          history.push('/signin')
+        })
+        else
         Swal.fire({ 
           title: 'Successfull',
-          text: 'Yoyr account has been created successfully',
+          text: 'Your account has been created successfully',
           icon: 'success',
           showCancelButton: false,
           showConfirmButton: true,
@@ -114,6 +129,9 @@ const mapStateToProps = state => {
         college: state.userDetails.college,
         categories: state.userDetails.categories,
         password: state.userDetails.password,
+        facebook:state.userDetails.facebook,
+        instagram:state.userDetails.instagram,
+        youtube:state.userDetails.youtube,
     }
 }
  

@@ -51,9 +51,9 @@ const userDetailsReducer = produce((draft, action) => {
     username: '',
     password: '',
     categories: [],
-    instagram: '',
-    facebook: '',
-    youtube: '',
+    instagram: null,
+    facebook: null,
+    youtube: null,
 })
 
 export default userDetailsReducer

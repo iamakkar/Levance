@@ -119,9 +119,9 @@ function App(props) {
             <Link to={'/createaccount1'} className='new' >Create an account</Link>
           </a>
           <div className="seperator"></div>
-          <a href="#" className="new">
+          <Link to="/forgotpassword" className="new">
             Forgot password?
-          </a>
+          </Link>
         </div>
       </div>
       </div>
