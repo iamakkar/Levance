@@ -19,6 +19,7 @@ const [visible, setVisible] = useState(false);
 const [cvisible, setCVisible] = useState(false);
 const [checked, setChecked] = useState(true);
 const [check_username,setCheckUsername] = useState(false)
+const [username,setUsername] = useState("")
 function PasswordShow() {
     setVisible(!visible)
   }
@@ -27,6 +28,7 @@ function PasswordShow() {
     setCVisible(!cvisible)
   }
   const checkUsername = (e) =>{
+    setUsername(e.target.value)
     try{
     axios({
       url:BASE_URL+"/checkusername",
@@ -50,8 +52,57 @@ function PasswordShow() {
     } 
   }
 
-const Next = () => {
-
+const Next = async () => {
+  
+  try{
+    await axios({
+      url:BASE_URL+"/checkusername",
+      method:"POST",
+      data:{
+        "username":username
+      }
+    }).then(res=>{
+      setCheckUsername(res.data.message);
+      console.log(res.data.message)
+      if(res.data.message)
+      {
+        return Swal.fire({
+          title: 'Username Error',
+          text: 'Username Already exists',
+          icon: 'warning',
+          showCancelButton: false,
+          showConfirmButton: true,
+          confirmButtonText: 'Okay',
+        })
+      }
+      if(!checked) {
+        return Swal.fire({
+          title: `Doesn't Match`,
+          text: `Password and confirm password doesn't match`,
+          icon: 'error',
+          showCancelButton: false,
+          showConfirmButton: true,
+          confirmButtonText: 'Okay',
+        })
+      }
+    
+      if (props.password.length < 6) {
+        return Swal.fire({
+          title: 'Too Short',
+          text: 'Please fill at least 6 characters',
+          icon: 'warning',
+          showCancelButton: false,
+          showConfirmButton: true,
+          confirmButtonText: 'Okay',
+        })
+      } else {
+        history.push('/createaccount4')
+      }
+    })}
+    catch(err){
+      console.log(err)
+    }
+    
   if (props.username === '') {
     return Swal.fire({
       title: 'Username Missing',
@@ -63,29 +114,7 @@ const Next = () => {
     })
   }
 
-  if(!checked) {
-    return Swal.fire({
-      title: `Doesn't Match`,
-      text: `Password and confirm password doesn't match`,
-      icon: 'error',
-      showCancelButton: false,
-      showConfirmButton: true,
-      confirmButtonText: 'Okay',
-    })
-  }
-
-  if (props.password.length < 6) {
-    return Swal.fire({
-      title: 'Too Short',
-      text: 'Please fill at least 6 characters',
-      icon: 'warning',
-      showCancelButton: false,
-      showConfirmButton: true,
-      confirmButtonText: 'Okay',
-    })
-  } else {
-    history.push('/createaccount4')
-  }
+  
 }
 
   return (<>
