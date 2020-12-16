@@ -34,6 +34,15 @@
   margin-bottom: 5%;
 }
 
+.button:hover{
+  background-color: black!important ;
+}
+
+.button:focus{
+  background-color: black!important ;
+}
+
+
 .buttn:hover {
   transform: translate(-12px, -12px);
 }

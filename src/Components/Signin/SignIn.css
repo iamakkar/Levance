@@ -158,6 +158,14 @@
   margin-bottom: 5%  ;
 }
 
+.buttn:hover{
+  background-color: black!important ;
+}
+
+.buttn:focus{
+  background-color: black!important ;
+}
+
 .buttn:hover {
   transform: translate(-12px, -12px)  ;
 }
