@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {Switch, BrowserRouter, Route} from 'react-router-dom'
 import Home from './Components/Home/wrapper';
 import Dashboard from "./Components/Dashboard/wrapper";
@@ -14,30 +14,43 @@ import ForgotPassword from './Components/forgotpassword/forgotpassword'
 import {connect} from 'react-redux';
 
 function App(props) {
-    return !props.authDone ? (
-  <BrowserRouter>
-  <Switch>
-    <Route exact={true} path='/' component={Home} />
-    <Route exact={true} path='/signin' component={SignIn} />
-    <Route exact={true} path='/createaccount1' component={CreateAccount1} />
-    <Route exact={true} path='/createaccount2' component={CreateAccount2} />
-    <Route exact={true} path='/createaccount3' component={CreateAccount3} />
-    <Route exact={true} path='/createaccount4' component={CreateAccount4} />
-    <Route exact={true} path='/createaccount5' component={CreateAccount5} />
-    <Route exact={true} path='/createaccountfinal' component={CreateAccountFinal} />
-    <Route exact={true} path="/forgotpassword" component={ForgotPassword}/>
-    <ProtectedRoute1 path='/dashboard' exact={true} component={Dashboard} />
-    <ProtectedRoute1 component={Dashboard} />
-  </Switch>
-  </BrowserRouter>
+
+const [isSplash, setIsSplash] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => setIsSplash(false), 3000)
+  })
+
+    return !isSplash ? (
+      !props.authDone ? (
+        <BrowserRouter>
+        <Switch>
+          <Route exact={true} path='/' component={Home} />
+          <Route exact={true} path='/signin' component={SignIn} />
+          <Route exact={true} path='/createaccount1' component={CreateAccount1} />
+          <Route exact={true} path='/createaccount2' component={CreateAccount2} />
+          <Route exact={true} path='/createaccount3' component={CreateAccount3} />
+          <Route exact={true} path='/createaccount4' component={CreateAccount4} />
+          <Route exact={true} path='/createaccount5' component={CreateAccount5} />
+          <Route exact={true} path='/createaccountfinal' component={CreateAccountFinal} />
+          <Route exact={true} path="/forgotpassword" component={ForgotPassword}/>
+          <ProtectedRoute1 path='/dashboard' exact={true} component={Dashboard} />
+          <ProtectedRoute1 component={Dashboard} />
+        </Switch>
+        </BrowserRouter>
+          ) : (
+            <BrowserRouter>
+        <Switch>
+          <Route exact={true} path='/' component={Home} />
+          <ProtectedRoute1 path='/dashboard' exact={true} component={Dashboard} />
+          <ProtectedRoute1 component={Dashboard} />
+        </Switch>
+        </BrowserRouter>
+          )
     ) : (
-      <BrowserRouter>
-  <Switch>
-    <Route exact={true} path='/' component={Home} />
-    <ProtectedRoute1 path='/dashboard' exact={true} component={Dashboard} />
-    <ProtectedRoute1 component={Dashboard} />
-  </Switch>
-  </BrowserRouter>
+      <div style={{display: "flex", flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+      <img src={require('./splash.gif')} />
+      </div>
     )
 }
 
