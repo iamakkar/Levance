@@ -12,15 +12,86 @@ import {Link, useHistory } from 'react-router-dom';
 import {connect} from 'react-redux'
 import Swal from 'sweetalert2';
 import Navbar from '../Home/navbar';
-
+import {sha256} from "js-sha256";
+import M from 'materialize-css';
+import axios from 'axios'
+import {BASE_URL} from "../../Config/config.json"
+import VpnKeyIcon from '@material-ui/icons/VpnKey';
 const validate = RegExp(/^[.a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/);
 
 function App(props) {
-
+  const [loader,setLoader] = useState(false);
+  const [loader2,setLoader2] = useState(false);
 const [valid, setValid] = useState(true);
 const [validphone, setValidphone] = useState(true);
-
+const [verifyotp,setVerifyotp] = useState(false)
+    const [hashotpclient,setHashotpclient] = useState("")
+    const [hashotpserver,setHashotpserver] = useState("")
+    const [token,setToken] = useState("")
+    const [waitotp,setwaitotp] = useState(false)
 const history = useHistory();
+
+const EmailOtpsent = ()=>{
+  if (!valid) {
+    return Swal.fire({
+      title: 'Check your e-mail',
+      text: 'Please fill a valid email!',
+      icon: 'warning',
+      showCancelButton: false,
+      showConfirmButton: true,
+      confirmButtonText: 'Okay',
+    })
+  }
+  setLoader(true)
+    try{
+    axios({
+        url:BASE_URL+"/verifyotp",
+        method:"POST",
+        data:{"email":props.email}
+    }).then(res=>{
+      setLoader(false)
+        if(res.data.error)
+        return M.toast({html:res.data.error})
+        setToken(res.data.token)
+        setHashotpserver(res.data.hash);
+        setwaitotp(true)
+        M.toast({html:"OTP Sent"})
+    })}
+    catch(err){
+        
+        setLoader(false)
+    }
+}
+const createhash = (e)=>{
+    
+    setHashotpclient(sha256(e.target.value))
+}
+const checkHash = ()=>{
+  setLoader2(true)
+  if(hashotpserver===hashotpclient)
+  {  axios({
+    url:BASE_URL+"/otpverify",
+    method:"POST",
+    data:{
+      token:token
+    }
+  }).then(res=>{
+    setLoader2(false)
+    if(res.data.error)
+    {
+      M.toast(res.data.error)
+    }
+    else{
+    setVerifyotp(true)
+    console.log(res.data)
+      M.toast({html:"OTP verified successfully"})
+  }})
+  }
+  else
+  M.toast({html:"Wrong OTP"})
+  setLoader2(false)
+}
+
 
 const Next = () => {
   if (!valid) {
@@ -81,7 +152,54 @@ return (
       <div className="wrappercreateaccount1">
         <h1 style={{marginTop:"10px"}}>Sign Up</h1>
         
-        <div className="con-inputcreateaccount1">
+        {!waitotp&&<p>OTP verification</p>}
+        {!waitotp&&<div className={valid || props.email === "" ? "con-inputcreateaccount1" : "invalid"}>
+         <input placeholder="Email" type="text"  onBlur={(val) => props.setEmail(val.target.value)} onChange={emailVerify} />
+         <i className="icon">
+            <EmailIcon />
+          </i>
+          <div className="bg"></div>
+        </div>}
+        
+        
+        {loader&&<div class="preloader-wrapper small active" style={{marginTop:"10px"}}>
+              <div class="spinner-layer spinner-blue-only">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div><div class="gap-patch">
+                  <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                  <div class="circle"></div>
+                </div>
+              </div>
+            </div>}
+        {!waitotp&&<button className="buttn" onClick={EmailOtpsent} >Submit</button>}
+        {waitotp&&!verifyotp&&<div className="con-inputcreateaccount1">
+         <input placeholder="OTP" type="password" disabled={verifyotp} onChange={(e)=>{createhash(e)}} />
+         <i className="icon">
+         <VpnKeyIcon />
+          </i>
+          <div className="bg"></div>
+        </div>}
+        {loader2&&<div class="preloader-wrapper small active" style={{marginTop:"10px"}}>
+              <div class="spinner-layer spinner-blue-only">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div><div class="gap-patch">
+                  <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                  <div class="circle"></div>
+                </div>
+              </div>
+            </div>}
+        {waitotp&&!verifyotp&&<button className="buttn" onClick={checkHash} >Verify Otp</button>}
+
+
+
+
+
+
+        {verifyotp&&<><div className="con-inputcreateaccount1">
          <input placeholder="Full Name" type="text" onBlur={(val) => props.setName(val.target.value)} />
          <i className="icon">
             <PersonIcon />
@@ -89,14 +207,8 @@ return (
           <div className="bg"></div>
         </div>
         
-        <div className={valid || props.email === "" ? "con-inputcreateaccount1" : "invalid"}>
-         <input placeholder="Email" type="text"  onBlur={(val) => props.setEmail(val.target.value)} onChange={emailVerify} />
-         <i className="icon">
-            <EmailIcon />
-          </i>
-          <div className="bg"></div>
-        </div>
-        
+
+
         <div className={validphone ? "con-inputcreateaccount1" : 'invalid'} >
         <input placeholder="Phone Number" type="tel" onBlur={(val) => props.setPhone(val.target.value)} onChange={phoneVerify} />
         <i className="icon">
@@ -2196,7 +2308,7 @@ return (
         <span>or</span>
         <div className="afteror">
             <Link to={'/signin'} className="new" >Already have an account</Link>
-        </div>
+        </div></>}
       </div>
     </div>
     </div>

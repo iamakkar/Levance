@@ -103,12 +103,12 @@ function App() {
         <div class="row section2_middleRow_edit">
           <div class="col s12 m6 center-align" data-aos="fade-in">
             <img src={require("../Home/influencer.png")} className="influencer_brand_logo" alt={"Error-404"} />
-            <button class="btnhome" onClick={() => history.push('/createaccount1')}>I'M INFLUENCER</button>
+            <button class="btnhome" onClick={() => history.push('/createaccount1')}>I'M AN INFLUENCER</button>
             <br></br>
           </div>
           <div class="col s12 m6 center-align" data-aos="fade-in">
             <img src={require("../Home/brand.png")} className="influencer_brand_logo" alt={"Error-404"} />
-            <button class="btnhome">I'M BRAND</button>
+            <button class="btnhome">I'M A BRAND</button>
           </div>
         </div>
       </div>
