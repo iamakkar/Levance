@@ -52,12 +52,12 @@ const changeAuthentication = () =>{
 >
   <NavItem>
   <Button style={{backgroundColor:"#4c4b77"}}><Link class='link' to={'/createaccount1'} style={{color:"white"}}>
-        I'm Influencer
+        I'm an Influencer
         </Link></Button>
   </NavItem>
   <NavItem>
   <Button style={{backgroundColor:"#4c4b77"}}><Link class='link'  style={{color:"white"}} to={'#'} >
-        I'm Brand
+        I'm a Brand
         </Link></Button>
   </NavItem>
   <NavItem>
