@@ -28,13 +28,13 @@ function PasswordShow() {
     setCVisible(!cvisible)
   }
   const checkUsername = (e) =>{
-    setUsername(e.target.value)
+    setUsername(e.target.value.toLowerCase())
     try{
     axios({
       url:BASE_URL+"/checkusername",
       method:"POST",
       data:{
-        "username":e.target.value
+        "username":e.target.value.toLowerCase()
       }
     }).then(res=>{
       setCheckUsername(res.data.message);
@@ -75,6 +75,16 @@ const Next = async () => {
           confirmButtonText: 'Okay',
         })
       }
+      if (props.password.length < 6) {
+        return Swal.fire({
+          title: 'Too Short',
+          text: 'Please fill password of at least 6 characters',
+          icon: 'warning',
+          showCancelButton: false,
+          showConfirmButton: true,
+          confirmButtonText: 'Okay',
+        })
+      }
       if(!checked) {
         return Swal.fire({
           title: `Doesn't Match`,
@@ -86,16 +96,7 @@ const Next = async () => {
         })
       }
     
-      if (props.password.length < 6) {
-        return Swal.fire({
-          title: 'Too Short',
-          text: 'Please fill at least 6 characters',
-          icon: 'warning',
-          showCancelButton: false,
-          showConfirmButton: true,
-          confirmButtonText: 'Okay',
-        })
-      } else {
+       else {
         history.push('/createaccount4')
       }
     })}
@@ -135,7 +136,7 @@ const Next = async () => {
         </div>
         {check_username&&<p style={{color:"red"}}>Username already exists</p>}
         <div className="con-inputcreateaccount1">
-         <input placeholder="Password"  type={!visible ? "password" : "text"} onBlur={val => props.setPassword(val.target.value)} />
+         <input placeholder="Password"  type={!visible ? "password" : "text"} onBlur={val => {props.setPassword(val.target.value);passwordCheck(val)}} />
          <i className="icon">
             <Lock />
           </i>
@@ -146,7 +147,7 @@ const Next = async () => {
         </div>
         
         <div className={checked ? "con-inputcreateaccount1" : 'invalid'}>
-        <input placeholder="Confirm Password"  type={!cvisible ? "password" : "text"} onChange={(val) => passwordCheck(val)} />
+        <input placeholder="Confirm Password"  type={!cvisible ? "password" : "text"} onChange={(val) => passwordCheck(val)} onBlur={(val) => passwordCheck(val)} />
         <i className="icon">
             <Lock />
           </i>

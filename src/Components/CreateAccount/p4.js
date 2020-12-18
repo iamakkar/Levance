@@ -41,7 +41,7 @@ function App(props) {
     if (y.length > 3 || y.length === 0) {
       return Swal.fire({
         title: 'Excess Categories',
-        text: 'Please select 1 categories!',
+        text: 'Please select atleast 1 or atmost 3 categories!',
         icon: 'warning',
         showCancelButton: false,
         showConfirmButton: true,
@@ -68,7 +68,7 @@ function App(props) {
             
         <div className="wrappercreateaccount1">
           <h1 style={{marginTop:"10px"}}>Sign Up</h1>
-          <h4 className="center-align">Select 3 Categories</h4>
+          <h4 className="center-align">Select atleast 1 or atmost 3 Categories</h4>
           <Select
             options={categories}
             closeMenuOnSelect={false}

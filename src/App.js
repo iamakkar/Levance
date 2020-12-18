@@ -12,13 +12,19 @@ import CreateAccountFinal from './Components/CreateAccount/final';
 import ProtectedRoute1 from './Components/ProtectedRoute/ProtectedRoute1'
 import ForgotPassword from './Components/forgotpassword/forgotpassword'
 import {connect} from 'react-redux';
-
+import axios from 'axios';
+import {BASE_URL} from "./Config/config.json"
 function App(props) {
 
 const [isSplash, setIsSplash] = useState(true);
 
   useEffect(() => {
-    setTimeout(() => setIsSplash(false), 3000)
+    axios({
+      url:BASE_URL,
+      method:"GET"
+    }).then(res=>{
+      setIsSplash(!res.data.message)
+    })
   })
 
     return !isSplash ? (
