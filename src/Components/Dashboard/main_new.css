@@ -97,12 +97,21 @@
   padding-bottom: 50px;
   border-bottom: 1px solid gray;
 }
+
+p{
+  margin: 0.4em;
+}
+h4{
+  margin: 0.4em;
+}
+
 @media screen and (max-width:660px)
 {
   .categories{
-    width: 60%;
+    width: 31%;
     margin: auto;
     margin-top: 10px;
+    margin-left: 10px;
   }
   .profileSide
   {
@@ -112,5 +121,12 @@
 .campaignBox
 {
   height: auto;
+}
+
+p{
+  margin: 0.3em;
+}
+h4{
+  margin: 0.3em;
 }
 }
