@@ -152,7 +152,7 @@ return (
       <div className="wrappercreateaccount1">
         <h1 style={{marginTop:"10px"}}>Sign Up</h1>
         
-        {!waitotp&&<p>OTP verification</p>}
+        {!waitotp&&<p>Enter Email</p>}
         {!waitotp&&<div className={valid || props.email === "" ? "con-inputcreateaccount1" : "invalid"}>
          <input placeholder="Email" type="text"  onBlur={(val) => props.setEmail(val.target.value)} onChange={emailVerify} />
          <i className="icon">
@@ -173,7 +173,7 @@ return (
                 </div>
               </div>
             </div>}
-        {!waitotp&&<button className="buttn" onClick={EmailOtpsent} >Submit</button>}
+        {!waitotp&&<button className="buttn" onClick={EmailOtpsent} >Send OTP</button>}
         {waitotp&&!verifyotp&&<div className="con-inputcreateaccount1">
          <input placeholder="OTP" type="password" disabled={verifyotp} onChange={(e)=>{createhash(e)}} />
          <i className="icon">
