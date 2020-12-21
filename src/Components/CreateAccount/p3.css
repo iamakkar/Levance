@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: flex-end;
   background-repeat: no-repeat;
-  background-image: url("../Signin/background.jpg");
+  background: linear-gradient(to left, #58d3e5, #4c4a79);
   background-size: cover;
 }
 
@@ -154,12 +154,12 @@
   margin-bottom: 5%;
 }
 
-.button:hover{
-  background-color: black!important ;
+.button:hover {
+  background-color: black !important ;
 }
 
-.button:focus{
-  background-color: black!important ;
+.button:focus {
+  background-color: black !important ;
 }
 
 .buttn:hover {
@@ -238,7 +238,7 @@ select.city {
     justify-content: center;
     align-items: center;
     background-repeat: no-repeat;
-    background-image: url("../Signin/background.jpg");
+    background: linear-gradient(to left, #58d3e5, #4c4a79);
     background-size: cover;
   }
 
@@ -385,5 +385,4 @@ select.city {
     height: 7%;
     margin: 10px;
   }
-
 }

@@ -6,7 +6,7 @@
   justify-content: center;
   align-items: flex-end;
   background-repeat: no-repeat;
-  background-image: url("../Signin/background.jpg");
+  background: linear-gradient(to left, #58d3e5, #4c4a79);
   background-size: cover;
   overflow: hidden;
 }
@@ -223,7 +223,7 @@ select.city {
     justify-content: center;
     align-items: center;
     background-repeat: no-repeat;
-    background-image: url("../Signin/background.jpg");
+    background: linear-gradient(to left, #58d3e5, #4c4a79);
     background-size: cover;
     height: 100vh;
   }

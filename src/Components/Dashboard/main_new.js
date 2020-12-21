@@ -109,9 +109,7 @@ function App(props) {
       M.toast({ html: "Relogin" })
       setTimeout(() => {
         console.error("error occurred");
-
         window.location.href = "/";
-
       }, 1000);
 
     }

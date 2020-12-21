@@ -1,369 +1,367 @@
-.AppSignin{
-  background-repeat: no-repeat  ;
-  background-image: url("./background.jpg")  ;
-  background-size: cover  ;
+.AppSignin {
+  background-repeat: no-repeat;
+  background: linear-gradient(to left, #58d3e5, #4c4a79);
+  background-size: cover;
   height: 100vh;
 }
 
 .wrappersignin {
-  justify-content: center  ;
-  align-items: center  ;
-  padding: 20px 30px  ;
-  border-radius: 10px  ;
-  box-shadow: 0px 10px 50px #555  ;
-  background-color: #ffffff  ;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 30px;
+  border-radius: 10px;
+  box-shadow: 0px 10px 50px #555;
+  background-color: #ffffff;
   text-align: center;
   margin-top: 4.5vw;
   margin-right: 2.5vw;
   margin-left: 2.5vw;
   width: 25vw;
 }
-.influencer_brand_logo_signin{
+.influencer_brand_logo_signin {
   width: 50%;
 }
 .con-inputSignin {
-  background: rgb(242, 243, 247)  ;
-  display: flex  ;
-  align-items: center  ;
-  justify-content: center  ;
-  padding: 5px  ;
-  border-radius: 12px  ;
-  position: relative  ;
-  width: 100%  ;
-  height: 7%  ;
-  margin: 10px  ;
-  text-decoration: none  ;
+  background: rgb(242, 243, 247);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  border-radius: 12px;
+  position: relative;
+  width: 100%;
+  height: 7%;
+  margin: 10px;
+  text-decoration: none;
 }
 
 .invalidSignin {
-  background: rgb(242, 243, 247)  ;
-  display: flex  ;
-  align-items: center  ;
-  justify-content: center  ;
-  border-radius: 12px  ;
-  border: 1px solid red!important ;
+  background: rgb(242, 243, 247);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  border: 1px solid red !important ;
   width: 100%;
   padding: 2px;
 }
 
 .invalidSignin input {
-  background: transparent  !important;
-  
+  background: transparent !important;
+
   font-size: 1rem !important ;
   font-family: "Poppins", sans-serif !important ;
-  
 }
 
-
 .invalidSignin input:focus ~ .bg {
-  border: 1px solid red  ;
+  border: 1px solid red;
 }
 
 .invalidSignin input:focus ~ i {
-  transform: translate(0, -8px)  ;
-  box-shadow: 0px, 8px, 20px, 0px rgba(0, 0, 0, 15)  ;
+  transform: translate(0, -8px);
+  box-shadow: 0px, 8px, 20px, 0px rgba(0, 0, 0, 15);
 }
 
 .invalidSignin i.icon {
-  order: -1  ;
-  background: red  ;
-  border-radius: 12px  ;
-  display: flex  ;
-  align-items: center  ;
-  justify-content: center  ;
-  width: 31px  ;
-  height: 31px  ;
-  z-index: 20  ;
-  transition: all 0.25s ease  ;
+  order: -1;
+  background: red;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 31px;
+  height: 31px;
+  z-index: 20;
+  transition: all 0.25s ease;
 }
 
 .bg {
-  background: transparent  ;
-  width: 100%  ;
-  height: 100%  ;
-  position: absolute  ;
-  z-index: 1  ;
-  left: 0px  ;
-  top: 0px  ;
-  pointer-events: none  ;
-  border-radius: inherit  ;
-  box-sizing: border-box  ;
-  border: 2px solid transparent  ;
-  transition: all 0.25s ease  ;
+  background: transparent;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 1;
+  left: 0px;
+  top: 0px;
+  pointer-events: none;
+  border-radius: inherit;
+  box-sizing: border-box;
+  border: 2px solid transparent;
+  transition: all 0.25s ease;
 }
 
 .con-inputSignin input {
-  border: 0px  ;
-  background: transparent  ;
-  outline: none  ;
-  font-size: 1rem  ;
-  font-family: "Poppins", sans-serif  ;
-  margin-left: 8px  ;
-  width: 260px  ;
-  transition: all 0.25s ease  ;
+  border: 0px;
+  background: transparent;
+  outline: none;
+  font-size: 1rem;
+  font-family: "Poppins", sans-serif;
+  margin-left: 8px;
+  width: 260px;
+  transition: all 0.25s ease;
 }
 
 .con-inputSignin input:focus {
-  padding-left: 5px  ;
-  padding-right: 0px  ;
+  padding-left: 5px;
+  padding-right: 0px;
 }
 
 .con-inputSignin input:focus ~ .bg {
-  border: 1px solid rgb(64, 154, 228)  ;
+  border: 1px solid rgb(64, 154, 228);
 }
 
 .con-inputSignin input:focus ~ i {
-  transform: translate(0, -8px)  ;
-  box-shadow: 0px, 8px, 20px, 0px rgba(0, 0, 0, 15)  ;
+  transform: translate(0, -8px);
+  box-shadow: 0px, 8px, 20px, 0px rgba(0, 0, 0, 15);
 }
 
 .con-inputSignin i.icon {
-  order: -1  ;
-  background: white  ;
-  border-radius: 12px  ;
-  display: flex  ;
-  align-items: center  ;
-  justify-content: center  ;
-  width: 31px  ;
-  height: 31px  ;
-  z-index: 20  ;
-  transition: all 0.25s ease  ;
+  order: -1;
+  background: white;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 31px;
+  height: 31px;
+  z-index: 20;
+  transition: all 0.25s ease;
 }
 
 .bg {
-  background: transparent  ;
-  width: 100%  ;
-  height: 100%  ;
-  position: absolute  ;
-  z-index: 1  ;
-  left: 0px  ;
-  top: 0px  ;
-  pointer-events: none  ;
-  border-radius: inherit  ;
-  box-sizing: border-box  ;
-  border: 2px solid transparent  ;
-  transition: all 0.25s ease  ;
+  background: transparent;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 1;
+  left: 0px;
+  top: 0px;
+  pointer-events: none;
+  border-radius: inherit;
+  box-sizing: border-box;
+  border: 2px solid transparent;
+  transition: all 0.25s ease;
 }
 
 .buttn {
-  background: black  ;
-  color: #ffffff  ;
-  border-radius: 25px  ;
-  transition: all 0.25s ease  ;
-  width: 40%  ;
-  height: 40px  ;
-  font-family: "Poppins", sans-serif  ;
-  font-size: 1rem  ;
-  margin-top: 5%  ;
-  margin-bottom: 5%  ;
-}
-
-.buttn:hover{
-  background-color: black!important ;
-}
-
-.buttn:focus{
-  background-color: black!important ;
+  background: black;
+  color: #ffffff;
+  border-radius: 25px;
+  transition: all 0.25s ease;
+  width: 40%;
+  height: 40px;
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  margin-top: 5%;
+  margin-bottom: 5%;
 }
 
 .buttn:hover {
-  transform: translate(-12px, -12px)  ;
+  background-color: black !important ;
+}
+
+.buttn:focus {
+  background-color: black !important ;
+}
+
+.buttn:hover {
+  transform: translate(-12px, -12px);
 }
 
 .buttn:hover:after {
-  transform: translate(6px, 6px)  ;
+  transform: translate(6px, 6px);
 }
 
 .buttn:hover:before {
-  transform: translate(12px, 12px)  ;
+  transform: translate(12px, 12px);
 }
 
 .buttn::after,
 .buttn::before {
-  content: ""  ;
-  position: absolute  ;
-  opacity: 0.3  ;
-  background: black  ;
-  border-radius: inherit  ;
-  width: 100%  ;
-  height: 100vh  ;
-  left: 0px  ;
-  bottom: 0px  ;
-  z-index: -1  ;
-  transition: all 0.25s ease  ;
+  content: "";
+  position: absolute;
+  opacity: 0.3;
+  background: black;
+  border-radius: inherit;
+  width: 100%;
+  height: 100vh;
+  left: 0px;
+  bottom: 0px;
+  z-index: -1;
+  transition: all 0.25s ease;
 }
 
 .afteror {
-  display: flex  ;
-  position: relative  ;
-  flex: 1  ;
-  align-items: center  ;
-  justify-content: space-around  ;
-  flex-direction: row  ;
-  margin-top: 5%  ;
+  display: flex;
+  position: relative;
+  flex: 1;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: row;
+  margin-top: 5%;
 }
 
 .new {
-  color: maroon  ;
-  flex: 0 1 auto  ;
-  font-size: 0.9rem  ;
-  align-self: auto  ;
-  margin-right: 5%  ;
-  margin-left: 5%  ;
-  white-space: nowrap  ;
-  text-decoration: none  ;
+  color: maroon;
+  flex: 0 1 auto;
+  font-size: 0.9rem;
+  align-self: auto;
+  margin-right: 5%;
+  margin-left: 5%;
+  white-space: nowrap;
+  text-decoration: none;
 }
 
 .new:hover {
-  color: blue  ;
-  text-decoration: underline  ;
+  color: blue;
+  text-decoration: underline;
 }
 
 .seperator {
-  border-left: 1.6px solid #000  ;
-  border-radius: 0.8px  ;
-  height: 15px  ;
-  flex: 0 1 auto  ;
-  align-self: auto  ;
+  border-left: 1.6px solid #000;
+  border-radius: 0.8px;
+  height: 15px;
+  flex: 0 1 auto;
+  align-self: auto;
 }
 
 /* RESPONSIVE STYLES */
 
 @media screen and (max-width: 600px) {
-  .AppSignin{
-    height: 110vh  ;
-    width: 100%  ;
-    justify-content: center  ;
-    align-items: center  ;
-    background-repeat: no-repeat  ;
-    background-image: url("./background.jpg")  ;
-    background-size: cover  ;
+  .AppSignin {
+    height: 110vh;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    background-repeat: no-repeat;
+    background: linear-gradient(to left, #58d3e5, #4c4a79);
+    background-size: cover;
   }
 
   .wrappersignin {
-    display: flex  ;
-    justify-content: center  ;
-    align-self: center  ;
-    align-items: center  ;
-    flex-direction: column  ;
-    
-    border-radius: 10px  ;
-    box-shadow: 0px 10px 50px #555  ;
-    background-color: #ffffff  ;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    align-items: center;
+    flex-direction: column;
+
+    border-radius: 10px;
+    box-shadow: 0px 10px 50px #555;
+    background-color: #ffffff;
     width: 90%;
-    margin:4vh auto 2vw;
+    margin: 4vh auto 2vw;
   }
 
   .con-inputSignin {
-    background: rgb(242, 243, 247)  ;
-    display: flex  ;
-    align-items: center  ;
-    justify-content: center  ;
-    padding: 5px  ;
-    border-radius: 12px  ;
-    position: relative  ;
-    width: 90%  ;
-    height: 11%  ;
+    background: rgb(242, 243, 247);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border-radius: 12px;
+    position: relative;
+    width: 90%;
+    height: 11%;
   }
 
   .con-inputSignin input {
-    border: 0px  ;
-    background: transparent  ;
-    outline: none  ;
-    font-size: 1rem  ;
-    font-family: "Poppins", sans-serif  ;
+    border: 0px;
+    background: transparent;
+    outline: none;
+    font-size: 1rem;
+    font-family: "Poppins", sans-serif;
     /* margin-left: 8px  ; */
-    width: 260px  ;
-    transition: all 0.25s ease  ;
+    width: 260px;
+    transition: all 0.25s ease;
   }
 
   .con-inputSignin input:focus {
-    padding-left: 5px  ;
-    padding-right: 0px  ;
+    padding-left: 5px;
+    padding-right: 0px;
   }
 
   .con-inputSignin input:focus ~ .bg {
-    border: 0.8px solid #000000  ;
+    border: 0.8px solid #000000;
   }
 
   .con-inputSignin input:focus ~ i {
-    transform: translate(0, -8px)  ;
-    box-shadow: 0px, 8px, 20px, 0px rgba(0, 0, 0, 15)  ;
+    transform: translate(0, -8px);
+    box-shadow: 0px, 8px, 20px, 0px rgba(0, 0, 0, 15);
   }
 
   .con-inputSignin i.icon {
-    order: -1  ;
-    background: white  ;
+    order: -1;
+    background: white;
 
-    border-radius: 12px  ;
-    display: flex  ;
-    align-items: center  ;
-    justify-content: center  ;
-    width: 31px  ;
-    height: 31px  ;
-    z-index: 20  ;
-    transition: all 0.25s ease  ;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 31px;
+    height: 31px;
+    z-index: 20;
+    transition: all 0.25s ease;
   }
 
   .bg {
-    background: transparent  ;
-    width: 100%  ;
-    height: 100%  ;
-    position: absolute  ;
-    z-index: 1  ;
-    left: 0px  ;
-    top: 0px  ;
-    pointer-events: none  ;
-    border-radius: inherit  ;
-    box-sizing: border-box  ;
-    border: 2px solid transparent  ;
-    transition: all 0.25s ease  ;
+    background: transparent;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+    left: 0px;
+    top: 0px;
+    pointer-events: none;
+    border-radius: inherit;
+    box-sizing: border-box;
+    border: 2px solid transparent;
+    transition: all 0.25s ease;
   }
 
   .buttn {
-    background: black  ;
-    color: #ffffff  ;
-    border-radius: 25px  ;
-    transition: all 0.25s ease  ;
-    width: 40%  ;
-    height: 40px  ;
-    font-family: "Poppins", sans-serif  ;
-    font-size: 1rem  ;
-    margin-top: 5%  ;
-    margin-bottom: 5%  ;
+    background: black;
+    color: #ffffff;
+    border-radius: 25px;
+    transition: all 0.25s ease;
+    width: 40%;
+    height: 40px;
+    font-family: "Poppins", sans-serif;
+    font-size: 1rem;
+    margin-top: 5%;
+    margin-bottom: 5%;
   }
 
   .afteror {
-    display: flex  ;
-    position: relative  ;
-    flex: 1  ;
-    align-items: center  ;
-    justify-content: space-around  ;
-    flex-direction: row  ;
-    margin-top: 5%  ;
+    display: flex;
+    position: relative;
+    flex: 1;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+    margin-top: 5%;
   }
 
   .new {
-    color: maroon  ;
-    flex: 0 1 auto  ;
-    font-size: 0.9rem  ;
-    align-self: auto  ;
+    color: maroon;
+    flex: 0 1 auto;
+    font-size: 0.9rem;
+    align-self: auto;
     /* margin-right: 5%  ; */
     /* margin-left: 5%  ; */
-    white-space: nowrap  ;
-    text-decoration: none  ;
+    white-space: nowrap;
+    text-decoration: none;
   }
 
   .new:hover {
-    color: blue  ;
-    text-decoration: underline  ;
+    color: blue;
+    text-decoration: underline;
   }
 
   .seperator {
-    border-left: 1.6px solid #000  ;
-    border-radius: 0.8px  ;
-    height: 15px  ;
-    flex: 0 1 auto  ;
-    align-self: auto  ;
+    border-left: 1.6px solid #000;
+    border-radius: 0.8px;
+    height: 15px;
+    flex: 0 1 auto;
+    align-self: auto;
   }
 }
