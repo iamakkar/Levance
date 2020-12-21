@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import './App.css';
 import {Switch, BrowserRouter, Route} from 'react-router-dom'
 import Home from './Components/Home/wrapper';
 import Dashboard from "./Components/Dashboard/wrapper";
@@ -54,8 +55,8 @@ const [isSplash, setIsSplash] = useState(true);
         </BrowserRouter>
           )
     ) : (
-      <div style={{display: "flex", flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-      <img src={require('./splash.gif')} />
+      <div className='splashparent' >
+      <img className='splash' src={require('./splash1.gif')} />
       </div>
     )
 }
