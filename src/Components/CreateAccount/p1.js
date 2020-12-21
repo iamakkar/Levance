@@ -20,11 +20,11 @@ import VpnKeyIcon from '@material-ui/icons/VpnKey';
 const validate = RegExp(/^[.a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/);
 
 function App(props) {
-  const [loader,setLoader] = useState(false);
-  const [loader2,setLoader2] = useState(false);
-const [valid, setValid] = useState(true);
-const [validphone, setValidphone] = useState(true);
-const [verifyotp,setVerifyotp] = useState(false)
+    const [loader,setLoader] = useState(false);
+    const [loader2,setLoader2] = useState(false);
+    const [valid, setValid] = useState(true);
+    const [validphone, setValidphone] = useState(true);
+    const [verifyotp,setVerifyotp] = useState(false)
     const [hashotpclient,setHashotpclient] = useState("")
     const [hashotpserver,setHashotpserver] = useState("")
     const [token,setToken] = useState("")
@@ -2297,7 +2297,7 @@ return (
         </div>
         <div className="con-input">
 
-                <RadioGroup aria-label="gender" name="gender1" row onChange={val => props.setGender(val.target.value)}>
+        <RadioGroup aria-label="gender" name="gender1" row onChange={val => props.setGender(val.target.value)}>
         <FormControlLabel value="female" control={<Radio />} label="Female" />
         <FormControlLabel value="male" control={<Radio />} label="Male" />
         
