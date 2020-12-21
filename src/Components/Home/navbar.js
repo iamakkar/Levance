@@ -33,7 +33,7 @@ const changeAuthentication = () =>{
 {!props.isAuthenticated?<Navbar
   alignLinks="right"
   brand={<a href="/" class="brand-logo"><div class="logo">
-  <img src={require("./2.png")} alt={"Error-404"} />
+  <img src={require("./2.png")} alt={"levance-navbar-full-logo"} />
   </div></a>}
   id="mobile-nav"
   menuIcon={<Icon className="black-text">menu</Icon>}
@@ -74,7 +74,7 @@ const changeAuthentication = () =>{
 <Navbar
   alignLinks="right"
   brand={<a href="/" class="brand-logo"><div class="logo">
-  <img src={require("./2.png")} alt={"Error-404"} />
+  <img src={require("./2.png")} alt={"levance-navbar-full-logo"} />
   </div></a>}
   id="mobile-nav"
   fixed={true}
