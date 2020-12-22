@@ -20,11 +20,11 @@ import VpnKeyIcon from '@material-ui/icons/VpnKey';
 const validate = RegExp(/^[.a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/);
 
 function App(props) {
-  const [loader,setLoader] = useState(false);
-  const [loader2,setLoader2] = useState(false);
-const [valid, setValid] = useState(true);
-const [validphone, setValidphone] = useState(true);
-const [verifyotp,setVerifyotp] = useState(false)
+    const [loader,setLoader] = useState(false);
+    const [loader2,setLoader2] = useState(false);
+    const [valid, setValid] = useState(true);
+    const [validphone, setValidphone] = useState(true);
+    const [verifyotp,setVerifyotp] = useState(false)
     const [hashotpclient,setHashotpclient] = useState("")
     const [hashotpserver,setHashotpserver] = useState("")
     const [token,setToken] = useState("")
@@ -152,7 +152,7 @@ return (
       <div className="wrappercreateaccount1">
         <h1 style={{marginTop:"10px"}}>Sign Up</h1>
         
-        {!waitotp&&<p>OTP verification</p>}
+        {!waitotp&&<p>Enter Email</p>}
         {!waitotp&&<div className={valid || props.email === "" ? "con-inputcreateaccount1" : "invalid"}>
          <input placeholder="Email" type="text"  onBlur={(val) => props.setEmail(val.target.value)} onChange={emailVerify} />
          <i className="icon">
@@ -173,7 +173,7 @@ return (
                 </div>
               </div>
             </div>}
-        {!waitotp&&<button className="buttn" onClick={EmailOtpsent} >Submit</button>}
+        {!waitotp&&<button className="buttn" onClick={EmailOtpsent} >Send OTP</button>}
         {waitotp&&!verifyotp&&<div className="con-inputcreateaccount1">
          <input placeholder="OTP" type="password" disabled={verifyotp} onChange={(e)=>{createhash(e)}} />
          <i className="icon">
@@ -2297,7 +2297,7 @@ return (
         </div>
         <div className="con-input">
 
-                <RadioGroup aria-label="gender" name="gender1" row onChange={val => props.setGender(val.target.value)}>
+        <RadioGroup aria-label="gender" name="gender1" row onChange={val => props.setGender(val.target.value)}>
         <FormControlLabel value="female" control={<Radio />} label="Female" />
         <FormControlLabel value="male" control={<Radio />} label="Male" />
         

@@ -10,15 +10,9 @@ import Navbar from '../Home/navbar';
 
 function App(props) {
     const history = useHistory();
-  const validInsta = /\bhttps:\/\/www.instagram.com\//;
-  const validInsta2 = /\bwww.instagram.com\//;
-  const validInsta3 = /\bhttps:\/\/instagram.com\//;
-  const validFacebook = /\bhttps:\/\/www.facebook.com\//;
-  const validFacebook2 = /\bwww.facebook.com\//;
-  const validFacebook3 = /\bhttps:\/\/facebook.com\//;
-  const validYoutube = /\bhttps:\/\/www.youtube.com\//;
-  const validYoutube2 = /\bwww.youtube.com\//;
-  const validYoutube3 = /\bhttps:\/\/youtube.com\//;
+  const validInsta = /instagram.com\//;
+  const validFacebook = /facebook.com\//;
+  const validYoutube = /youtube.com\//;
     const Next = () => {
         if(props.instagram === '' && props.facebook === '' && props.youtube === '' ) {
           return Swal.fire({
@@ -33,7 +27,7 @@ function App(props) {
         else 
         {if(props.instagram != '')
         {
-          if(!validInsta.test(props.instagram)&&!validInsta2.test(props.instagram)&&!validInsta3.test(props.instagram))
+          if(!validInsta.test(props.instagram))
           return Swal.fire({
             title: 'Details Error',
             text: 'Enter valid Instagram profile URL!',
@@ -47,7 +41,7 @@ function App(props) {
         else if(props.facebook != '')
         {
 
-          if(!validFacebook.test(props.facebook)&&!validFacebook2.test(props.facebook)&&!validFacebook3.test(props.facebook))
+          if(!validFacebook.test(props.facebook))
           return Swal.fire({
             title: 'Details Error',
             text: 'Enter valid Facebook profile URL!',
@@ -60,7 +54,7 @@ function App(props) {
         }
         else if(props.youtube != '')
         {
-          if(!validYoutube.test(props.youtube)&&!validYoutube2.test(props.youtube)&&!validYoutube3.test(props.youtube))
+          if(!validYoutube.test(props.youtube))
           return Swal.fire({
             title: 'Details Error',
             text: 'Enter valid youtube profile URL!',

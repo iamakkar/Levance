@@ -1,10 +1,10 @@
-.Appcreateaccount4{
+.Appcreateaccount4 {
   height: 100vh;
   width: 100%;
   justify-content: center;
   align-items: flex-end;
   background-repeat: no-repeat;
-  background-image: url("../Signin/background.jpg");
+  background: linear-gradient(to left, #58d3e5, #4c4a79);
   background-size: cover;
 }
 
@@ -46,14 +46,13 @@
   margin-bottom: 5%;
 }
 
-.button:hover{
-  background-color: black!important ;
+.button:hover {
+  background-color: black !important ;
 }
 
-.button:focus{
-  background-color: black!important ;
+.button:focus {
+  background-color: black !important ;
 }
-
 
 .buttn:hover {
   transform: translate(-12px, -12px);
@@ -108,8 +107,7 @@
   text-decoration: underline;
 }
 
-@media screen and (max-width:1000px)
-{
+@media screen and (max-width: 1000px) {
   .wrappercreateaccount4 {
     display: flex;
     justify-content: center;
@@ -136,5 +134,4 @@
     height: 7%;
     margin: 10px;
   }
-  
 }
