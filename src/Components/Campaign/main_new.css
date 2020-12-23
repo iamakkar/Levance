@@ -1,0 +1,132 @@
+
+
+.db_rect {
+  
+  background: #4c4a79;
+  height: 8.7vh;
+}
+
+
+
+
+/* .imageBackground
+{
+  background-image: url("https://images.pexels.com/photos/1731427/pexels-photo-1731427.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-color: red;
+  height: 250px;
+}*/
+.profilePic
+{
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  margin: auto;
+  margin-top: -50px;
+  border: 6px solid white;
+  z-index: 1;
+  box-shadow: 0 0 7px;
+  position: relative;
+
+}
+.profileImage
+{
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+.profileImageChange
+{
+  display: none;
+}
+.profileImageChangeLabel
+{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  color: white;
+  background-color: rgba(76, 74, 121, 0.7);
+  margin: 0;
+  width: 100%;
+  height: 50%;
+  border-bottom-left-radius: 100px;
+  
+  border-bottom-right-radius: 100px;
+
+  vertical-align: bottom;
+  display: none;
+}
+.profilePic:hover{
+  cursor: pointer;
+}
+.profilePic:hover .profileImageChangeLabel
+{
+  display: block;
+  cursor: pointer;
+}
+
+
+.categories
+{
+  background-color: aliceblue;
+  color: blue;
+  padding: .7vw;
+  border-radius: 20px;
+  font-size: 0.7em;
+  margin: 1vh;
+  width: 30%;
+  display: inline-block;
+} 
+.profileSide
+{
+  background: linear-gradient(to left, #58d3e5, #4c4a79);
+  height: 82.8vh;
+  box-shadow: inset 0 0 5px;
+}
+.campaignBox
+{
+  height: 82.7vh;
+  overflow: auto;
+  padding:0px!important;
+}
+.campaign
+{
+  margin: 20px;
+  padding-bottom: 50px;
+  border-bottom: 1px solid gray;
+}
+
+p{
+  margin: 0.4em;
+}
+h4{
+  margin: 0.4em;
+}
+
+@media screen and (max-width:660px)
+{
+  .categories{
+    width: 31%;
+    margin: auto;
+    margin-top: 10px;
+    margin-left: 10px;
+  }
+  .profileSide
+  {
+    height: auto;
+  }
+  
+.campaignBox
+{
+  height: auto;
+}
+
+p{
+  margin: 0.3em;
+}
+h4{
+  margin: 0.3em;
+}
+}

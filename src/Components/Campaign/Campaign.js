@@ -11,7 +11,6 @@ import { Modal, Button, TextInput } from "react-materialize"
 import Select from "react-select";
 import Swal from 'sweetalert2';
 import { BASE_URL } from "../../Config/config.json";
-import { Link } from 'react-router-dom';
 
 function App(props) {
 
@@ -97,6 +96,7 @@ function App(props) {
 
 
   useEffect(async () => {
+      console.log(props.description)
     const res = await axios({
       url: BASE_URL + "/getdetails",
       method: "GET",
@@ -129,10 +129,7 @@ function App(props) {
         x.push(y);
       })
       setUpdatedCategories(x);
-      axios.get(BASE_URL + "/campaign").then(res => {
-        console.log(res)
-        SetCampaigns(res.data.campaigns);
-      })
+      
     }  }, [])
   const updateDetails = async () => {
     updateProfile.categories = updatedCategories.map(category => {
@@ -379,12 +376,12 @@ function App(props) {
                 <h3>{campaign.brandName}</h3>
                 <h6>Description:</h6>
                 <p>{campaign.description}</p>
-                {/* <button class="btn waves-effect waves-light right modal-trigger" href="#Modal-1" value={campaign._id}
+                <button class="btn waves-effect waves-light right modal-trigger" value={campaign._id}
                   disabled={campaign.interestedInfluencer.some(influencer => influencer.userId == user._id)}
                   onClick={(e) => { SetSelectedCampaign(campaign) }}>Accept
     <i class="material-icons right">send</i>
-                </button> */}
-              <Link to={"/campaign"} brand={campaign.brandName}  class="btn waves-effect waves-light right modal-trigger" description={campaign.description}>Details</Link>
+                </button>
+
               </div>)
             })}
             {/* <h5> Currently we don't have any campaign for your category. We'll inform you as soon as possible via mail.</h5> */}
