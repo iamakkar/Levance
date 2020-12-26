@@ -122,7 +122,7 @@ const Next = async () => {
   <Navbar/>
     <div className="appcreateaccount1 container-fluid">
       <div className="row">
-        <div className="col s12 m12">
+      <div className="col s12 m12">
           
       <div className="wrappercreateaccount1">
         <h1>Sign Up</h1>

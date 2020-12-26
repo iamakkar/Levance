@@ -63,12 +63,9 @@ function App(props) {
 
   return (<>
   <Navbar/>
-    <div className="AppSignin container-fluid">
-      <div className="row" style={{marginBottom:'0px'}}>
-        <div className="col s12 m7  center-align">
-        {/* <img src={require("../../logo/Levance3.png")} className="influencer_brand_logo_signin hide-on-med-and-down" alt={"Error-404"} /> */}
-            </div>
-        <div className="col s12 m5">
+    <div className="AppSignin">
+      <div className="row" >
+        <div className="col s12 m12">
       <div className="wrappersignin">
         <h1>Sign In</h1>
         <div className={valid || cred.email === "" ? "con-inputSignin" : "invalidSignin"}>
