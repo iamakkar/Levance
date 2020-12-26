@@ -95,11 +95,11 @@ const changeAuthentication = () =>{
   className="white black-text"
   
 >
-  <NavItem>
+  {/* <NavItem>
     <Link to="/dashboard" class="link">
       Dashboard
     </Link>
-  </NavItem>
+  </NavItem> */}
   <NavItem>
   <a href="mailto:levancemarketing@gmail.com" class='link' >
         Contact Us

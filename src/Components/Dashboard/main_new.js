@@ -43,6 +43,9 @@ function App(props) {
     { value: "Repost", label: "Repost" },
   ];
 
+  const message1 = `Hang on tight!`;
+  const message2 = `Your desired campaigns might be here anytime soon!`;
+
   const handleSubmitFile = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
@@ -270,9 +273,7 @@ function App(props) {
                   {
                   user.categories.map(item => {
                     return (
-                      
                         <div className="categories">{item}</div>
-                      
                     )
                   })
 
@@ -374,7 +375,13 @@ function App(props) {
           </div>
           <div class="col s12 m9 campaignBox">
             <div className="teal lighten-2 white-text"><marquee>Notification</marquee></div>
-              {campaigns.length==0&&<h5> Currently we don't have any campaign for your category. We'll inform you as soon as possible via mail.</h5>}
+              {campaigns.length==0&&
+              <div className='no-campaign-message' >
+                <img src={require('./wait.jpg')} style={{maxHeight: 250, maxWidth: 250}} />
+                <p style={{textAlign: 'center', color: 'grey'}}>{message1}</p>
+                <p style={{textAlign: 'center', color: 'grey'}}>{message2}</p>
+              </div>
+              }
             {campaigns.map(campaign => {
               return (<div className="campaign">
                 <h3>{campaign.brandName}</h3>

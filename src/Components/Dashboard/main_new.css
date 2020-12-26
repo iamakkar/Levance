@@ -1,13 +1,7 @@
-
-
 .db_rect {
-  
   background: #4c4a79;
   height: 8.7vh;
 }
-
-
-
 
 /* .imageBackground
 {
@@ -18,8 +12,7 @@
   background-color: red;
   height: 250px;
 }*/
-.profilePic
-{
+.profilePic {
   width: 200px;
   height: 200px;
   border-radius: 50%;
@@ -29,20 +22,16 @@
   z-index: 1;
   box-shadow: 0 0 7px;
   position: relative;
-
 }
-.profileImage
-{
+.profileImage {
   width: 100%;
   height: 100%;
   border-radius: 50%;
 }
-.profileImageChange
-{
+.profileImageChange {
   display: none;
 }
-.profileImageChangeLabel
-{
+.profileImageChangeLabel {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -52,81 +41,80 @@
   width: 100%;
   height: 50%;
   border-bottom-left-radius: 100px;
-  
+
   border-bottom-right-radius: 100px;
 
   vertical-align: bottom;
   display: none;
 }
-.profilePic:hover{
+.profilePic:hover {
   cursor: pointer;
 }
-.profilePic:hover .profileImageChangeLabel
-{
+.profilePic:hover .profileImageChangeLabel {
   display: block;
   cursor: pointer;
 }
 
-
-.categories
-{
+.categories {
   background-color: aliceblue;
   color: blue;
-  padding: .7vw;
+  padding: 0.7vw;
   border-radius: 20px;
   font-size: 0.7em;
   margin: 1vh;
   width: 30%;
   display: inline-block;
-} 
-.profileSide
-{
+}
+.profileSide {
   background: linear-gradient(to left, #58d3e5, #4c4a79);
   height: 82.8vh;
   box-shadow: inset 0 0 5px;
 }
-.campaignBox
-{
+.campaignBox {
   height: 82.7vh;
   overflow: auto;
-  padding:0px!important;
+  padding: 0px !important;
 }
-.campaign
-{
+.campaign {
   margin: 20px;
   padding-bottom: 50px;
   border-bottom: 1px solid gray;
 }
 
-p{
+p {
   margin: 0.4em;
 }
-h4{
+h4 {
   margin: 0.4em;
 }
 
-@media screen and (max-width:660px)
-{
-  .categories{
+.no-campaign-message {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+@media screen and (max-width: 660px) {
+  .categories {
     width: 31%;
     margin: auto;
     margin-top: 10px;
     margin-left: 10px;
   }
-  .profileSide
-  {
+  .profileSide {
     height: auto;
   }
-  
-.campaignBox
-{
-  height: auto;
-}
 
-p{
-  margin: 0.3em;
-}
-h4{
-  margin: 0.3em;
-}
+  .campaignBox {
+    height: auto;
+  }
+
+  p {
+    margin: 0.3em;
+  }
+  h4 {
+    margin: 0.3em;
+  }
 }

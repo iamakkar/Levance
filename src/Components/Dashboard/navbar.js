@@ -40,7 +40,7 @@ const changeAuthentication = () =>{
       <ul class="right hide-on-med-and-down">
         {props.isAuthenticated?
         <>
-        <li><Link class='link' to='/dashboard'>Dashboard</Link></li>
+        {/* <li><Link class='link' to='/dashboard'>Dashboard</Link></li> */}
 <li><a href="mailto:levancemarketing@gmail.com" class='link' >
         Contact Us
         </a></li>
@@ -69,7 +69,7 @@ const changeAuthentication = () =>{
   <ul class="sidenav" id="mobile-demo-dashboard">
   {props.isAuthenticated?
         <>
-        <li><Link class='link' to='/dashboard'>Dashboard</Link></li>
+        {/* <li><Link class='link' to='/dashboard'>Dashboard</Link></li> */}
 <li><a href="mailto:levancemarketing@gmail.com" class='link' >
         Contact Us
         </a></li>
