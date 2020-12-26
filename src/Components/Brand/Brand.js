@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./p1.css";
-import AppleIcon from '@material-ui/icons/Apple';
+import AppleIcon from '@material-ui/icons/Business';
 import EmailIcon from '@material-ui/icons/Email';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import {Link, useHistory } from 'react-router-dom';
@@ -59,10 +59,16 @@ function App() {
           setLoader(false)
           if(res.data.error)
           return M.toast({html:res.data.error})
-          M.toast({html:"Registered Successfully"})
-          setTimeout(() => {
-            history.push("/")
-          }, 3000);
+          Swal.fire({ 
+            title: 'Successfull',
+            text: `Your details have been submitted successfully. We'll contact you soon!`,
+            icon: 'success',
+            showCancelButton: false,
+            showConfirmButton: true,
+            confirmButtonText: 'Cool',
+          }).then(() => {
+            history.push('/')
+          })
 
         })
     }
@@ -74,7 +80,6 @@ function App() {
       <div className="row" style={{marginBottom:"0px"}}>
         <div className="col s12 m12" >
       <div className="wrappercreateaccount1" >
-        <h4   style={{marginTop:"10px"}}>Brand registration</h4>
         <div className="con-inputcreateaccount1">
          <input placeholder="Full Name" type="text" onChange={val =>{setBrandDate({
              ...brandData,
@@ -87,7 +92,7 @@ function App() {
         </div>
 
         <div className="con-inputcreateaccount1">
-         <input placeholder="Brand" type="text" onChange={val =>{setBrandDate({
+         <input placeholder="Brand Name" type="text" onChange={val =>{setBrandDate({
              ...brandData,
                 brand:val.target.value
          })}}  />
