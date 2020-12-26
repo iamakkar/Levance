@@ -130,7 +130,7 @@ function App(props) {
       })
       setUpdatedCategories(x);
       axios.get(BASE_URL + "/campaign").then(res => {
-        console.log(res)
+        
         SetCampaigns(res.data.campaigns);
       })
     }  }, [])
@@ -374,20 +374,21 @@ function App(props) {
           </div>
           <div class="col s12 m9 campaignBox">
             <div className="teal lighten-2 white-text"><marquee>Notification</marquee></div>
-            {/* {campaigns.map(campaign => {
+              {campaigns.length==0&&<h5> Currently we don't have any campaign for your category. We'll inform you as soon as possible via mail.</h5>}
+            {campaigns.map(campaign => {
               return (<div className="campaign">
                 <h3>{campaign.brandName}</h3>
                 <h6>Description:</h6>
-                <p>{campaign.description}</p> */}
-                {/* <button class="btn waves-effect waves-light right modal-trigger" href="#Modal-1" value={campaign._id}
+                <p>{campaign.description}</p>
+                <button class="btn waves-effect waves-light right modal-trigger" href="#Modal-1" value={campaign._id}
                   disabled={campaign.interestedInfluencer.some(influencer => influencer.userId == user._id)}
                   onClick={(e) => { SetSelectedCampaign(campaign) }}>Accept
     <i class="material-icons right">send</i>
-                </button> */}
+                </button>
               {/* <Link to={"/campaign"} brand={campaign.brandName}  class="btn waves-effect waves-light right modal-trigger" description={campaign.description}>Details</Link> */}
-              {/* </div>)
-            })} */}
-            <h5> Currently we don't have any campaign for your category. We'll inform you as soon as possible via mail.</h5>
+              </div>)
+            })}
+
           </div>
         </div>
       </div>

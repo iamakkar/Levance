@@ -12,7 +12,7 @@ import CreateAccount5 from './Components/CreateAccount/p5';
 import CreateAccountFinal from './Components/CreateAccount/final';
 import ProtectedRoute1 from './Components/ProtectedRoute/ProtectedRoute1'
 import ForgotPassword from './Components/forgotpassword/forgotpassword'
-// import Campaign from './Components/Campaign/Campaign'
+import Brand from './Components/Brand/Brand'
 import {connect} from 'react-redux';
 import axios from 'axios';
 import {BASE_URL} from "./Config/config.json"
@@ -42,6 +42,7 @@ const [isSplash, setIsSplash] = useState(true);
           <Route exact={true} path='/createaccount5' component={CreateAccount5} />
           <Route exact={true} path='/createaccountfinal' component={CreateAccountFinal} />
           <Route exact={true} path="/forgotpassword" component={ForgotPassword}/>
+          <Route exact={true} path="/brandregister" component={Brand}/>
           <ProtectedRoute1 path='/dashboard' exact={true} component={Dashboard} />
           <ProtectedRoute1 component={Dashboard} />
         </Switch>
@@ -51,7 +52,7 @@ const [isSplash, setIsSplash] = useState(true);
         <Switch>
           <Route exact={true} path='/' component={Home} />
           <ProtectedRoute1 path='/dashboard' exact={true} component={Dashboard} />
-          {/* <ProtectedRoute1 path='/campaign' component={Campaign}/> */}
+          
           <ProtectedRoute1 component={Dashboard} />
         </Switch>
         </BrowserRouter>
