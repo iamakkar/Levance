@@ -50,8 +50,6 @@ const [isSplash, setIsSplash] = useState(true);
           ) : (
             <BrowserRouter>
         <Switch>
-          <Route exact={true} path='/' component={Home} />
-          <ProtectedRoute1 path='/dashboard' exact={true} component={Dashboard} />
           
           <ProtectedRoute1 component={Dashboard} />
         </Switch>
@@ -59,7 +57,7 @@ const [isSplash, setIsSplash] = useState(true);
           )
     ) : (
       <div className='splashparent' >
-      <img className='splash' src={require('./splash1.gif')} />
+      <img className='splash' src={require('./splash1.gif').default} />
       </div>
     )
 }

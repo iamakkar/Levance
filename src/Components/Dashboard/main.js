@@ -30,7 +30,7 @@ function App(props) {
     <>
       <div className="containermain">
         <div className="child1">
-          <img src={require("./yash.svg")} alt={"Error-404"} />
+          <img src={require("./yash.svg").default} alt={"Error-404"} />
           <button>Edit Profile</button>
         </div>
         <div className="child2">

@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import './main_new.css'
 import Location from "@material-ui/icons/PersonPinCircle";
 import M from 'materialize-css'
@@ -12,6 +12,11 @@ import Select from "react-select";
 import Swal from 'sweetalert2';
 import { BASE_URL } from "../../Config/config.json";
 import { Link } from 'react-router-dom';
+import ReactCrop from 'react-image-crop'
+import "react-image-crop/dist/ReactCrop.css";
+
+
+
 
 function App(props) {
 
@@ -24,6 +29,64 @@ function App(props) {
   const [inputError, setInputError] = useState(false)
   const [inputCategoriesError, setInputCategoriesError] = useState(false)
   const [loader,setLoader] = useState(false)
+  
+  const pixelRatio = window.devicePixelRatio || 1;
+
+function getResizedCanvas(canvas, newWidth, newHeight) {
+  const tmpCanvas = document.createElement("canvas");
+  tmpCanvas.width = newWidth;
+  tmpCanvas.height = newHeight;
+
+  const ctx = tmpCanvas.getContext("2d");
+  ctx.drawImage(
+    canvas,
+    0,
+    0,
+    canvas.width,
+    canvas.height,
+    0,
+    0,
+    newWidth,
+    newHeight
+  );
+
+  return tmpCanvas;
+}
+
+function generateDownload(previewCanvas, crop) {
+  if (!crop || !previewCanvas) {
+    return;
+  }
+
+  const canvas = getResizedCanvas(previewCanvas, crop.width, crop.height);
+
+  canvas.toBlob(
+    (blob) => {
+      const previewUrl = window.URL.createObjectURL(blob);
+      console.log(blob)
+      const reader = new FileReader();
+      reader.readAsDataURL(blob);
+    reader.onloadend = () => {
+      console.log(reader.result);
+      uploadImage(reader.result);
+      document.getElementById("CloseCroopedImageButton").click()
+    };
+      // const anchor = document.createElement("a");
+      // anchor.download = "cropPreview.png";
+      // anchor.href = URL.createObjectURL(blob);
+      // anchor.click();
+
+      // window.URL.revokeObjectURL(previewUrl);
+    },
+    "image/png",
+    1
+  );
+}
+
+
+
+
+
   const categories = [
     { value: "Beauty", label: "Beauty" },
     { value: "Fashion", label: "Fashion" },
@@ -46,17 +109,46 @@ function App(props) {
   const message1 = `Hang on tight!`;
   const message2 = `Your desired campaigns might be here anytime soon!`;
 
+  // const handleSubmitFile = (e) => {
+  //   if (e.target.files && e.target.files.length > 0) {
+  //     const file = e.target.files[0];
+  //   const reader = new FileReader();
+  //   reader.readAsDataURL(file);
+  //     reader.onloadend = ()=>{
+  //       setCroppedImage({
+  //         ...croppedImage,
+  //         src:reader.result
+  //       })
+  //     }
+  //     console.log(croppedImage)
+  //   }
+  // };
+
+
+
+
+  const [upImg, setUpImg] = useState();
+  const imgRef = useRef(null);
+  const previewCanvasRef = useRef(null);
+  const [crop, setCrop] = useState({ unit: "%", width: 30, aspect: 1 / 1 });
+  const [completedCrop, setCompletedCrop] = useState(null);
+
   const handleSubmitFile = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      uploadImage(reader.result);
-    };
-    reader.onerror = () => {
-      console.error('Error');
-    };
+    if (e.target.files && e.target.files.length > 0) {
+      document.getElementById("ModalCroopedImageButton").click();
+      console.log(e.target.files[0])
+      const reader = new FileReader();
+      reader.addEventListener("load", () => setUpImg(reader.result));
+      reader.readAsDataURL(e.target.files[0]);
+    }
   };
+
+  const onLoad = useCallback((img) => {
+    imgRef.current = img;
+  }, []);
+
+
+
   const updateChange = (e) => {
     var value = e.target.value
     if (value == "")
@@ -66,9 +158,43 @@ function App(props) {
       [e.target.name]: value
     })
   }
+
+  
+  // // If you setState the crop in here you should return false.
+  // const onImageLoaded = image => {
+  //   this.imageRef = image;
+  // };
+
+  // const onCropComplete = crop => {
+  //   makeClientCrop(crop);
+  // };
+
+  // const onCropChange = (crop, percentCrop) => {
+  //   // You could also use percentCrop:
+  //   // this.setState({ crop: percentCrop });
+  //   this.setCroppedImage({ 
+  //     ...croppedImage,
+  //     crop });
+  // };
+
+  // const  makeClientCrop=async (crop) =>{
+  //   if (this.imageRef && crop.width && crop.height) {
+  //     const croppedImageUrl = await this.getCroppedImg(
+  //       this.imageRef,
+  //       crop,
+  //       'newFile.jpeg'
+  //     );
+  //     this.setState({ croppedImageUrl });
+  //   }
+  // }
+
+
   const uploadImage = async (base64EncodedImage) => {
-    const splitter = user.profilePic.split("/");
-    const lastPic = splitter[splitter.length - 1].split(".")[0]
+    var lastPic="";
+    if(user.profilePic!=="https://res.cloudinary.com/levance/image/upload/v1609964215/default-avatar-icon_sktkcd.jpg")
+    {const splitter = user.profilePic.split("/");
+    lastPic = splitter[splitter.length - 1].split(".")[0]}
+
     try {
       setLoader(true)
       const res = await axios({
@@ -97,6 +223,38 @@ function App(props) {
     }
   };
 
+  
+  useEffect(() => {
+    if (!completedCrop || !previewCanvasRef.current || !imgRef.current) {
+      return;
+    }
+
+    const image = imgRef.current;
+    const canvas = previewCanvasRef.current;
+    const crop = completedCrop;
+
+    const scaleX = image.naturalWidth / image.width;
+    const scaleY = image.naturalHeight / image.height;
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = crop.width * pixelRatio;
+    canvas.height = crop.height * pixelRatio;
+
+    ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+    ctx.imageSmoothingQuality = "high";
+
+    ctx.drawImage(
+      image,
+      crop.x * scaleX,
+      crop.y * scaleY,
+      crop.width * scaleX,
+      crop.height * scaleY,
+      0,
+      0,
+      crop.width,
+      crop.height
+    );
+  }, [completedCrop]);
 
 
   useEffect(async () => {
@@ -239,6 +397,59 @@ function App(props) {
   return (
     <>
       <Navbar />
+      <Modal
+  actions={[<Button
+    type="button"
+    disabled={!completedCrop?.width || !completedCrop?.height}
+    onClick={() =>
+      generateDownload(previewCanvasRef.current, completedCrop)
+    }
+  >
+    Submit
+  </Button>,
+    <Button flat modal="close" node="button" id="CloseCroopedImageButton" waves="green">Close</Button>
+  ]}
+  bottomSheet={false}
+  fixedFooter={false}
+  header="Update profile picture"
+  id="ModalCroppedImage"
+  open={false}
+  options={{
+    dismissible: true,
+    endingTop: '10%',
+    inDuration: 250,
+    onCloseEnd: null,
+    onCloseStart: null,
+    onOpenEnd: null,
+    onOpenStart: null,
+    opacity: 0.5,
+    outDuration: 250,
+    preventScrolling: true,
+    startingTop: '4%'
+  }}
+  root={document.body}
+  trigger={<Button node="button" id="ModalCroopedImageButton" style={{display:"none"}}>MODAL</Button>}
+>
+<ReactCrop
+        src={upImg}
+        onImageLoaded={onLoad}
+        crop={crop}
+        onChange={(c) => setCrop(c)}
+        onComplete={(c) => setCompletedCrop(c)}
+      />
+      <div>
+        <canvas
+          ref={previewCanvasRef}
+          // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
+          style={{
+            width: Math.round(completedCrop?.width ?? 0),
+            height: Math.round(completedCrop?.height ?? 0),
+            display:"none"
+          }}
+        />
+      </div>
+      
+</Modal>
       <div className="container-fluid">
         <div className="row" style={{ marginBottom: "0px" }}>
           <div className="col s12 m12 db_rect">
@@ -377,7 +588,7 @@ function App(props) {
             <div className="teal lighten-2 white-text"><marquee>Notification</marquee></div>
               {campaigns.length==0&&
               <div className='no-campaign-message' >
-                <img src={require('./wait.jpg')} style={{maxHeight: 250, maxWidth: 250}} />
+                <img src={require('./wait.jpg').default} style={{maxHeight: 250, maxWidth: 250}} />
                 <p style={{textAlign: 'center', color: 'grey'}}>{message1}</p>
                 <p style={{textAlign: 'center', color: 'grey'}}>{message2}</p>
               </div>

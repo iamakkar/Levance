@@ -109,7 +109,7 @@ function App(props) {
           <label>{`Prefered Categories : ${props.categories}`} </label>
           <div className="bg"></div>
         </div>
-        <p>By signing up, you accept our <a href={require("../../Config/Terms_&_Conditions.pdf")} target="_blank">Terms {'&'} Conditions</a> and <a href={require("../../Config/Privacy_Policy.pdf")} target="_blank">Privacy Policy</a></p>
+        <p>By signing up, you accept our <a href={require("../../Config/Terms_&_Conditions.pdf").default} target="_blank">Terms {'&'} Conditions</a> and <a href={require("../../Config/Privacy_Policy.pdf").default} target="_blank">Privacy Policy</a></p>
         <button className="buttn" onClick={submit1} >Confirm</button>
         
       </div>
