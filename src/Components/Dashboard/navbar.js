@@ -34,7 +34,7 @@ const changeAuthentication = () =>{
         <nav>
     <div class="nav-wrapper white">
       <a href="/" class="brand-logo"><div class="logo">
-        <img src={require("../Home/2.png")} alt={"levance-dashboard-full-logo"} />
+        <img src={require("../Home/2.png").default} alt={"levance-dashboard-full-logo"} />
         </div></a>
       <a href="#" data-target="mobile-demo-dashboard" class="sidenav-trigger"><i class="material-icons black-text">menu</i></a>
       <ul class="right hide-on-med-and-down">
