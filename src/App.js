@@ -13,9 +13,12 @@ import CreateAccountFinal from './Components/CreateAccount/final';
 import ProtectedRoute1 from './Components/ProtectedRoute/ProtectedRoute1'
 import ForgotPassword from './Components/forgotpassword/forgotpassword'
 import Brand from './Components/Brand/Brand'
+import UnsubcribedEmail from './Components/UnsubscribedEmail/UnsubcribedEmail'
 import {connect} from 'react-redux';
 import axios from 'axios';
 import {BASE_URL} from "./Config/config.json"
+import TermsConditions from './Components/Terms&Conditions/Terms&Conditions';
+import Privacy_Policy from './Components/Terms&Conditions/PrivacyPolicy'
 function App(props) {
 
 const [isSplash, setIsSplash] = useState(true);
@@ -33,7 +36,7 @@ const [isSplash, setIsSplash] = useState(true);
       !props.authDone ? (
         <BrowserRouter>
         <Switch>
-          <Route exact={true} path='/' component={Home} />
+        <Route exact={true} path="/unsubscribeEmail/:email" component={UnsubcribedEmail}/>
           <Route exact={true} path='/signin' component={SignIn} />
           <Route exact={true} path='/createaccount1' component={CreateAccount1} />
           <Route exact={true} path='/createaccount2' component={CreateAccount2} />
@@ -43,21 +46,24 @@ const [isSplash, setIsSplash] = useState(true);
           <Route exact={true} path='/createaccountfinal' component={CreateAccountFinal} />
           <Route exact={true} path="/forgotpassword" component={ForgotPassword}/>
           <Route exact={true} path="/brandregister" component={Brand}/>
-          <ProtectedRoute1 path='/dashboard' exact={true} component={Dashboard} />
-          <ProtectedRoute1 component={Dashboard} />
+          <Route exact={true} path="/termsandconditions" component={TermsConditions}/>
+          <Route exact={true} path="/privacypolicy" component={Privacy_Policy}/>
+          <Route path='/' component={Home} />
         </Switch>
         </BrowserRouter>
           ) : (
             <BrowserRouter>
         <Switch>
-          
+
+          <Route exact={true} path="/termsandconditions" component={TermsConditions}/>
+          <Route exact={true} path="/privacypolicy" component={Privacy_Policy}/>
           <ProtectedRoute1 component={Dashboard} />
         </Switch>
         </BrowserRouter>
           )
     ) : (
       <div className='splashparent' >
-      <img className='splash' src={require('./splash1.gif').default} />
+      <img className='splash' src={require('./splash1.gif').default} style={{width:"90%"}}/>
       </div>
     )
 }
