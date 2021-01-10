@@ -22,6 +22,7 @@ const validate = RegExp(/^[.a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/);
 function App(props) {
     const [loader,setLoader] = useState(false);
     const [loader2,setLoader2] = useState(false);
+
     const [valid, setValid] = useState(true);
     const [validphone, setValidphone] = useState(true);
     const [verifyotp,setVerifyotp] = useState(false)
@@ -29,6 +30,7 @@ function App(props) {
     const [hashotpserver,setHashotpserver] = useState("")
     const [token,setToken] = useState("")
     const [waitotp,setwaitotp] = useState(false)
+
 const history = useHistory();
 
 const EmailOtpsent = ()=>{
@@ -88,8 +90,8 @@ const checkHash = ()=>{
   }})
   }
   else
-  M.toast({html:"Wrong OTP"})
-  setLoader2(false)
+  {M.toast({html:"Wrong OTP"})
+  setLoader2(false)}
 }
 
 
@@ -181,6 +183,7 @@ return (
           </i>
           <div className="bg"></div>
         </div>}
+        {waitotp&&!verifyotp&&<p>(If email not found, then check spam or junk emails)</p>}
         {loader2&&<div class="preloader-wrapper small active" style={{marginTop:"10px"}}>
               <div class="spinner-layer spinner-blue-only">
                 <div class="circle-clipper left">
@@ -192,6 +195,7 @@ return (
                 </div>
               </div>
             </div>}
+            
         {waitotp&&!verifyotp&&<button className="buttn" onClick={checkHash} >Verify Otp</button>}
 
 

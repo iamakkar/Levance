@@ -191,7 +191,7 @@ function generateDownload(previewCanvas, crop) {
 
   const uploadImage = async (base64EncodedImage) => {
     var lastPic="";
-    if(user.profilePic!=="https://res.cloudinary.com/levance/image/upload/v1609964215/default-avatar-icon_sktkcd.jpg")
+    if(user.profilePic!=="https://res.cloudinary.com/levance/image/upload/v1610275545/Untitled_design_1_e6v0wt.png")
     {const splitter = user.profilePic.split("/");
     lastPic = splitter[splitter.length - 1].split(".")[0]}
 
@@ -585,7 +585,7 @@ function generateDownload(previewCanvas, crop) {
 
           </div>
           <div class="col s12 m9 campaignBox">
-            <div className="teal lighten-2 white-text"><marquee>Notification</marquee></div>
+            {/* <div className="teal lighten-2 white-text"><marquee>Notification</marquee></div> */}
               {campaigns.length==0&&
               <div className='no-campaign-message' >
                 <img src={require('./wait.jpg').default} style={{maxHeight: 250, maxWidth: 250}} />
