@@ -20,6 +20,7 @@ function App(props) {
     const [waitotp,setwaitotp] = useState(false)
     const [token,setToken] = useState("")
     const [loader,setLoader] = useState(false);
+    
     const [password,setPassword] = useState({
       password:"",
       confirmPassword:""

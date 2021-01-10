@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./final.css";
 import axios from 'axios';
 import {connect} from 'react-redux';
@@ -8,7 +8,7 @@ import {BASE_URL} from "../../Config/config.json"
 import Navbar from '../Home/navbar'
 
 function App(props) {
-
+  const [loader,setLoader] = useState(false);
     var college = props.college ? 'Yes' : 'No';
 
     var history = useHistory();
@@ -26,6 +26,7 @@ function App(props) {
           confirmButtonText: 'Okay',
         })
       }else{
+        setLoader(true)
       await axios.post(BASE_URL+'/createaccount', {email: props.email,
         password: props.password,
         fullName: props.fullName,
@@ -39,6 +40,7 @@ function App(props) {
         instagram:props.instagram,
         youtube:props.youtube,
       }).then((res) => {
+        setLoader(false)
         if(res.data.error)
         Swal.fire({ 
           title: 'Error',
@@ -48,10 +50,14 @@ function App(props) {
           showConfirmButton: true,
           confirmButtonText: 'Okay',
         }).then(() => {
+          
           history.push('/signin')
         })
         else
-        Swal.fire({ 
+        {
+          setLoader(false)
+        Swal.fire({
+           
           title: 'Successfull',
           text: 'Your account has been created successfully',
           icon: 'success',
@@ -60,8 +66,10 @@ function App(props) {
           confirmButtonText: 'Cool',
         }).then(() => {
           history.push('/signin')
-        })
-      }).catch((e) => console.log(e))}
+        })}
+      }).catch((e) => {
+        setLoader(false)
+        console.log(e)})}
     }
     
   return (<>
