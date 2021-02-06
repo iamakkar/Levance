@@ -62,7 +62,7 @@ const changeAuthentication = () =>{
         </Link></Button>
   </NavItem>
   <NavItem>
-  <a href="mailto:levancemarketing@gmail.com" class='link' >
+  <a href="mailto:contact@levance.in" class='link' >
         Contact Us
         </a>
   </NavItem>
@@ -101,7 +101,7 @@ const changeAuthentication = () =>{
     </Link>
   </NavItem> */}
   <NavItem>
-  <a href="mailto:levancemarketing@gmail.com" class='link' >
+  <a href="mailto:contact@levance.in" class='link' >
         Contact Us
         </a>
   </NavItem>

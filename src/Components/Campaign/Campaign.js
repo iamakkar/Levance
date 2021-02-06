@@ -1,5 +1,5 @@
-import React, { useCallback, useRef, useState, Redirect } from 'react'
-import './main_new.css'
+import React, { useCallback, useRef, useState } from 'react'
+import '../Dashboard/main_new.css'
 import Location from "@material-ui/icons/PersonPinCircle";
 import M from 'materialize-css'
 import Navbar from "../Home/navbar"
@@ -21,8 +21,11 @@ import CloseIcon from '@material-ui/icons/Close';
 function App(props) {
 
   const [user, setUser] = useState(props);
-  const [campaigns, SetCampaigns] = useState([]);
-
+  const [selectedCampaign, SetSelectedCampaign] = useState({
+    description:"",
+    interestedInfluencer:[],
+    brandName:""
+  });
   const [selectedFile, setSelectedFile] = useState();
   const [updateProfile, setUpdatedProfile] = useState({});
   const [updatedCategories, setUpdatedCategories] = useState([]);
@@ -290,10 +293,12 @@ function generateDownload(previewCanvas, crop) {
         x.push(y);
       })
       setUpdatedCategories(x);
-      axios.get(BASE_URL + "/campaign").then(res => {
-        
-        SetCampaigns(res.data.campaigns);
+      axios.get(`http://localhost:5000/individualCampaign/${props.match.params.campaignID}`).then(res => {
+        if(res.data.err)
+        return console.log(res.data.err)
+        SetSelectedCampaign(res.data.message);
       })
+    
     }  }, [])
   const updateDetails = async () => {
     updateProfile.categories = updatedCategories.map(category => {
@@ -368,24 +373,27 @@ function generateDownload(previewCanvas, crop) {
       setInputError(false)
 
   })
-  
+  const handleChange = () => {
+    const userId = user._id;
+    const email = props.email;
+    const fullName = props.fullName;
+    const campaignId = selectedCampaign._id;
+    const interestedInfluencer = {
+      userId, email, fullName, campaignId
+    }
+    axios.put("http://localhost:5000" + "/addInfluencer", interestedInfluencer).then(res => {
+      
+        console.log(res)
+        SetSelectedCampaign(res.data)
+      M.toast({ html: 'Done' })
+    //   setTimeout(() => {
+    //       window.location.href="/dashboard"
+    //   }, 2000);
+    }).catch(err => {
+      console.log(err)
+    })
+  }
 
-  const slideToLeft=()=>{
-    var ele = document.getElementById("individualCampaignBox")
-    ele.style.animationName="animateIndividualCampaignBoxOpen"
-    ele.style.display="block"
-    ele.style.animationFillMode='forwards'
-    ele.style.animationTimingFunction='ease-out'
-  }
-  const slideToRight=()=>{
-    var ele = document.getElementById("individualCampaignBox")
-    ele.style.animationName="animateIndividualCampaignBoxClose"
-    ele.style.animationFillMode='forwards'
-    ele.style.animationTimingFunction='ease-out'
-    setTimeout(() => {
-      ele.style.display="none"
-    }, 900);
-  }
 
 
   return (
@@ -450,7 +458,7 @@ function generateDownload(previewCanvas, crop) {
           </div>
         </div>
         <div className="row" style={{ marginBottom: "0px" }}>
-          <div className="col s12 m3 center-align profileSide">
+          <div className="col s12 m3 center-align profileSide hide-on-small-only">
             <div className="profilePic">
               <img src={user.profilePic} className="profileImage" />
               <input type='file' className="profileImageChange" id='profileImageChange' onChange={handleSubmitFile} />
@@ -579,32 +587,48 @@ function generateDownload(previewCanvas, crop) {
 
           </div>
           <div class="col s12 m9 campaignBox" id="campaignBox">
-            {/* <div className="teal lighten-2 white-text"><marquee>Notification</marquee></div> */}
-              {campaigns.length==0&&
-              <div className='no-campaign-message' >
-                <img src={require('./wait.jpg').default} style={{maxHeight: 250, maxWidth: 250}} />
-                <p style={{textAlign: 'center', color: 'grey'}}>{message1}</p>
-                <p style={{textAlign: 'center', color: 'grey'}}>{message2}</p>
-              </div>
-              }
-            {campaigns.map(campaign => {
-              return (<div className="campaign">
-                <h3>{campaign.brandName}</h3>
-                <h6>Description:</h6>
-                <h6>Brief</h6>
-                <button class="btn right" value={campaign._id}
-                  onClick={(e) => { if(e.target.value)window.location.href=`/campaign/${e.target.value}` }}>Details
-    <i class="material-icons right">send</i>
-                </button>
-              {/* <Link to={"/campaign"} brand={campaign.brandName}  class="btn waves-effect waves-light right modal-trigger" description={campaign.description}>Details</Link> */}
-              </div>)
-            })}
+            
 
-          </div>
-          </div>
+            {parser(selectedCampaign.description)}
+            <div className="col s12 center">
+                <Button className="modal-trigger waves-effect center-block" style={{backgroundColor:"#4c4b77",fontFamily:"Poppins",fontWeight:"700",color:"#fff",marginBottom:"8px",borderRadius:"5px"}} disabled={selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id)} href="#Modal-1" >Accept</Button>
+          </div></div>
+
+        </div>
       </div>
 
-      
+      <Modal
+  actions={[
+    <Button flat modal="close" node="button" waves="green"  onClick={handleChange}>Agree</Button>,
+    <Button flat modal="close" node="button" waves="green">Close</Button>
+  ]}
+  bottomSheet={false}
+  fixedFooter={false}
+  header="Levance"
+  id="Modal-1"
+  open={false}
+  options={{
+    dismissible: true,
+    endingTop: '10%',
+    inDuration: 250,
+    onCloseEnd: null,
+    onCloseStart: null,
+    onOpenEnd: null,
+    onOpenStart: null,
+    opacity: 0.5,
+    outDuration: 250,
+    preventScrolling: true,
+    startingTop: '4%'
+  }}
+  root={document.body}
+  
+>
+
+          
+          <p>Are you sure to accept campaign by {selectedCampaign.brandName} ?</p>
+        
+        
+</Modal>
 
 
 

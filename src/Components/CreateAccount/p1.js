@@ -133,7 +133,8 @@ const Next = () => {
 }
 
 const emailVerify = (e) => {
-  setValid(validate.test(e.target.value));
+  // setValid(validate.test(e.target.value));
+  setValid(true)
   console.log(valid)
 }
 
@@ -175,7 +176,9 @@ return (
                 </div>
               </div>
             </div>}
+            
         {!waitotp&&<button className="buttn" onClick={EmailOtpsent} >Send OTP</button>}
+        {waitotp&&!verifyotp&&<p>Otp sent to<span  style={{fontWeight:700,color:"#4c4a79"}}> {props.email}</span></p>}
         {waitotp&&!verifyotp&&<div className="con-inputcreateaccount1">
          <input placeholder="OTP" type="password" disabled={verifyotp} onChange={(e)=>{createhash(e)}} />
          <i className="icon">
@@ -183,6 +186,7 @@ return (
           </i>
           <div className="bg"></div>
         </div>}
+        {waitotp&&!verifyotp&&<p style={{color:"#3073e6"}} class="resendotp" onClick={EmailOtpsent}>Resend Otp</p>}
         {waitotp&&!verifyotp&&<p>(If email not found, then check spam or junk emails)</p>}
         {loader2&&<div class="preloader-wrapper small active" style={{marginTop:"10px"}}>
               <div class="spinner-layer spinner-blue-only">
@@ -227,16 +231,16 @@ return (
             
               <option value="">Select City</option>
               <optgroup label="--- Top Cities ---">
-                <option value="Delhi">Delhi</option>
-                <option value="Mumbai">Mumbai</option>
-                <option value="Noida">Noida</option>
-                <option value="Gurugram">Gurugram</option>
-                <option value="Ghaziabad">Ghaziabad</option>
-                <option value="Bangalore">Bangalore</option>
-                <option value="Hyderabad">Hyderabad</option>
-                <option value="Pune">Pune</option>
-                <option value="Chandigarh">Chandigarh</option>
-                <option value="Calcutta">Calcutta</option>
+                <option value="delhi">Delhi</option>
+                <option value="mumbai">Mumbai</option>
+                <option value="noida">Noida</option>
+                <option value="gurugram">Gurugram</option>
+                <option value="ghaziabad">Ghaziabad</option>
+                <option value="bangalore">Bangalore</option>
+                <option value="hyderabad">Hyderabad</option>
+                <option value="pune">Pune</option>
+                <option value="chandigarh">Chandigarh</option>
+                <option value="calcutta">Calcutta</option>
               </optgroup>
                <optgroup label="--- All Cities ---">
                    <option value="abbenda">Abbenda</option>

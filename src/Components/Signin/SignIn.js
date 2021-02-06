@@ -34,7 +34,8 @@ function App(props) {
       ...cred,
       email: e.target.value,
     });
-    setValid(validate.test(e.target.value));
+    // setValid(validate.test(e.target.value));
+    setValid(true)
   }
 
   async function submit() {

@@ -20,8 +20,8 @@ function App(props) {
     const [waitotp,setwaitotp] = useState(false)
     const [token,setToken] = useState("")
     const [loader,setLoader] = useState(false);
-    
-    const [password,setPassword] = useState({
+    const [password,setPassword] = useState
+    ({
       password:"",
       confirmPassword:""
     })
@@ -37,7 +37,7 @@ function App(props) {
           setLoader(false)
             if(res.data.error)
             return M.toast({html:res.data.error})
-            
+            M.toast({html:"Otp sent successfully"})
             setHashotpserver(res.data.hash);
             setToken(res.data.token)
             setwaitotp(true)
@@ -131,6 +131,7 @@ function App(props) {
               </div>
             </div>}
         {!waitotp&&<button className="buttn" onClick={EmailOtpsent} >Submit</button>}
+        {waitotp&&!verifyotp&&<p>Otp sent to<span  style={{fontWeight:700,color:"#4c4a79"}}> {email}</span></p>}
         {waitotp&&!verifyotp&&<div className="con-inputcreateaccount1">
          <input placeholder="OTP" type="password" disabled={verifyotp} onChange={(e)=>{createhash(e)}} />
          <i className="icon">
@@ -138,7 +139,8 @@ function App(props) {
           </i>
           <div className="bg"></div>
         </div>}
-        
+        {waitotp&&!verifyotp&&<p style={{color:"#3073e6"}} class="resendotp" onClick={EmailOtpsent}>Resend Otp</p>}
+        {waitotp&&!verifyotp&&<p>(If email not found, then check spam or junk emails)</p>}
         {waitotp&&!verifyotp&&<button className="buttn" onClick={checkHash} >Verify Otp</button>}
         {verifyotp&&<div className="con-inputcreateaccount1">
          <input placeholder="New Password" type="password" onChange={(e)=>{setPassword({

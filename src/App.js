@@ -19,6 +19,7 @@ import axios from 'axios';
 import {BASE_URL} from "./Config/config.json"
 import TermsConditions from './Components/Terms&Conditions/Terms&Conditions';
 import Privacy_Policy from './Components/Terms&Conditions/PrivacyPolicy'
+import Campaign from './Components/Campaign/Campaign'
 function App(props) {
 
 const [isSplash, setIsSplash] = useState(true);
@@ -57,6 +58,7 @@ const [isSplash, setIsSplash] = useState(true);
 
           <Route exact={true} path="/termsandconditions" component={TermsConditions}/>
           <Route exact={true} path="/privacypolicy" component={Privacy_Policy}/>
+          <Route path="/campaign/:campaignID" component={Campaign}/>
           <ProtectedRoute1 component={Dashboard} />
         </Switch>
         </BrowserRouter>
