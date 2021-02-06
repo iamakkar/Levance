@@ -118,6 +118,17 @@ function App(props) {
           <div className="bg"></div>
         </div>
         <p>By signing up, you accept our <a href={require("../../Config/Terms_&_Conditions.pdf").default} target="_blank">Terms {'&'} Conditions</a> and <a href={require("../../Config/Privacy_Policy.pdf").default} target="_blank">Privacy Policy</a></p>
+        {loader&&<div class="preloader-wrapper small active" style={{marginTop:"10px"}}>
+              <div class="spinner-layer spinner-blue-only">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div><div class="gap-patch">
+                  <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                  <div class="circle"></div>
+                </div>
+              </div>
+            </div>}
         <button className="buttn" onClick={submit1} >Confirm</button>
         
       </div>
