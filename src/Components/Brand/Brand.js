@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./p1.css";
 import AppleIcon from '@material-ui/icons/Business';
 import EmailIcon from '@material-ui/icons/Email';
+import Web from '@material-ui/icons/Language';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import {Link, useHistory } from 'react-router-dom';
 import PhoneIphoneIcon from '@material-ui/icons/PhoneIphone';
@@ -26,6 +27,7 @@ function App() {
       brand:"",
       phone:"",
       reached:"",
+      website:"",
       comment:null
   });
   const emailVerify = (e) => {
@@ -98,6 +100,17 @@ function App() {
          })}}  />
          <i className="icon">
             <AppleIcon/>
+          </i>
+          <div className="bg"></div>
+        </div>
+
+        <div className="con-inputcreateaccount1">
+         <input placeholder="Website/Social Media Handle" type="text" onChange={val =>{setBrandDate({
+             ...brandData,
+                website:val.target.value
+         })}}  />
+         <i className="icon">
+            <Web/>
           </i>
           <div className="bg"></div>
         </div>
