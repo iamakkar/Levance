@@ -32,8 +32,12 @@ function App(props) {
   const [inputError, setInputError] = useState(false)
   const [inputCategoriesError, setInputCategoriesError] = useState(false)
   const [loader,setLoader] = useState(false)
+  const [postInputState, setPostInputState] = useState('')
+  const [finalArr, setDinalArr] = useState([{uri: '', caption: '', status: ''}])
   
   const pixelRatio = window.devicePixelRatio || 1;
+
+  const hiddenFileInput = React.useRef(null);
 
 function getResizedCanvas(canvas, newWidth, newHeight) {
   const tmpCanvas = document.createElement("canvas");
@@ -394,6 +398,29 @@ function generateDownload(previewCanvas, crop) {
     })
   }
 
+  const handleClick = e => {
+    hiddenFileInput.current.click();
+  }
+
+  const handlePostInputState = (e) => {
+    e.preventDefault();
+    console.log(e.target.files)
+    for(var i = 0; i < e.target.files.length; i++) {
+    const file = e.target.files[i];
+    var reader = new FileReader();
+    if(file) { 
+      reader.readAsDataURL(file);
+      reader.onloadend  = () => {
+        var base64 = reader.result;
+         
+        // console.log(base64);
+      }
+      reader.onerror = (e) => {
+        console.log(e);
+      }
+    }
+    }
+  }
 
 
   return (
@@ -591,8 +618,25 @@ function generateDownload(previewCanvas, crop) {
 
             {parser(selectedCampaign.description)}
             <div className="col s12 center">
-                <Button className="modal-trigger waves-effect center-block" style={{backgroundColor:"#4c4b77",fontFamily:"Poppins",fontWeight:"700",color:"#fff",marginBottom:"8px",borderRadius:"5px"}} disabled={selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id)} href="#Modal-1" >Accept</Button>
-          </div></div>
+              {!selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id) ? 
+              <Button className="modal-trigger waves-effect center-block" style={{backgroundColor:"#4c4b77",fontFamily:"Poppins",fontWeight:"700",color:"#fff",marginBottom:"8px",borderRadius:"5px"}} href="#Modal-1" >Accept</Button>
+              : <>
+              <input type='file' name='post' multiple value={postInputState} onChange={handlePostInputState} style={{display: 'none'}} ref={hiddenFileInput} onChange={handlePostInputState} />
+              <Button className="modal-trigger waves-effect center-block" onClick={handleClick} style={{backgroundColor:"#4c4b77",fontFamily:"Poppins",fontWeight:"700",color:"#fff",marginBottom:"8px",borderRadius:"5px"}} ><i class="material-icons left">upload</i>Upload</Button>
+              </> 
+              }
+          </div>
+          {selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id) ? 
+          <div className="col s12 center">
+          <div class="input-field col s12">
+          <textarea id="last_name" type="text" class="materialize-textarea" />
+          <label for="last_name">Caption</label>
+        </div>
+        </div>
+           :
+            <></>
+            }
+          </div>
 
         </div>
       </div>
