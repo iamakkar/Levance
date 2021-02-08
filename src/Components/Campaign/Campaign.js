@@ -34,6 +34,7 @@ function App(props) {
   const [loader,setLoader] = useState(false)
   const [postInputState, setPostInputState] = useState('')
   const [finalArr, setDinalArr] = useState([{uri: '', caption: '', status: ''}])
+  const [caption, setCaption] = useState('');
   
   const pixelRatio = window.devicePixelRatio || 1;
 
@@ -402,27 +403,44 @@ function generateDownload(previewCanvas, crop) {
     hiddenFileInput.current.click();
   }
 
-  const handlePostInputState = (e) => {
+  const toBase64 = file => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+});
+
+  const handlePostInputState = async(e) => {
     e.preventDefault();
-    console.log(e.target.files)
-    for(var i = 0; i < e.target.files.length; i++) {
-    const file = e.target.files[i];
-    var reader = new FileReader();
-    if(file) { 
-      reader.readAsDataURL(file);
-      reader.onloadend  = () => {
-        var base64 = reader.result;
-         selectedFile.push(base64)
-      }
-      reader.onerror = (e) => {
-        console.log(e);
-      }
+    console.log(e.target.files.length)
+    let abc = e.target.files.length
+    console.log(e.target.files[0])
+    console.log(e.target.files[1])
+    let x = [];
+    for(var i = 0; i < abc; i++) {
+    let file = e.target.files[i];
+    let base64 = toBase64(file);
+    x.push(base64);
     }
-    }
+    let y = await Promise.all(x)
+    setSelectedFile(y);
   }
 
-  const handlePostSubmit=()=>{
-    console.log(selectedFile)
+  const handlePostSubmit= async() =>{
+    // try {
+    //   const res = await axios({
+    //     url: 'http://localhost:5000/api/uploadPosts',
+    //     method: 'POST',
+    //     data: JSON.stringify({ posts: selectedFile }),
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       'authorization': `Bearer ${localStorage.token}`
+    //     },
+    //   })
+    // } catch (e) {
+    //   console.log(e);
+    // }
+    
   }
 
   return (
@@ -629,11 +647,11 @@ function generateDownload(previewCanvas, crop) {
               }
           </div>
           {selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id) ? 
-          <div className="col s12 m8"  style={{margin:'auto'}}>
+          <div className="col s12 center"  style={{margin:'auto'}}>
           <div class="input-field">
-          <textarea id="last_name" type="text" class="materialize-textarea"/>
+          <textarea id="last_name" type="text" class="materialize-textarea" value={caption} onChange={(val) => setCaption(val.target.value)} />
           <label for="last_name">Caption</label>
-          <Button className="waves-effect center-block" onClick={handlePostSubmit} style={{backgroundColor:"#4c4b77",fontFamily:"Poppins",fontWeight:"700",color:"#fff",marginBottom:"8px",borderRadius:"5px"}} ><i class="material-icons right">upload</i>Submit</Button>
+          <Button className="waves-effect center-block" onClick={handlePostSubmit} style={{backgroundColor:"#4c4b77",fontFamily:"Poppins",fontWeight:"700",color:"#fff",marginBottom:"8px",borderRadius:"5px"}} ><i class="material-icons right">send</i>Submit</Button>
         </div>
         
         </div>
