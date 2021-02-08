@@ -290,7 +290,7 @@ function generateDownload(previewCanvas, crop) {
         x.push(y);
       })
       setUpdatedCategories(x);
-      axios.get(BASE_URL + "/campaign").then(res => {
+      axios.get("http://localhost:5000" + "/campaign").then(res => {
         
         SetCampaigns(res.data.campaigns);
       })
