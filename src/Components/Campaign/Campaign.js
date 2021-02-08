@@ -26,7 +26,7 @@ function App(props) {
     interestedInfluencer:[],
     brandName:""
   });
-  const [selectedFile, setSelectedFile] = useState();
+  const [selectedFile, setSelectedFile] = useState([]);
   const [updateProfile, setUpdatedProfile] = useState({});
   const [updatedCategories, setUpdatedCategories] = useState([]);
   const [inputError, setInputError] = useState(false)
@@ -412,8 +412,7 @@ function generateDownload(previewCanvas, crop) {
       reader.readAsDataURL(file);
       reader.onloadend  = () => {
         var base64 = reader.result;
-         
-        // console.log(base64);
+         selectedFile.push(base64)
       }
       reader.onerror = (e) => {
         console.log(e);
@@ -422,6 +421,9 @@ function generateDownload(previewCanvas, crop) {
     }
   }
 
+  const handlePostSubmit=()=>{
+    console.log(selectedFile)
+  }
 
   return (
     <>
@@ -622,20 +624,23 @@ function generateDownload(previewCanvas, crop) {
               <Button className="modal-trigger waves-effect center-block" style={{backgroundColor:"#4c4b77",fontFamily:"Poppins",fontWeight:"700",color:"#fff",marginBottom:"8px",borderRadius:"5px"}} href="#Modal-1" >Accept</Button>
               : <>
               <input type='file' name='post' multiple value={postInputState} onChange={handlePostInputState} style={{display: 'none'}} ref={hiddenFileInput} onChange={handlePostInputState} />
-              <Button className="modal-trigger waves-effect center-block" onClick={handleClick} style={{backgroundColor:"#4c4b77",fontFamily:"Poppins",fontWeight:"700",color:"#fff",marginBottom:"8px",borderRadius:"5px"}} ><i class="material-icons left">upload</i>Upload</Button>
+              <Button className="waves-effect center-block" onClick={handleClick} style={{backgroundColor:"#4c4b77",fontFamily:"Poppins",fontWeight:"700",color:"#fff",marginBottom:"8px",borderRadius:"5px"}} ><i class="material-icons left">upload</i>Upload</Button>
               </> 
               }
           </div>
           {selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id) ? 
-          <div className="col s12 center">
-          <div class="input-field col s12">
-          <textarea id="last_name" type="text" class="materialize-textarea" />
+          <div className="col s12 m8"  style={{margin:'auto'}}>
+          <div class="input-field">
+          <textarea id="last_name" type="text" class="materialize-textarea"/>
           <label for="last_name">Caption</label>
+          <Button className="waves-effect center-block" onClick={handlePostSubmit} style={{backgroundColor:"#4c4b77",fontFamily:"Poppins",fontWeight:"700",color:"#fff",marginBottom:"8px",borderRadius:"5px"}} ><i class="material-icons right">upload</i>Submit</Button>
         </div>
+        
         </div>
            :
             <></>
             }
+
           </div>
 
         </div>
