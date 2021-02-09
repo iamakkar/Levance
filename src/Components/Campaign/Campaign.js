@@ -36,7 +36,9 @@ function App(props) {
   const [postInputState, setPostInputState] = useState('')
   const [finalArr, setDinalArr] = useState([{uri: '', caption: '', status: ''}])
   const [caption, setCaption] = useState('');
-  
+  const [status, setStatus] = useState('');
+
+  var recievedPostArray = [];
   const pixelRatio = window.devicePixelRatio || 1;
 
   const hiddenFileInput = React.useRef(null);
@@ -303,9 +305,15 @@ function generateDownload(previewCanvas, crop) {
         if(res.data.err)
         return console.log(res.data.err)
         SetSelectedCampaign(res.data.message);
+        console.log(res.data.message.interestedInfluencer)
+        for(var m = 0; m < res.data.message.interestedInfluencer.length; m++) {
+          if(res.data.message.interestedInfluencer[m].userId === user._id) {
+            recievedPostArray = res.data.message.interestedInfluencer[m].postForUploadation;
+            setStatus(res.data.message.interestedInfluencer[m].status);
+          }
+        }
       })
-    
-    }  }, [])
+    }  }, [selectedFile])
   const updateDetails = async () => {
     updateProfile.categories = updatedCategories.map(category => {
       return category.value;
@@ -461,7 +469,15 @@ function generateDownload(previewCanvas, crop) {
       console.log(e);
       setLoaderSubmitfiles(false)
     }
-    
+    //abb aage
+    await axios.get(`http://localhost:5000/individualCampaign/${props.match.params.campaignID}`)
+    .then(res => {
+      for(var m = 0; m < res.data.message.interestedInfluencer.length; m++) {
+        if(res.data.message.interestedInfluencer[m].userId == user._id) {
+          setStatus(res.data.message.interestedInfluencer[m].status);
+        }
+      }
+    });
   }
 
   return (
@@ -650,18 +666,13 @@ function generateDownload(previewCanvas, crop) {
               />
               {(updatedCategories.length > 3||updatedCategories.length==0) && <p class="red-text">Select atmost 3 categories</p>}
             </Modal>
-
-
-
           </div>
+          
           <div class="col s12 m9 campaignBox" id="campaignBox">
-            
-
             {parser(selectedCampaign.description)}
             <div className="col s12 center">
               {!selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id) ? 
               <Button className="modal-trigger waves-effect center-block" style={{backgroundColor:"#4c4b77",fontFamily:"Poppins",fontWeight:"700",color:"#fff",marginBottom:"8px",borderRadius:"5px"}} href="#Modal-1" >Accept</Button>
-              
               : <>
               <input type='file' name='post' multiple value={postInputState} onChange={handlePostInputState} style={{display: 'none'}} ref={hiddenFileInput} onChange={handlePostInputState} />
               <Button className="waves-effect center-block" onClick={handleClick} style={{backgroundColor:"#4c4b77",fontFamily:"Poppins",fontWeight:"700",color:"#fff",marginBottom:"8px",borderRadius:"5px"}} ><i class="material-icons left">upload</i>Upload</Button>
@@ -675,7 +686,7 @@ function generateDownload(previewCanvas, crop) {
           <div class="input-field">
           <textarea id="last_name" type="text" class="materialize-textarea" value={caption} onChange={(val) => setCaption(val.target.value)} />
           <label for="last_name">Caption</label>
-          {caption==''&&<h6>Caption Can't be blank</h6>}
+          {caption==''&&<p style={{color: 'red'}} >Caption Can't be blank</p>}
           {loaderSubmitfiles&&
           <div class="preloader-wrapper small active" style={{margin:'10px auto',display:'block'}}>
               <div class="spinner-layer spinner-blue-only">
@@ -687,17 +698,20 @@ function generateDownload(previewCanvas, crop) {
                   <div class="circle"></div>
                 </div>
               </div>
-            </div>
-}
-
+            </div>}
           <Button className="waves-effect center-block" onClick={handlePostSubmit} disabled={caption==''||selectedFile.length==0} style={{backgroundColor:"#4c4b77",fontFamily:"Poppins",fontWeight:"700",color:"#fff",marginBottom:"8px",borderRadius:"5px"}} ><i class="material-icons right">send</i>Submit</Button>
         </div>
-        
-        </div>
-           :
-            <></>
+        <div class='col s12 center'>
+          {(() => {
+            switch(status) {
+              case "pending": return ( recievedPostArray === [] ? null : <p>Pending</p>);
+              case "accepted": return <div><p>Accepted</p></div>;
+              case "rejected": return <p>Rejected</p>;
             }
-
+          })}
+        </div>
+        </div>
+           : <></>}
           </div>
 
         </div>
