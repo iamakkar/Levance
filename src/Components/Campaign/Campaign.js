@@ -32,6 +32,7 @@ function App(props) {
   const [inputError, setInputError] = useState(false)
   const [inputCategoriesError, setInputCategoriesError] = useState(false)
   const [loader,setLoader] = useState(false)
+  const [loaderSubmitfiles,setLoaderSubmitfiles] = useState(false)
   const [postInputState, setPostInputState] = useState('')
   const [finalArr, setDinalArr] = useState([{uri: '', caption: '', status: ''}])
   const [caption, setCaption] = useState('');
@@ -414,32 +415,52 @@ function generateDownload(previewCanvas, crop) {
     e.preventDefault();
     console.log(e.target.files.length)
     let abc = e.target.files.length
-    console.log(e.target.files[0])
-    console.log(e.target.files[1])
     let x = [];
     for(var i = 0; i < abc; i++) {
     let file = e.target.files[i];
     let base64 = toBase64(file);
     x.push(base64);
     }
+
     let y = await Promise.all(x)
-    setSelectedFile(y);
+    console.log(y)
+    const res=[];
+    for (let index = 0; index < y.length; index++) {
+       res.push({filestr:y[index]});
+      
+    }
+
+    setSelectedFile(res);
+    console.log(selectedFile);
   }
 
   const handlePostSubmit= async() =>{
-    // try {
-    //   const res = await axios({
-    //     url: 'http://localhost:5000/api/uploadPosts',
-    //     method: 'POST',
-    //     data: JSON.stringify({ posts: selectedFile }),
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       'authorization': `Bearer ${localStorage.token}`
-    //     },
-    //   })
-    // } catch (e) {
-    //   console.log(e);
-    // }
+    if(selectedFile==[])
+    return M.toast({
+      html:'Atleast one post to be attached'
+    })
+    setLoaderSubmitfiles(true)
+    try {
+       await axios({
+        url: 'http://localhost:5000/api/uploadPosts',
+        method: 'POST',
+        data: {caption:caption, posts: selectedFile,campaignId: props.match.params.campaignID},
+        headers: {
+          'Content-Type': 'application/json',
+          'authorization': `Bearer ${localStorage.token}`
+        },
+      }).then(res=>{
+        if(res.data.error)
+        M.toast({
+          html:"An error occurred , please try later"
+        })
+        setLoaderSubmitfiles(false)
+        console.log(res)
+      })
+    } catch (e) {
+      console.log(e);
+      setLoaderSubmitfiles(false)
+    }
     
   }
 
@@ -640,18 +661,36 @@ function generateDownload(previewCanvas, crop) {
             <div className="col s12 center">
               {!selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id) ? 
               <Button className="modal-trigger waves-effect center-block" style={{backgroundColor:"#4c4b77",fontFamily:"Poppins",fontWeight:"700",color:"#fff",marginBottom:"8px",borderRadius:"5px"}} href="#Modal-1" >Accept</Button>
+              
               : <>
               <input type='file' name='post' multiple value={postInputState} onChange={handlePostInputState} style={{display: 'none'}} ref={hiddenFileInput} onChange={handlePostInputState} />
               <Button className="waves-effect center-block" onClick={handleClick} style={{backgroundColor:"#4c4b77",fontFamily:"Poppins",fontWeight:"700",color:"#fff",marginBottom:"8px",borderRadius:"5px"}} ><i class="material-icons left">upload</i>Upload</Button>
               </> 
               }
+              <br/>
+              <a href='#modaltermsandconditions' className="modal-trigger">Terms {'&'} Conditions</a>
           </div>
           {selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id) ? 
           <div className="col s12 center"  style={{margin:'auto'}}>
           <div class="input-field">
           <textarea id="last_name" type="text" class="materialize-textarea" value={caption} onChange={(val) => setCaption(val.target.value)} />
           <label for="last_name">Caption</label>
-          <Button className="waves-effect center-block" onClick={handlePostSubmit} style={{backgroundColor:"#4c4b77",fontFamily:"Poppins",fontWeight:"700",color:"#fff",marginBottom:"8px",borderRadius:"5px"}} ><i class="material-icons right">send</i>Submit</Button>
+          {caption==''&&<h6>Caption Can't be blank</h6>}
+          {loaderSubmitfiles&&
+          <div class="preloader-wrapper small active" style={{margin:'10px auto',display:'block'}}>
+              <div class="spinner-layer spinner-blue-only">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div><div class="gap-patch">
+                  <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                  <div class="circle"></div>
+                </div>
+              </div>
+            </div>
+}
+
+          <Button className="waves-effect center-block" onClick={handlePostSubmit} disabled={caption==''||selectedFile.length==0} style={{backgroundColor:"#4c4b77",fontFamily:"Poppins",fontWeight:"700",color:"#fff",marginBottom:"8px",borderRadius:"5px"}} ><i class="material-icons right">send</i>Submit</Button>
         </div>
         
         </div>
@@ -693,6 +732,37 @@ function generateDownload(previewCanvas, crop) {
 
           
           <p>Are you sure to accept campaign by {selectedCampaign.brandName} ?</p>
+          <a href='#modaltermsandconditions' className="modal-trigger">Terms {'&'} Conditions</a>
+        
+</Modal>
+<Modal
+  actions={[
+    <Button flat modal="close" node="button" waves="green">Close</Button>
+  ]}
+  bottomSheet={false}
+  fixedFooter={false}
+  header="Terms & Conditions"
+  id="modaltermsandconditions"
+  open={false}
+  options={{
+    dismissible: true,
+    endingTop: '10%',
+    inDuration: 250,
+    onCloseEnd: null,
+    onCloseStart: null,
+    onOpenEnd: null,
+    onOpenStart: null,
+    opacity: 0.5,
+    outDuration: 250,
+    preventScrolling: true,
+    startingTop: '4%'
+  }}
+  root={document.body}
+  
+>
+
+          
+          <p>{parser(String(selectedCampaign.termsandcondition))}</p>
         
         
 </Modal>
