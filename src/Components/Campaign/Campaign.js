@@ -14,85 +14,95 @@ import { BASE_URL } from "../../Config/config.json";
 import { Link } from 'react-router-dom';
 import ReactCrop from 'react-image-crop'
 import "react-image-crop/dist/ReactCrop.css";
-import parser  from 'html-react-parser'
+import parser from 'html-react-parser'
 import CloseIcon from '@material-ui/icons/Close';
-
+import './Campaign.css'
 
 function App(props) {
 
   const [user, setUser] = useState(props);
   const [selectedCampaign, SetSelectedCampaign] = useState({
-    description:"",
-    interestedInfluencer:[],
-    brandName:""
+    description: "",
+    interestedInfluencer: [],
+    brandName: ""
   });
   const [selectedFile, setSelectedFile] = useState([]);
   const [updateProfile, setUpdatedProfile] = useState({});
   const [updatedCategories, setUpdatedCategories] = useState([]);
   const [inputError, setInputError] = useState(false)
   const [inputCategoriesError, setInputCategoriesError] = useState(false)
-  const [loader,setLoader] = useState(false)
-  const [loaderSubmitfiles,setLoaderSubmitfiles] = useState(false)
+  const [loader, setLoader] = useState(false)
+  const [loaderSubmitfiles, setLoaderSubmitfiles] = useState(false)
   const [postInputState, setPostInputState] = useState('')
-  const [finalArr, setDinalArr] = useState([{uri: '', caption: '', status: ''}])
+  const [interestedInfluencer, setinterestedInfluencer] = useState({
+    acceptanceByTeam: "",
+    caption: "",
+    email: "",
+    postAfterUploadation: [],
+    postForUploadation: [],
+    remark: "",
+    status: "",
+    userId: "",
+    _id: ""
+  })
   const [caption, setCaption] = useState('');
-  const [status, setStatus] = useState('');
+
 
   var recievedPostArray = [];
   const pixelRatio = window.devicePixelRatio || 1;
 
   const hiddenFileInput = React.useRef(null);
 
-function getResizedCanvas(canvas, newWidth, newHeight) {
-  const tmpCanvas = document.createElement("canvas");
-  tmpCanvas.width = newWidth;
-  tmpCanvas.height = newHeight;
+  function getResizedCanvas(canvas, newWidth, newHeight) {
+    const tmpCanvas = document.createElement("canvas");
+    tmpCanvas.width = newWidth;
+    tmpCanvas.height = newHeight;
 
-  const ctx = tmpCanvas.getContext("2d");
-  ctx.drawImage(
-    canvas,
-    0,
-    0,
-    canvas.width,
-    canvas.height,
-    0,
-    0,
-    newWidth,
-    newHeight
-  );
+    const ctx = tmpCanvas.getContext("2d");
+    ctx.drawImage(
+      canvas,
+      0,
+      0,
+      canvas.width,
+      canvas.height,
+      0,
+      0,
+      newWidth,
+      newHeight
+    );
 
-  return tmpCanvas;
-}
-
-function generateDownload(previewCanvas, crop) {
-  if (!crop || !previewCanvas) {
-    return;
+    return tmpCanvas;
   }
 
-  const canvas = getResizedCanvas(previewCanvas, crop.width, crop.height);
+  function generateDownload(previewCanvas, crop) {
+    if (!crop || !previewCanvas) {
+      return;
+    }
 
-  canvas.toBlob(
-    (blob) => {
-      const previewUrl = window.URL.createObjectURL(blob);
-      console.log(blob)
-      const reader = new FileReader();
-      reader.readAsDataURL(blob);
-    reader.onloadend = () => {
-      console.log(reader.result);
-      uploadImage(reader.result);
-      document.getElementById("CloseCroopedImageButton").click()
-    };
-      // const anchor = document.createElement("a");
-      // anchor.download = "cropPreview.png";
-      // anchor.href = URL.createObjectURL(blob);
-      // anchor.click();
+    const canvas = getResizedCanvas(previewCanvas, crop.width, crop.height);
 
-      // window.URL.revokeObjectURL(previewUrl);
-    },
-    "image/png",
-    1
-  );
-}
+    canvas.toBlob(
+      (blob) => {
+        const previewUrl = window.URL.createObjectURL(blob);
+        console.log(blob)
+        const reader = new FileReader();
+        reader.readAsDataURL(blob);
+        reader.onloadend = () => {
+          console.log(reader.result);
+          uploadImage(reader.result);
+          document.getElementById("CloseCroopedImageButton").click()
+        };
+        // const anchor = document.createElement("a");
+        // anchor.download = "cropPreview.png";
+        // anchor.href = URL.createObjectURL(blob);
+        // anchor.click();
+
+        // window.URL.revokeObjectURL(previewUrl);
+      },
+      "image/png",
+      1
+    );
+  }
 
 
 
@@ -170,7 +180,7 @@ function generateDownload(previewCanvas, crop) {
     })
   }
 
-  
+
   // // If you setState the crop in here you should return false.
   // const onImageLoaded = image => {
   //   this.imageRef = image;
@@ -201,10 +211,11 @@ function generateDownload(previewCanvas, crop) {
 
 
   const uploadImage = async (base64EncodedImage) => {
-    var lastPic="";
-    if(user.profilePic!=="https://res.cloudinary.com/levance/image/upload/v1610275545/Untitled_design_1_e6v0wt.png")
-    {const splitter = user.profilePic.split("/");
-    lastPic = splitter[splitter.length - 1].split(".")[0]}
+    var lastPic = "";
+    if (user.profilePic !== "https://res.cloudinary.com/levance/image/upload/v1610275545/Untitled_design_1_e6v0wt.png") {
+      const splitter = user.profilePic.split("/");
+      lastPic = splitter[splitter.length - 1].split(".")[0]
+    }
 
     try {
       setLoader(true)
@@ -234,7 +245,7 @@ function generateDownload(previewCanvas, crop) {
     }
   };
 
-  
+
   useEffect(() => {
     if (!completedCrop || !previewCanvasRef.current || !imgRef.current) {
       return;
@@ -292,7 +303,7 @@ function generateDownload(previewCanvas, crop) {
       props.setCity(user.city);
       props.setUsername(user.username);
       props.setCategories(user.categories);
-      
+
       setUser(user)
       setUpdatedProfile(user);
       var x = [];
@@ -301,25 +312,33 @@ function generateDownload(previewCanvas, crop) {
         x.push(y);
       })
       setUpdatedCategories(x);
-      axios.get(`http://localhost:5000/individualCampaign/${props.match.params.campaignID}`).then(res => {
-        if(res.data.err)
-        return console.log(res.data.err)
+      axios({
+        method: "POST",
+        headers: {
+          'authorization': `Bearer ${localStorage.token}`
+        },
+        url: `http://localhost:5000/individualCampaign/${props.match.params.campaignID}`
+      }
+      ).then(res => {
+        if (res.data.err)
+          return console.log(res.data.err)
         SetSelectedCampaign(res.data.message);
+
         console.log(res.data.message.interestedInfluencer)
-        for(var m = 0; m < res.data.message.interestedInfluencer.length; m++) {
-          if(res.data.message.interestedInfluencer[m].userId === user._id) {
-            recievedPostArray = res.data.message.interestedInfluencer[m].postForUploadation;
-            setStatus(res.data.message.interestedInfluencer[m].status);
+        for (var m = 0; m < res.data.message.interestedInfluencer.length; m++) {
+          if (res.data.message.interestedInfluencer[m].userId === user._id) {
+            setinterestedInfluencer(res.data.message.interestedInfluencer[m]);
+            break;
           }
         }
       })
-    }  }, [selectedFile])
+    }
+  }, [])
   const updateDetails = async () => {
     updateProfile.categories = updatedCategories.map(category => {
       return category.value;
     })
-    if(updateProfile.categories.length>3)
-    {
+    if (updateProfile.categories.length > 3) {
       return Swal.fire({
         title: 'Categories Error',
         text: 'Atmost 3 categories allowed',
@@ -329,55 +348,54 @@ function generateDownload(previewCanvas, crop) {
         confirmButtonText: 'Okay',
       })
     }
-    else{
+    else {
       setLoader(true)
-    const result = await axios({
-      url: BASE_URL + "/updateprofile",
-      method: "PUT",
-      data: updateProfile
-      ,
-      headers: {
-        'authorization': `Bearer ${localStorage.token}`
-      }
-    })
-    setLoader(false)
-    if(result.data.error)
-    {
-      M.toast({html:"Error occurred"})
-    }
-    else{
-      M.toast({html:"Updated Successfully"})
-      document.getElementById("updateModal").click();
-    const res = await axios({
-      url: BASE_URL + "/getdetails",
-      method: "GET",
-      headers: {
-        'authorization': `Bearer ${localStorage.token}`
-      }
-    })
-    {
-      const user = res.data;
-      props.setEmail(user.email);
-      props.setName(user.fullName);
-      props.setCity(user.city);
-      props.setUsername(user.username);
-      props.setCategories(user.categories);
-      
-      setUser(user)
-      setUpdatedProfile(user);
-      var x = [];
-      user.categories.map(category => {
-        var y = { value: category, label: category };
-        x.push(y);
+      const result = await axios({
+        url: BASE_URL + "/updateprofile",
+        method: "PUT",
+        data: updateProfile
+        ,
+        headers: {
+          'authorization': `Bearer ${localStorage.token}`
+        }
       })
-      setUpdatedCategories(x);
+      setLoader(false)
+      if (result.data.error) {
+        M.toast({ html: "Error occurred" })
+      }
+      else {
+        M.toast({ html: "Updated Successfully" })
+        document.getElementById("updateModal").click();
+        const res = await axios({
+          url: BASE_URL + "/getdetails",
+          method: "GET",
+          headers: {
+            'authorization': `Bearer ${localStorage.token}`
+          }
+        })
+        {
+          const user = res.data;
+          props.setEmail(user.email);
+          props.setName(user.fullName);
+          props.setCity(user.city);
+          props.setUsername(user.username);
+          props.setCategories(user.categories);
+
+          setUser(user)
+          setUpdatedProfile(user);
+          var x = [];
+          user.categories.map(category => {
+            var y = { value: category, label: category };
+            x.push(y);
+          })
+          setUpdatedCategories(x);
+        }
+      }
+
+
+
+
     }
-  }
-
-
-
-    
-  }
   }
   useEffect(() => {
 
@@ -387,6 +405,26 @@ function generateDownload(previewCanvas, crop) {
       setInputError(false)
 
   })
+  const refreshCampaign = () => {
+    axios({
+      method: "POST",
+      headers: {
+        'authorization': `Bearer ${localStorage.token}`
+      },
+      url: `http://localhost:5000/individualCampaign/${props.match.params.campaignID}`
+    }).then(res => {
+      if (res.data.err)
+        return console.log(res.data.err)
+      SetSelectedCampaign(res.data.message);
+      for (var m = 0; m < res.data.message.interestedInfluencer.length; m++) {
+        if (res.data.message.interestedInfluencer[m].userId === user._id) {
+          setinterestedInfluencer(res.data.message.interestedInfluencer[m]);
+          console.log(res.data.message.interestedInfluencer[m].userId)
+          break;
+        }
+      }
+    })
+  }
   const handleChange = () => {
     const userId = user._id;
     const email = props.email;
@@ -396,13 +434,11 @@ function generateDownload(previewCanvas, crop) {
       userId, email, fullName, campaignId
     }
     axios.put("http://localhost:5000" + "/addInfluencer", interestedInfluencer).then(res => {
-      
-        console.log(res)
-        SetSelectedCampaign(res.data)
+
+      console.log(res)
+      SetSelectedCampaign(res.data)
       M.toast({ html: 'Done' })
-    //   setTimeout(() => {
-    //       window.location.href="/dashboard"
-    //   }, 2000);
+      refreshCampaign()
     }).catch(err => {
       console.log(err)
     })
@@ -417,125 +453,127 @@ function generateDownload(previewCanvas, crop) {
     reader.readAsDataURL(file);
     reader.onload = () => resolve(reader.result);
     reader.onerror = error => reject(error);
-});
+  });
 
-  const handlePostInputState = async(e) => {
+  const handlePostInputState = async (e) => {
     e.preventDefault();
     console.log(e.target.files.length)
     let abc = e.target.files.length
     let x = [];
-    for(var i = 0; i < abc; i++) {
-    let file = e.target.files[i];
-    let base64 = toBase64(file);
-    x.push(base64);
+    for (var i = 0; i < abc; i++) {
+      let file = e.target.files[i];
+      let base64 = toBase64(file);
+      x.push(base64);
     }
 
     let y = await Promise.all(x)
     console.log(y)
-    const res=[];
+    const res = [];
     for (let index = 0; index < y.length; index++) {
-       res.push({filestr:y[index]});
-      
+      res.push({ filestr: y[index] });
+
     }
 
     setSelectedFile(res);
     console.log(selectedFile);
   }
 
-  const handlePostSubmit= async() =>{
-    if(selectedFile==[])
-    return M.toast({
-      html:'Atleast one post to be attached'
-    })
+  const handlePostSubmit = async () => {
+    if (selectedFile == [])
+      return M.toast({
+        html: 'Atleast one post to be attached'
+      })
     setLoaderSubmitfiles(true)
     try {
-       await axios({
+      await axios({
         url: 'http://localhost:5000/api/uploadPosts',
         method: 'POST',
-        data: {caption:caption, posts: selectedFile,campaignId: props.match.params.campaignID},
+        data: { caption: caption, posts: selectedFile, campaignId: props.match.params.campaignID },
         headers: {
           'Content-Type': 'application/json',
           'authorization': `Bearer ${localStorage.token}`
         },
-      }).then(res=>{
-        if(res.data.error)
-        M.toast({
-          html:"An error occurred , please try later"
-        })
-        setLoaderSubmitfiles(false)
+      }).then(res => {
+        if (res.data.error)
+          M.toast({
+            html: "An error occurred , please try later"
+          })
+        setLoaderSubmitfiles(false);
+        refreshCampaign()
         console.log(res)
       })
     } catch (e) {
       console.log(e);
       setLoaderSubmitfiles(false)
     }
+
     //abb aage
-    await axios.get(`http://localhost:5000/individualCampaign/${props.match.params.campaignID}`)
-    .then(res => {
-      for(var m = 0; m < res.data.message.interestedInfluencer.length; m++) {
-        if(res.data.message.interestedInfluencer[m].userId == user._id) {
-          setStatus(res.data.message.interestedInfluencer[m].status);
-        }
-      }
-    });
+    // await axios.get(`http://localhost:5000/individualCampaign/${props.match.params.campaignID}`)
+    // .then(res => {
+    //   for(var m = 0; m < res.data.message.interestedInfluencer.length; m++) {
+    //     if(res.data.message.interestedInfluencer[m].userId == user._id) {
+    //       setStatus(res.data.message.interestedInfluencer[m].status);
+    //     }
+    //   }
+    // });
   }
 
   return (
     <>
       <Navbar />
       <Modal
-  actions={[<Button
-    type="button"
-    disabled={!completedCrop?.width || !completedCrop?.height}
-    onClick={() =>
-      generateDownload(previewCanvasRef.current, completedCrop)
-    }
-  >
-    Submit
+        actions={[<Button
+          type="button"
+          disabled={!completedCrop?.width || !completedCrop?.height}
+          onClick={() =>
+            generateDownload(previewCanvasRef.current, completedCrop)
+          }
+        >
+          Submit
   </Button>,
-    <Button flat modal="close" node="button" id="CloseCroopedImageButton" waves="green">Close</Button>
-  ]}
-  bottomSheet={false}
-  fixedFooter={false}
-  header="Update profile picture"
-  id="ModalCroppedImage"
-  open={false}
-  options={{
-    dismissible: true,
-    endingTop: '10%',
-    inDuration: 250,
-    onCloseEnd: null,
-    onCloseStart: null,
-    onOpenEnd: null,
-    onOpenStart: null,
-    opacity: 0.5,
-    outDuration: 250,
-    preventScrolling: true,
-    startingTop: '4%'
-  }}
-  root={document.body}
-  trigger={<Button node="button" id="ModalCroopedImageButton" style={{display:"none"}}>MODAL</Button>}
->
-<ReactCrop
-        src={upImg}
-        onImageLoaded={onLoad}
-        crop={crop}
-        onChange={(c) => setCrop(c)}
-        onComplete={(c) => setCompletedCrop(c)}
-      />
-      <div>
-        <canvas
-          ref={previewCanvasRef}
-          // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
-          style={{
-            width: Math.round(completedCrop?.width ?? 0),
-            height: Math.round(completedCrop?.height ?? 0),
-            display:"none"
-          }}
+        <Button flat modal="close" node="button" id="CloseCroopedImageButton" waves="green">Close</Button>
+        ]}
+        bottomSheet={false}
+        fixedFooter={false}
+        header="Update profile picture"
+        id="ModalCroppedImage"
+        open={false}
+        options={{
+          dismissible: true,
+          endingTop: '10%',
+          inDuration: 250,
+          onCloseEnd: null,
+          onCloseStart: null,
+          onOpenEnd: null,
+          onOpenStart: null,
+          opacity: 0.5,
+          outDuration: 250,
+          preventScrolling: true,
+          startingTop: '4%'
+        }}
+        root={document.body}
+        trigger={<Button node="button" id="ModalCroopedImageButton" style={{ display: "none" }}>MODAL</Button>}
+      >
+        <ReactCrop
+          src={upImg}
+          onImageLoaded={onLoad}
+          crop={crop}
+          onChange={(c) => setCrop(c)}
+          onComplete={(c) => setCompletedCrop(c)}
         />
-      </div>
-      
-</Modal>
+        <div>
+          <canvas
+            ref={previewCanvasRef}
+            // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
+            style={{
+              width: Math.round(completedCrop?.width ?? 0),
+              height: Math.round(completedCrop?.height ?? 0),
+              display: "none"
+            }}
+          />
+        </div>
+
+      </Modal>
       <div className="container-fluid">
         <div className="row" style={{ marginBottom: "0px" }}>
           <div className="col s12 m12 db_rect">
@@ -548,7 +586,7 @@ function generateDownload(previewCanvas, crop) {
               <input type='file' className="profileImageChange" id='profileImageChange' onChange={handleSubmitFile} />
               <label for='profileImageChange' className='profileImageChangeLabel'>Change profile image</label>
             </div>
-            {loader&&<div class="preloader-wrapper small active" style={{marginTop:"10px"}}>
+            {loader && <div class="preloader-wrapper small active" style={{ marginTop: "10px" }}>
               <div class="spinner-layer spinner-yellow-only">
                 <div class="circle-clipper left">
                   <div class="circle"></div>
@@ -568,13 +606,13 @@ function generateDownload(previewCanvas, crop) {
               <div className="row">
                 <div className="col s12 m12">
                   {
-                  user.categories.map(item => {
-                    return (
+                    user.categories.map(item => {
+                      return (
                         <div className="categories">{item}</div>
-                    )
-                  })
+                      )
+                    })
 
-                }
+                  }
                 </div>
               </div>
             </div>
@@ -582,19 +620,19 @@ function generateDownload(previewCanvas, crop) {
 
             <Modal
               actions={[
-                <>{loader&&<div class="left preloader-wrapper small active" style={{marginTop:"10px"}}>
-                <div class="spinner-layer spinner-yellow-only">
-                  <div class="circle-clipper left">
-                    <div class="circle"></div>
-                  </div><div class="gap-patch">
-                    <div class="circle"></div>
-                  </div><div class="circle-clipper right">
-                    <div class="circle"></div>
+                <>{loader && <div class="left preloader-wrapper small active" style={{ marginTop: "10px" }}>
+                  <div class="spinner-layer spinner-yellow-only">
+                    <div class="circle-clipper left">
+                      <div class="circle"></div>
+                    </div><div class="gap-patch">
+                      <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                      <div class="circle"></div>
+                    </div>
                   </div>
-                </div>
-              </div>}</>,
-              <Button onClick={updateDetails} disabled={inputError} style={{marginRight:"5px"}}>Submit</Button>,
-              <Button flat modal="close" id="updateModal" node="button" waves="green">Close</Button>
+                </div>}</>,
+                <Button onClick={updateDetails} disabled={inputError} style={{ marginRight: "5px" }}>Submit</Button>,
+                <Button flat modal="close" id="updateModal" node="button" waves="green">Close</Button>
               ]}
               bottomSheet={false}
               fixedFooter={false}
@@ -615,7 +653,7 @@ function generateDownload(previewCanvas, crop) {
                 startingTop: '4%'
               }}
               root={document.body}
-              trigger={<Button node="button" style={{marginBottom:"10px"}}>Edit Profile</Button>}
+              trigger={<Button node="button" style={{ marginBottom: "10px" }}>Edit Profile</Button>}
             >
               <TextInput
                 id="TextInput-1"
@@ -661,125 +699,144 @@ function generateDownload(previewCanvas, crop) {
                 value={updatedCategories}
                 onChange={async (e) => {
                   await setUpdatedCategories(e)
-                  
+
                 }}
               />
-              {(updatedCategories.length > 3||updatedCategories.length==0) && <p class="red-text">Select atmost 3 categories</p>}
+              {(updatedCategories.length > 3 || updatedCategories.length == 0) && <p class="red-text">Select atmost 3 categories</p>}
             </Modal>
           </div>
-          
+
           <div class="col s12 m9 campaignBox" id="campaignBox">
             {parser(selectedCampaign.description)}
-            <div className="col s12 center">
-              {!selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id) ? 
-              <Button className="modal-trigger waves-effect center-block" style={{backgroundColor:"#4c4b77",fontFamily:"Poppins",fontWeight:"700",color:"#fff",marginBottom:"8px",borderRadius:"5px"}} href="#Modal-1" >Accept</Button>
-              : <>
-              <input type='file' name='post' multiple value={postInputState} onChange={handlePostInputState} style={{display: 'none'}} ref={hiddenFileInput} onChange={handlePostInputState} />
-              <Button className="waves-effect center-block" onClick={handleClick} style={{backgroundColor:"#4c4b77",fontFamily:"Poppins",fontWeight:"700",color:"#fff",marginBottom:"8px",borderRadius:"5px"}} ><i class="material-icons left">upload</i>Upload</Button>
-              </> 
-              }
-              <br/>
-              <a href='#modaltermsandconditions' className="modal-trigger">Terms {'&'} Conditions</a>
-          </div>
-          {selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id) ? 
-          <div className="col s12 center"  style={{margin:'auto'}}>
-          <div class="input-field">
-          <textarea id="last_name" type="text" class="materialize-textarea" value={caption} onChange={(val) => setCaption(val.target.value)} />
-          <label for="last_name">Caption</label>
-          {caption==''&&<p style={{color: 'red'}} >Caption Can't be blank</p>}
-          {loaderSubmitfiles&&
-          <div class="preloader-wrapper small active" style={{margin:'10px auto',display:'block'}}>
-              <div class="spinner-layer spinner-blue-only">
-                <div class="circle-clipper left">
-                  <div class="circle"></div>
-                </div><div class="gap-patch">
-                  <div class="circle"></div>
-                </div><div class="circle-clipper right">
-                  <div class="circle"></div>
-                </div>
-              </div>
-            </div>}
-          <Button className="waves-effect center-block" onClick={handlePostSubmit} disabled={caption==''||selectedFile.length==0} style={{backgroundColor:"#4c4b77",fontFamily:"Poppins",fontWeight:"700",color:"#fff",marginBottom:"8px",borderRadius:"5px"}} ><i class="material-icons right">send</i>Submit</Button>
-        </div>
-        <div class='col s12 center'>
-          {(() => {
-            switch(status) {
-              case "pending": return ( recievedPostArray === [] ? null : <p>Pending</p>);
-              case "accepted": return <div><p>Accepted</p></div>;
-              case "rejected": return <p>Rejected</p>;
+            {console.log(interestedInfluencer)}
+            {
+              interestedInfluencer.postForUploadation.length != 0 && <h6>Status: <span style={{ fontWeight: 700 }}>{interestedInfluencer.status}</span></h6>
             }
-          })}
-        </div>
-        </div>
-           : <></>}
+            {
+              interestedInfluencer.postForUploadation.length != 0 && <h3>Posts uploaded</h3>
+            }
+            <div className="col s12 center">
+
+              <div class='postsUploadedPreviewBox'>{
+                interestedInfluencer.postForUploadation.map(ele => {
+                  if (ele.url.includes('image'))
+                    return <img src={ele.url} class='postsUploadedPreview' />
+                  if (ele.url.includes('video'))
+                    return (<video class='postsUploadedPreview' controls>
+                      <source src={ele.url} />
+                    </video>)
+                })
+              }</div>
+              {!selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id) ?
+                <Button className="modal-trigger waves-effect center-block" style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} href="#Modal-1" >Accept</Button>
+                : <>
+                  <input type='file' name='post' multiple value={postInputState} onChange={handlePostInputState} style={{ display: 'none' }} ref={hiddenFileInput} onChange={handlePostInputState} />
+                  <Button className="waves-effect center-block" onClick={handleClick} style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons left">upload</i>Upload</Button>
+                  <p>(Upload all posts in one go)</p>
+                </>
+              }
+              <br />
+              <a href='#modaltermsandconditions' className="modal-trigger">Terms {'&'} Conditions</a>
+            </div>
+            {selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id) ?
+              <div className="col s12 center" style={{ margin: 'auto' }}>
+                <div class="input-field">
+                  <textarea id="last_name" type="text" class="materialize-textarea" value={caption} onChange={(val) => setCaption(val.target.value)} />
+                  <label for="last_name">Caption</label>
+                  {caption == '' && <p style={{ color: 'red' }} >Caption Can't be blank</p>}
+                  {loaderSubmitfiles &&
+                    <div class="preloader-wrapper small active" style={{ margin: '10px auto', display: 'block' }}>
+                      <div class="spinner-layer spinner-blue-only">
+                        <div class="circle-clipper left">
+                          <div class="circle"></div>
+                        </div><div class="gap-patch">
+                          <div class="circle"></div>
+                        </div><div class="circle-clipper right">
+                          <div class="circle"></div>
+                        </div>
+                      </div>
+                    </div>}
+                  <Button className="waves-effect center-block" onClick={handlePostSubmit} disabled={caption == '' || selectedFile.length == 0} style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons right">send</i>Submit</Button>
+                </div>
+                {/* <div class='col s12 center'>
+                  {(() => {
+                    switch (status) {
+                      case "pending": return (recievedPostArray === [] ? null : <p>Pending</p>);
+                      case "accepted": return <div><p>Accepted</p></div>;
+                      case "rejected": return <p>Rejected</p>;
+                    }
+                  })}
+                </div> */}
+              </div>
+              : <></>}
           </div>
 
         </div>
       </div>
 
       <Modal
-  actions={[
-    <Button flat modal="close" node="button" waves="green"  onClick={handleChange}>Agree</Button>,
-    <Button flat modal="close" node="button" waves="green">Close</Button>
-  ]}
-  bottomSheet={false}
-  fixedFooter={false}
-  header="Levance"
-  id="Modal-1"
-  open={false}
-  options={{
-    dismissible: true,
-    endingTop: '10%',
-    inDuration: 250,
-    onCloseEnd: null,
-    onCloseStart: null,
-    onOpenEnd: null,
-    onOpenStart: null,
-    opacity: 0.5,
-    outDuration: 250,
-    preventScrolling: true,
-    startingTop: '4%'
-  }}
-  root={document.body}
-  
->
+        actions={[
+          <Button flat modal="close" node="button" waves="green" onClick={handleChange}>Agree</Button>,
+          <Button flat modal="close" node="button" waves="green">Close</Button>
+        ]}
+        bottomSheet={false}
+        fixedFooter={false}
+        header="Levance"
+        id="Modal-1"
+        open={false}
+        options={{
+          dismissible: true,
+          endingTop: '10%',
+          inDuration: 250,
+          onCloseEnd: null,
+          onCloseStart: null,
+          onOpenEnd: null,
+          onOpenStart: null,
+          opacity: 0.5,
+          outDuration: 250,
+          preventScrolling: true,
+          startingTop: '4%'
+        }}
+        root={document.body}
 
-          
-          <p>Are you sure to accept campaign by {selectedCampaign.brandName} ?</p>
-          <a href='#modaltermsandconditions' className="modal-trigger">Terms {'&'} Conditions</a>
-        
-</Modal>
-<Modal
-  actions={[
-    <Button flat modal="close" node="button" waves="green">Close</Button>
-  ]}
-  bottomSheet={false}
-  fixedFooter={false}
-  header="Terms & Conditions"
-  id="modaltermsandconditions"
-  open={false}
-  options={{
-    dismissible: true,
-    endingTop: '10%',
-    inDuration: 250,
-    onCloseEnd: null,
-    onCloseStart: null,
-    onOpenEnd: null,
-    onOpenStart: null,
-    opacity: 0.5,
-    outDuration: 250,
-    preventScrolling: true,
-    startingTop: '4%'
-  }}
-  root={document.body}
-  
->
+      >
 
-          
-          <p>{parser(String(selectedCampaign.termsandcondition))}</p>
-        
-        
-</Modal>
+
+        <p>Are you sure to accept campaign by {selectedCampaign.brandName} ?</p>
+        <a href='#modaltermsandconditions' className="modal-trigger">Terms {'&'} Conditions</a>
+
+      </Modal>
+      <Modal
+        actions={[
+          <Button flat modal="close" node="button" waves="green">Close</Button>
+        ]}
+        bottomSheet={false}
+        fixedFooter={false}
+        header="Terms & Conditions"
+        id="modaltermsandconditions"
+        open={false}
+        options={{
+          dismissible: true,
+          endingTop: '10%',
+          inDuration: 250,
+          onCloseEnd: null,
+          onCloseStart: null,
+          onOpenEnd: null,
+          onOpenStart: null,
+          opacity: 0.5,
+          outDuration: 250,
+          preventScrolling: true,
+          startingTop: '4%'
+        }}
+        root={document.body}
+
+      >
+
+
+        <p>{parser(String(selectedCampaign.termsandcondition))}</p>
+
+
+      </Modal>
 
 
 
