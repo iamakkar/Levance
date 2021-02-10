@@ -473,9 +473,16 @@ function App(props) {
       res.push({ filestr: y[index] });
 
     }
-
     setSelectedFile(res);
     console.log(selectedFile);
+      Swal.fire({
+      title: 'Uploaded Successfully',
+      text: 'Your latest post would be shown here when you press the SUBMIT button after entering the caption.',
+      icon: 'success',
+      showCancelButton: false,
+      showConfirmButton: true,
+      confirmButtonText: 'Cool',
+    })
   }
 
   const handlePostSubmit = async () => {
@@ -713,8 +720,11 @@ function App(props) {
               interestedInfluencer.postForUploadation.length != 0 && <h6>Status: <span style={{ fontWeight: 700 }}>{interestedInfluencer.status}</span></h6>
             }
             {
-              interestedInfluencer.postForUploadation.length != 0 && <h3>Posts uploaded</h3>
+              interestedInfluencer.remark != "" && <h6>Remarks: <span>{interestedInfluencer.remark}</span></h6>
             }
+            {/* {
+              interestedInfluencer.postForUploadation.length != 0 && <h3>Posts uploaded</h3>
+            } */}
             <div className="col s12 center">
 
               <div class='postsUploadedPreviewBox'>{
@@ -730,7 +740,7 @@ function App(props) {
               {!selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id) ?
                 <Button className="modal-trigger waves-effect center-block" style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} href="#Modal-1" >Accept</Button>
                 : <>
-                  <input type='file' name='post' multiple value={postInputState} onChange={handlePostInputState} style={{ display: 'none' }} ref={hiddenFileInput} onChange={handlePostInputState} />
+                  <input type='file' name='post' multiple value={postInputState} style={{ display: 'none' }} ref={hiddenFileInput} onChange={handlePostInputState} />
                   <Button className="waves-effect center-block" onClick={handleClick} style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons left">upload</i>Upload</Button>
                   <p>(Upload all posts in one go)</p>
                 </>
