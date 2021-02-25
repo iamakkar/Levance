@@ -57,7 +57,7 @@ const changeAuthentication = () =>{
         </Link></Button>
   </NavItem>
   <NavItem>
-  <Button style={{backgroundColor:"#4c4b77"}}><Link class='link'  style={{color:"white"}} to={'/brandregister'} >
+  <Button style={{backgroundColor:"#4c4b77"}}><Link class='link'  style={{color:"white"}} to={'/brandprocess'} >
         I'm a Brand
         </Link></Button>
   </NavItem>

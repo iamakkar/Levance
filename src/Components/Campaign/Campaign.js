@@ -618,6 +618,14 @@ const TimeForInsights=()=>{
           console.log(e);
           setLoaderSubmitInsights(false)
         }
+        Swal.fire({
+          title: 'Uploaded Successfully',
+          text: 'Your insights have been uploaded successfully. Thank You!',
+          icon: 'success',
+          showCancelButton: false,
+          showConfirmButton: true,
+          confirmButtonText: 'Cool',
+        })
       }
   return (
     <>

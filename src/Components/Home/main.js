@@ -108,7 +108,7 @@ function App() {
           </div>
           <div class="col s12 m6 center-align" data-aos="fade-in">
             <img src={require("../Home/brand.png").default} className="influencer_brand_logo" alt={"levance-home-brand-image"} />
-            <button class="btnhome">I'M A BRAND</button>
+            <button class="btnhome" onClick={() => history.push('/brandprocess')} >I'M A BRAND</button>
           </div>
         </div>
       </div>

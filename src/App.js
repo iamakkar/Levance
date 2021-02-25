@@ -13,6 +13,7 @@ import CreateAccountFinal from './Components/CreateAccount/final';
 import ProtectedRoute1 from './Components/ProtectedRoute/ProtectedRoute1'
 import ForgotPassword from './Components/forgotpassword/forgotpassword'
 import Brand from './Components/Brand/Brand'
+import Process from './Components/Brand/Process'
 import UnsubcribedEmail from './Components/UnsubscribedEmail/UnsubcribedEmail'
 import {connect} from 'react-redux';
 import axios from 'axios';
@@ -47,6 +48,7 @@ const [isSplash, setIsSplash] = useState(true);
           <Route exact={true} path='/createaccountfinal' component={CreateAccountFinal} />
           <Route exact={true} path="/forgotpassword" component={ForgotPassword}/>
           <Route exact={true} path="/brandregister" component={Brand}/>
+          <Route exact={true} path="/brandprocess" component={Process}/>
           <Route exact={true} path="/termsandconditions" component={TermsConditions}/>
           <Route exact={true} path="/privacypolicy" component={Privacy_Policy}/>
           <Route path='/' component={Home} />
