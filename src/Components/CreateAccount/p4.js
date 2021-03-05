@@ -37,10 +37,9 @@ function App(props) {
       y.push(item.value);
     });
     x = [];
-    console.log(y)
     if (y.length > 3 || y.length === 0) {
       return Swal.fire({
-        title: 'Excess Categories',
+        title: 'Wrong no. of Categories',
         text: 'Select 1 to 3 categories!',
         icon: 'warning',
         showCancelButton: false,
@@ -50,7 +49,7 @@ function App(props) {
     } else {
       props.setCategories(y);
     history.push('/createaccount5');
-    console.log(props.categories)
+    
     }
   }
 
@@ -76,7 +75,7 @@ function App(props) {
             className="select"
             onChange={val => selection(val)}
           />
-          <button className="buttn" onClick={Next} >Next</button>
+          <button className="buttn" onClick={Next} id="submit">Next</button>
           <span>or</span>
           <div className="afteror">
             <Link to={"/signin"} className="new">

@@ -44,7 +44,7 @@ function App(props) {
         if(res.data.error)
         Swal.fire({ 
           title: 'Error',
-          text: 'Email ID already exists',
+          text: res.data.error,
           icon: 'warning',
           showCancelButton: false,
           showConfirmButton: true,

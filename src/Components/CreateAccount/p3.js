@@ -1,11 +1,11 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import "./p1.css";
 import Person from '@material-ui/icons/PersonPin';
 import Lock from "@material-ui/icons/Lock";
 import Eye from "@material-ui/icons/VisibilitySharp";
 import Eyecut from "@material-ui/icons/VisibilityOffSharp";
-import {Link, useHistory } from 'react-router-dom';
-import {connect} from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
 import Swal from 'sweetalert2';
 import Navbar from '../Home/navbar';
 import axios from 'axios'
@@ -14,43 +14,44 @@ const validate = RegExp(/^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/)
 
 function App(props) {
 
-const history = useHistory();
+  const history = useHistory();
 
-const [visible, setVisible] = useState(false);
-const [cvisible, setCVisible] = useState(false);
-const [checked, setChecked] = useState(true);
-const [check_username,setCheckUsername] = useState(false)
-const [username,setUsername] = useState("")
-function PasswordShow() {
+  const [visible, setVisible] = useState(false);
+  const [cvisible, setCVisible] = useState(false);
+  const [checked, setChecked] = useState(true);
+  const [check_username, setCheckUsername] = useState(false)
+  const [username, setUsername] = useState("")
+  function PasswordShow() {
     setVisible(!visible)
   }
 
   function ConfirmPasswordShow() {
     setCVisible(!cvisible)
   }
-  const checkUsername = (e) =>{
+  const checkUsername = (e) => {
     setUsername(e.target.value.toLowerCase())
-    try{
-    axios({
-      url:BASE_URL+"/checkusername",
-      method:"POST",
-      data:{
-        "username":e.target.value.toLowerCase()
-      }
-    }).then(res=>{
-      setCheckUsername(res.data.message);
-      console.log(res.data.message)
-    })}
-    catch(err){
+    try {
+      axios({
+        url: BASE_URL + "/checkusername",
+        method: "POST",
+        data: {
+          "username": e.target.value.toLowerCase()
+        }
+      }).then(res => {
+        setCheckUsername(res.data.message);
+        
+      })
+    }
+    catch (err) {
       console.log(err)
     }
   }
   function passwordCheck(e) {
-    if (e.target.value === props.password ) {
+    if (e.target.value === props.password) {
       setChecked(true);
     } else {
       setChecked(false);
-    } 
+    }
   }
 
 const Next = async () => {
@@ -114,23 +115,23 @@ const Next = async () => {
     catch(err){
       console.log(err)
     }
-    
-  if (props.username === '') {
-    return Swal.fire({
-      title: 'Username Missing',
-      text: 'Please fill the the username',
-      icon: 'warning',
-      showCancelButton: false,
-      showConfirmButton: true,
-      confirmButtonText: 'Okay',
-    })
+
+    if (props.username === '') {
+      return Swal.fire({
+        title: 'Username Missing',
+        text: 'Please fill the the username',
+        icon: 'warning',
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonText: 'Okay',
+      })
+    }
+
+
   }
 
-  
-}
-
   return (<>
-  <Navbar/>
+    <Navbar />
     <div className="appcreateaccount1 container-fluid">
       <div className="row">
       <div className="col s12 m12">
@@ -177,11 +178,10 @@ const Next = async () => {
           
         </div>
       </div>
-      
-      </div>
-      </div>
     </div>
-    </>
+    </div>
+    </div>
+  </>
   );
 }
 
