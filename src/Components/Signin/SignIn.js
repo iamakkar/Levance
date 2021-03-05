@@ -74,8 +74,10 @@ function App(props) {
             name="email"
             placeholder="Email"
             type="email"
+            id="email"
             formNoValidate
             onChange={ValidateEmail}
+            onKeyPress={(e)=>{if(e.key=="Enter")document.getElementById("password").focus()}}
           />
           <i className="icon">
             <Email />
@@ -85,8 +87,10 @@ function App(props) {
         <div className="con-inputSignin">
           <input
             placeholder="Password"
+            id="password"
             type={!visible ? "password" : "text"}
             onChange={(val) => setCred({ ...cred, password: val.target.value })}
+            onKeyPress={(e)=>{if(e.key=="Enter"){document.getElementById("submit").click();document.getElementById("password").blur()}}}
           />
           <i className="icon">
             <Lock />
@@ -109,7 +113,7 @@ function App(props) {
               </div>
             </div>}
         <br/>
-        <button className="buttn" onClick={submit} >Log In</button>
+        <button className="buttn" id="submit" onClick={submit} >Log In</button>
         <br/>
         <span>or</span>
         <div className="afteror">

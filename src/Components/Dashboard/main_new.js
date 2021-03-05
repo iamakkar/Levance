@@ -290,8 +290,14 @@ function generateDownload(previewCanvas, crop) {
         x.push(y);
       })
       setUpdatedCategories(x);
-      axios.get("http://localhost:5000" + "/campaign").then(res => {
-        
+      axios({
+        method:'GET',
+        url:BASE_URL + "/campaign",
+        headers: {
+          'authorization': `Bearer ${localStorage.token}`
+        }
+      }).then(res => {
+        console.log(res)
         SetCampaigns(res.data.campaigns);
       })
     }  }, [])

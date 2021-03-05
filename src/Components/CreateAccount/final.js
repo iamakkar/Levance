@@ -44,7 +44,7 @@ function App(props) {
         if(res.data.error)
         Swal.fire({ 
           title: 'Error',
-          text: 'Email ID already exists',
+          text: res.data.error,
           icon: 'warning',
           showCancelButton: false,
           showConfirmButton: true,
@@ -59,7 +59,7 @@ function App(props) {
         Swal.fire({
            
           title: 'Successfull',
-          text: 'Your account has been created successfully',
+          text: 'Your account has been created successfully. Please sign in with your registered email to access your profile.',
           icon: 'success',
           showCancelButton: false,
           showConfirmButton: true,
