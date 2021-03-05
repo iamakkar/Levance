@@ -294,7 +294,7 @@ function App(props) {
         headers: {
           'authorization': `Bearer ${localStorage.token}`
         },
-        url: `http://localhost:5000/individualCampaign/${props.match.params.campaignID}`
+        url: `${BASE_URL}/individualCampaign/${props.match.params.campaignID}`
       }
       ).then(res => {
         if (res.data.err)
@@ -392,7 +392,7 @@ function App(props) {
       headers: {
         'authorization': `Bearer ${localStorage.token}`
       },
-      url: `http://localhost:5000/individualCampaign/${props.match.params.campaignID}`
+      url: `${BASE_URL}/individualCampaign/${props.match.params.campaignID}`
     }).then(res => {
       if (res.data.err)
         return console.log(res.data.err)
@@ -416,7 +416,7 @@ function App(props) {
     const interestedInfluencer = {
       userId, email, fullName, campaignId
     }
-    axios.put("http://localhost:5000" + "/addInfluencer", interestedInfluencer).then(res => {
+    axios.put(BASE_URL + "/addInfluencer", interestedInfluencer).then(res => {
 
       console.log(res)
       SetSelectedCampaign(res.data)
@@ -476,7 +476,7 @@ function App(props) {
     setLoaderSubmitfiles(true)
     try {
       await axios({
-        url: 'http://localhost:5000/api/uploadPosts',
+        url: `${BASE_URL}/api/uploadPosts`,
         method: 'POST',
         data: { caption: caption, posts: selectedFile, campaignId: props.match.params.campaignID },
         headers: {
@@ -520,7 +520,7 @@ function App(props) {
     }))
     return M.toast({html:'Please fill all fields'})
     axios({
-      url:'http://localhost:5000/postsLinkUpload',
+      url: `${BASE_URL}/postsLinkUpload`,
       method:'POST',
       data:{
         postLinkSubmit:postLinkSubmit,
@@ -598,7 +598,7 @@ const TimeForInsights=()=>{
         try {
           setLoaderSubmitInsights(true)
           await axios({
-            url: 'http://localhost:5000/api/uploadInsights',
+            url: `${BASE_URL}/api/uploadInsights`,
             method: 'POST',
             data: { insights:insights, campaignId: props.match.params.campaignID },
             headers: {

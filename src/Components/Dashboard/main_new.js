@@ -300,7 +300,7 @@ function generateDownload(previewCanvas, crop) {
           'authorization': `Bearer ${localStorage.token}`
         }
       }).then(res => {
-        console.log(res)
+        
         SetCampaigns(res.data.campaigns);
       })
     }  }, [])
