@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import Navbar from '../Home/navbar';
 import axios from 'axios'
 import { BASE_URL } from "../../Config/config.json";
+const validate = RegExp(/^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/)
 
 function App(props) {
 
@@ -53,7 +54,17 @@ function PasswordShow() {
   }
 
 const Next = async () => {
-  
+
+  if(await !validate.test(username.toLowerCase())) {
+    return Swal.fire({
+      title: 'Invalid Format',
+      text: 'Username should contain only lowercase alphabets, period(.) and underscore(_).',
+      icon: 'warning',
+      showCancelButton: false,
+      showConfirmButton: true,
+      confirmButtonText: 'Okay',
+    })
+  } 
   try{
     await axios({
       url:BASE_URL+"/checkusername",
@@ -135,6 +146,7 @@ const Next = async () => {
           <div className="bg"></div>
         </div>
         {check_username&&<p style={{color:"red"}}>Username already exists</p>}
+        {!validate.test(username.toLowerCase())&&<p style={{color:"red"}}>Username should contain only period(.) and underscore(_) as special characters. It should not contain any spaces.</p>}
         <div className="con-inputcreateaccount1">
          <input placeholder="Password"  type={!visible ? "password" : "text"} onBlur={val => {props.setPassword(val.target.value);passwordCheck(val)}} />
          <i className="icon">

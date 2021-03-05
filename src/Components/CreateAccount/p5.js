@@ -7,6 +7,7 @@ import { Link, useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { connect } from 'react-redux';
 import Navbar from '../Home/navbar';
+const validate = RegExp(/^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/);
 
 function App(props) {
   const history = useHistory();
@@ -41,15 +42,16 @@ function App(props) {
               <h4>It's Time to Connect Socially</h4>
               <p>(Enter atleast one)</p>
               <div className="con-inputcreateaccount1">
-                <input placeholder="Instagram (profile url or username)" type="text" onChange={val => props.setInstagram(val.target.value)} />
+                <input placeholder="Instagram (username)" type="text" onChange={val => props.setInstagram(val.target.value)} />
                 <i className="icon">
                   <Instagram />
                 </i>
                 <div className="bg"></div>
               </div>
+              {!validate.test(props.instagram.toLowerCase())&&<p style={{color:"red"}}>Username should match instagram requirements.</p>}
 
               <div className="con-inputcreateaccount1">
-                <input placeholder="Facebook (profile url or username)" type="text" onChange={val => props.setFacebook(val.target.value)} />
+                <input placeholder="Facebook (username)" type="text" onChange={val => props.setFacebook(val.target.value)} />
                 <i className="icon">
                   <Facebook />
                 </i>
@@ -57,7 +59,7 @@ function App(props) {
               </div>
 
               <div className="con-inputcreateaccount1">
-                <input placeholder="Youtube (channel url)" type="text" onChange={val => props.setYoutube(val.target.value)} />
+                <input placeholder="Youtube (channel name)" type="text" onChange={val => props.setYoutube(val.target.value)} />
                 <i className="icon">
                   <Youtube />
                 </i>

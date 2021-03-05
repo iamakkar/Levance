@@ -2,6 +2,7 @@ import React, {useEffect} from 'react'
 import {connect} from 'react-redux';
 import Navbar from './navbar'
 import Main from './main';
+import Footer from './footer';
 
 function App(props) {
 
@@ -16,6 +17,7 @@ function App(props) {
     <>
    <Navbar />
     <Main />
+    <Footer />
     </> 
   )
 }

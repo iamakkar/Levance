@@ -243,7 +243,7 @@ function App() {
           </div>
         </div>
       </div> */}
-      <div className="container-fluid" style={{backgroundColor:"rgb(88, 211, 230)"}}>
+      {/* <div className="container-fluid" style={{backgroundColor:"rgb(88, 211, 230)"}}>
         <div className="row">
           <div className="col m6 s12 center-align">
             <ul className="white-text">
@@ -266,7 +266,7 @@ function App() {
           <p className="center-align white-text">&#169; Copyrights retained by Levance</p>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
 
 

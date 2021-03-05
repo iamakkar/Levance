@@ -58,8 +58,7 @@ function App(props) {
           setLoader(false)
         Swal.fire({
            
-          title: 'Successfull',
-          text: 'Your account has been created successfully',
+          title: 'Account Created. Kindly login to see your profile',
           icon: 'success',
           showCancelButton: false,
           showConfirmButton: true,
