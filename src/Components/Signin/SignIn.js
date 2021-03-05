@@ -10,6 +10,7 @@ import axios from 'axios';
 import Logo from '../../logo/Levance.svg'
 import Navbar from '../Home/navbar'
 import M from "materialize-css"
+import Swal from 'sweetalert2';
 import {BASE_URL} from "../../Config/config.json"
 
 const validate = RegExp(/^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/);
@@ -32,16 +33,25 @@ function App(props) {
   function ValidateEmail(e) {
     setCred({
       ...cred,
-      email: e.target.value,
+      email: e.target.value.trim(),
     });
     // setValid(validate.test(e.target.value));
     setValid(true)
   }
 
   async function submit() {
+    if(!cred.email||!cred.password)
+    return Swal.fire({
+      title: 'Missing Details',
+      text: 'Please fill all details.',
+      icon: 'warning',
+      showCancelButton: false,
+      showConfirmButton: true,
+      confirmButtonText: 'Okay',
+    })
     setLoader(true)
-    props.setEmail(cred.email)
-    await axios.post(BASE_URL+'/login', cred)
+
+    await axios.post("http://localhost:5000"+'/login', cred)
     .then(res => next(res))
     .catch((e) => {console.log(e);setLoader(false)})
   }
@@ -51,12 +61,12 @@ function App(props) {
     
     if(x.data.Error)
     {
-      M.toast({html:x.data.Error})
+     return M.toast({html:x.data.Error})
     }
       else{
         await localStorage.setItem('token', x.data.token);
         // await localStorage.setItem('user',JSON.stringify(x.data.user));
-        
+        props.setEmail(x.data.user.email)
         props.setAuth(true);
         history.push("/dashboard")
       }
@@ -72,7 +82,7 @@ function App(props) {
         <div className={valid || cred.email === "" ? "con-inputSignin" : "invalidSignin"}>
           <input
             name="email"
-            placeholder="Email"
+            placeholder="Email or Username"
             type="email"
             id="email"
             formNoValidate
