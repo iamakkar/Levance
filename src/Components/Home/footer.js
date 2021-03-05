@@ -43,14 +43,14 @@ export default function App() {
                 {
                     icon: (<img src={email} />),
                     title: "Email Us",
-                    url: "https://wa.me/message/UQOL22GN45YMM1",
+                    url: "mailto:contact@levance.in",
                     openExternal: false,
                     style: {fontFamily: 'Ubuntu'},
                 },
                 {
                     icon: (<img src={whatsapp} />),
                     title: "Text Us",
-                    url: "mailto:contact@levance.in",
+                    url: "https://wa.me/message/UQOL22GN45YMM1",
                     openExternal: false,
                     style: {fontFamily: 'Ubuntu'},
                 },

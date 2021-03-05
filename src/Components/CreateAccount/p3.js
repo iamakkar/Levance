@@ -140,7 +140,9 @@ const Next = async () => {
         <h1>Sign Up</h1>
         
         <div className="con-inputcreateaccount1">
-         <input placeholder="Pick username" type="text" onBlur={val => {props.setUsername(val.target.value);}} onChange={val=>checkUsername(val)} />
+         <input placeholder="Pick username" type="text" onBlur={val => {props.setUsername(val.target.value);}} onChange={val=>checkUsername(val)} onKeyPress={(e)=>{
+           if(e.key=="Enter") document.getElementById("password").focus()
+         }} />
          <i className="icon">
             <Person />
           </i>
@@ -149,7 +151,9 @@ const Next = async () => {
         {check_username&&<p style={{color:"red"}}>Username already exists</p>}
         {!validate.test(username.toLowerCase())&&<p style={{color:"red"}}>Username should contain only period(.) and underscore(_) as special characters. It should not contain any spaces.</p>}
         <div className="con-inputcreateaccount1">
-         <input placeholder="Password"  type={!visible ? "password" : "text"} onBlur={val => {props.setPassword(val.target.value);passwordCheck(val)}} />
+         <input placeholder="Password" id="password" type={!visible ? "password" : "text"} onBlur={val => {props.setPassword(val.target.value);passwordCheck(val)}} onKeyPress={(e)=>{
+           if(e.key=="Enter") document.getElementById("cpassword").focus()
+         }} />
          <i className="icon">
             <Lock />
           </i>
@@ -160,7 +164,9 @@ const Next = async () => {
         </div>
         
         <div className={checked ? "con-inputcreateaccount1" : 'invalid'}>
-        <input placeholder="Confirm Password"  type={!cvisible ? "password" : "text"} onChange={(val) => passwordCheck(val)} onBlur={(val) => passwordCheck(val)} />
+        <input placeholder="Confirm Password" id="cpassword" type={!cvisible ? "password" : "text"} onChange={(val) => passwordCheck(val)} onBlur={(val) => passwordCheck(val)} onKeyPress={(e)=>{
+           if(e.key=="Enter") {document.getElementById("cpassword").blur();document.getElementById("submit").click();}
+         }}/>
         <i className="icon">
             <Lock />
           </i>
@@ -170,7 +176,7 @@ const Next = async () => {
           <div className="bg"></div>
         </div>
         
-        <button className="buttn" onClick={Next} disabled={check_username} >Next</button>
+        <button className="buttn" id="submit" onClick={Next} disabled={check_username} >Next</button>
         <span>or</span>
         <div className="afteror">
           

@@ -16,7 +16,7 @@ function App(props) {
     if (props.instagram === '' && props.facebook === '' && props.youtube === '') {
       return Swal.fire({
         title: 'Empty Details',
-        text: 'Please fill at least 1 social media handle!',
+        text: 'Please fill at least one social media handle!',
         icon: 'warning',
         showCancelButton: false,
         showConfirmButton: true,
