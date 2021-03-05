@@ -41,7 +41,7 @@ function App(props) {
               <h4>It's Time to Connect Socially</h4>
               <p>(Enter atleast one)</p>
               <div className="con-inputcreateaccount1">
-                <input placeholder="Instagram (profile url or username)" type="text" onChange={val => props.setInstagram(val.target.value)} />
+                <input placeholder="Instagram (username)" id="instagram" type="text" onChange={val => props.setInstagram(val.target.value)} onKeyPress={(e)=>{if(e.key=="Enter") document.getElementById("facebook").focus()}} />
                 <i className="icon">
                   <Instagram />
                 </i>
@@ -49,7 +49,7 @@ function App(props) {
               </div>
 
               <div className="con-inputcreateaccount1">
-                <input placeholder="Facebook (profile url or username)" type="text" onChange={val => props.setFacebook(val.target.value)} />
+                <input placeholder="Facebook (username)" id="facebook" type="text" onChange={val => props.setFacebook(val.target.value)} onKeyPress={(e)=>{if(e.key=="Enter") document.getElementById("youtube").focus()}}/>
                 <i className="icon">
                   <Facebook />
                 </i>
@@ -57,7 +57,7 @@ function App(props) {
               </div>
 
               <div className="con-inputcreateaccount1">
-                <input placeholder="Youtube (channel url)" type="text" onChange={val => props.setYoutube(val.target.value)} />
+                <input placeholder="Youtube (channel url)" id="youtube" type="text" onChange={val => props.setYoutube(val.target.value)} onKeyPress={(e)=>{if(e.key=="Enter") {document.getElementById("youtube").blur();document.getElementById("submit").click();}}}/>
                 <i className="icon">
                   <Youtube />
                 </i>
@@ -66,7 +66,7 @@ function App(props) {
 
 
 
-              <button className="buttn" onClick={Next} >Next</button>
+              <button className="buttn" id="submit" onClick={Next} >Next</button>
               <span>or</span>
               <div className="afteror">
 
