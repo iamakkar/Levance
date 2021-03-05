@@ -12,7 +12,18 @@ const validate = RegExp(/^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/);
 function App(props) {
   const history = useHistory();
 
-  const Next = () => {
+  const Next = async () => {
+    if(await !validate.test(props.instagram.toLowerCase())) {
+      return Swal.fire({
+        title: 'Invalid Format',
+        text: 'Username should contain only lowercase alphabets, period(.) and underscore(_).',
+        icon: 'warning',
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonText: 'Okay',
+      })
+    } 
+
     if (props.instagram === '' && props.facebook === '' && props.youtube === '') {
       return Swal.fire({
         title: 'Empty Details',
