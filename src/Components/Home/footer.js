@@ -13,6 +13,10 @@ export default function App() {
         <Footer backgroundColor="#58d3e5" theme='light' columnLayout='space-between'
     columns={[
         {
+            title: "About Us",
+            style: {fontFamily: 'Ubuntu', fontSize: 'large'},
+        },
+        {
             title: "Register",
             style: {fontFamily: 'Ubuntu'},
             items: [
