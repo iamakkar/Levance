@@ -18,16 +18,20 @@ function App(props) {
   const [facebook,setFacebook] = useState(false);
   const [loader, setLoader] = useState(false);
   const Next = () => {
-    
-    
-
       history.push('/createaccountfinal')
-
-
-    
   }
-  const checkSocialMediaUsername=()=>{
-    if (props.instagram === '' && props.facebook === '' && props.youtube === '') {
+  const checkSocialMediaUsername=async ()=>{
+if(await !validate.test(props.instagram.toLowerCase())) {
+  return Swal.fire({
+    title: 'Invalid Format',
+    text: 'Username should contain only lowercase alphabets, period(.) and underscore(_).',
+    icon: 'warning',
+    showCancelButton: false,
+    showConfirmButton: true,
+    confirmButtonText: 'Okay',
+  })
+}    
+if (props.instagram === '' && props.facebook === '' && props.youtube === '') {
       return Swal.fire({
         title: 'Empty Details',
         text: 'Please fill at least one social media handle!',
