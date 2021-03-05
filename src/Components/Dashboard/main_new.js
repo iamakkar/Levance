@@ -134,6 +134,9 @@ function generateDownload(previewCanvas, crop) {
   const [completedCrop, setCompletedCrop] = useState(null);
 
   const handleSubmitFile = (e) => {
+    console.log(e);
+    setUpImg()
+    setCompletedCrop(null)
     if (e.target.files && e.target.files.length > 0) {
       document.getElementById("ModalCroopedImageButton").click();
       console.log(e.target.files[0])
@@ -459,7 +462,7 @@ function generateDownload(previewCanvas, crop) {
           <div className="col s12 m3 center-align profileSide">
             <div className="profilePic">
               <img src={user.profilePic} className="profileImage" />
-              <input type='file' className="profileImageChange" id='profileImageChange' onChange={handleSubmitFile} />
+              <input type='file' accept="image/*" className="profileImageChange" id='profileImageChange' onChange={handleSubmitFile} />
               <label for='profileImageChange' className='profileImageChangeLabel'>Change profile image</label>
             </div>
             {loader&&<div class="preloader-wrapper small active" style={{marginTop:"10px"}}>
