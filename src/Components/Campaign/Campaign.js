@@ -32,10 +32,10 @@ function App(props) {
   const [inputError, setInputError] = useState(false)
   const [inputCategoriesError, setInputCategoriesError] = useState(false)
   const [loader, setLoader] = useState(false)
-  var timeofInsightsUploaded=''
+  var timeofInsightsUploaded = ''
   const [loaderSubmitfiles, setLoaderSubmitfiles] = useState(false)
   const [postInputState, setPostInputState] = useState('')
-  const [timeForInsights,settimeForInsights] = useState('')
+  const [timeForInsights, settimeForInsights] = useState('')
   const [interestedInfluencer, setinterestedInfluencer] = useState({
     acceptanceByTeam: "",
     caption: "",
@@ -50,8 +50,8 @@ function App(props) {
   const [caption, setCaption] = useState('');
   const [postsNo, setpostsNo] = useState(0);
   const [postLinkSubmit, setpostLinkSubmit] = useState([]);
-  const [timeOver,setTimeOver] = useState(false)
-  const [insights,setInsights] = useState([])
+  const [timeOver, setTimeOver] = useState(false)
+  const [insights, setInsights] = useState([])
   const [loaderSubmitInsights, setLoaderSubmitInsights] = useState(false)
   var recievedPostArray = [];
   const pixelRatio = window.devicePixelRatio || 1;
@@ -305,9 +305,8 @@ function App(props) {
         for (var m = 0; m < res.data.message.interestedInfluencer.length; m++) {
           if (res.data.message.interestedInfluencer[m].userId === user._id) {
             setinterestedInfluencer(res.data.message.interestedInfluencer[m]);
-            timeofInsightsUploaded=res.data.message.interestedInfluencer[m].acceptanceByTeam
-            console.log(res.data.message.interestedInfluencer[m].acceptanceByTeam)
-            console.log(timeofInsightsUploaded)
+            timeofInsightsUploaded = res.data.message.interestedInfluencer[m].acceptanceByTeam
+            console.log(res)
             TimeForInsights()
             break;
           }
@@ -400,7 +399,7 @@ function App(props) {
       for (var m = 0; m < res.data.message.interestedInfluencer.length; m++) {
         if (res.data.message.interestedInfluencer[m].userId === user._id) {
           setinterestedInfluencer(res.data.message.interestedInfluencer[m]);
-          timeofInsightsUploaded=res.data.message.interestedInfluencer[m].acceptanceByTeam
+          timeofInsightsUploaded = res.data.message.interestedInfluencer[m].acceptanceByTeam
           console.log(res.data.message.interestedInfluencer[m].userId)
           TimeForInsights()
           break;
@@ -458,7 +457,7 @@ function App(props) {
     }
     setSelectedFile(res);
     console.log(selectedFile);
-      Swal.fire({
+    Swal.fire({
       title: 'Uploaded Successfully',
       text: 'Your latest post would be shown here when you press the SUBMIT button after entering the caption.',
       icon: 'success',
@@ -478,16 +477,23 @@ function App(props) {
       await axios({
         url: `${BASE_URL}/api/uploadPosts`,
         method: 'POST',
-        data: { caption: caption, posts: selectedFile, campaignId: props.match.params.campaignID },
+        data: { caption: caption,
+           posts: selectedFile, 
+           campaignId: props.match.params.campaignID,
+            previousPost:interestedInfluencer.postForUploadation },
         headers: {
           'Content-Type': 'application/json',
           'authorization': `Bearer ${localStorage.token}`
         },
       }).then(res => {
         if (res.data.error)
-          M.toast({
+         { M.toast({
             html: "An error occurred , please try later"
           })
+          setTimeout(() => {
+            window.location.reload()
+          }, 1000);
+        }
         setLoaderSubmitfiles(false);
         refreshCampaign()
         console.log(res)
@@ -498,135 +504,133 @@ function App(props) {
     }
   }
   useEffect(() => {
-    var postlink =[] 
-         for (let index = 0; index < postsNo; index++) {
-           if(index<postLinkSubmit.length)
-       postlink.push(postLinkSubmit[index]);
-       else
-       {
-         postlink.push('')
-       }
+    var postlink = []
+    for (let index = 0; index < postsNo; index++) {
+      if (index < postLinkSubmit.length)
+        postlink.push(postLinkSubmit[index]);
+      else {
+        postlink.push('')
       }
-      setpostLinkSubmit(postlink)
+    }
+    setpostLinkSubmit(postlink)
 
   }, [postsNo])
 
-  const postsLinkUpload = () =>{
+  const postsLinkUpload = () => {
     console.log(postLinkSubmit)
-    if(postLinkSubmit.length==0)
-    return M.toast({html:'Fill atleast one link'})
-    if(postLinkSubmit.some(ele=>{
-      return ele==''
+    if (postLinkSubmit.length == 0)
+      return M.toast({ html: 'Fill atleast one link' })
+    if (postLinkSubmit.some(ele => {
+      return ele == ''
     }))
-    return M.toast({html:'Please fill all fields'})
+      return M.toast({ html: 'Please fill all fields' })
     axios({
       url: `${BASE_URL}/postsLinkUpload`,
-      method:'POST',
-      data:{
-        postLinkSubmit:postLinkSubmit,
+      method: 'POST',
+      data: {
+        postLinkSubmit: postLinkSubmit,
         campaignId: props.match.params.campaignID
       }
-      ,headers:{
+      , headers: {
         'Content-Type': 'application/json',
         'authorization': `Bearer ${localStorage.token}`
       }
-    }).then(async result=>{
+    }).then(async result => {
       console.log(result.data)
-      if(result.data.error)
-      {
-        return M.toast({html:result.data.error});
-      setTimeout(() => {
-        window.location.href="/"
-      }, 2000);
-    }
-      M.toast({html:result.data.message})
+      if (result.data.error) {
+        return M.toast({ html: result.data.error });
+        setTimeout(() => {
+          window.location.href = "/"
+        }, 2000);
+      }
+      M.toast({ html: result.data.message })
       setTimeout(() => {
         window.location.reload()
       }, 2000);
     })
   }
 
-const TimeForInsights=()=>{
+  const TimeForInsights = () => {
 
 
-      
-      var insightsTimer=setInterval(() => {
-        var t= new Date(timeofInsightsUploaded)
-        t.setHours(t.getHours()+24);
-        var curr=new Date()
-        var res = (t - curr) / 1000;
-        if(res<=0)
-        {clearInterval(insightsTimer);
+
+    var insightsTimer = setInterval(() => {
+      var t = new Date(timeofInsightsUploaded)
+      t.setHours(t.getHours() + 24);
+      var curr = new Date()
+      var res = (t - curr) / 1000;
+      if (res <= 0) {
+        clearInterval(insightsTimer);
         setTimeOver(true);
-        }
-        var hours = Math.floor(res / 3600) % 24;
-        var minutes = Math.floor(res / 60) % 60;
-        var seconds = res % 60;
-        
-        settimeForInsights(`${hours}hrs:${minutes}min:${Math.floor(seconds)}s`)
-      }, 1000);
+      }
+      var hours = Math.floor(res / 3600) % 24;
+      var minutes = Math.floor(res / 60) % 60;
+      var seconds = res % 60;
 
-      }
-      const handleInsightsInputState = async (e) => {
-        e.preventDefault();
-        console.log(e.target.files.length)
-        let abc = e.target.files.length
-        let x = [];
-        for (var i = 0; i < abc; i++) {
-          let file = e.target.files[i];
-          let base64 = toBase64(file);
-          x.push(base64);
-        }
-    
-        let y = await Promise.all(x)
-        console.log(y)
-        const res = [];
-        for (let index = 0; index < y.length; index++) {
-          res.push({ filestr: y[index] });
-    
-        }
-    
-        setInsights(res);
-        console.log(insights);
-      }
+      settimeForInsights(`${hours}hrs:${minutes}min:${Math.floor(seconds)}s`)
+    }, 1000);
 
-      const handleInsightSubmit = async () => {
-        if (selectedFile == [])
-          return M.toast({
-            html: 'Atleast one post to be attached'
+  }
+  const handleInsightsInputState = async (e) => {
+    e.preventDefault();
+    console.log(e.target.files.length)
+    let abc = e.target.files.length
+    let x = [];
+    for (var i = 0; i < abc; i++) {
+      let file = e.target.files[i];
+      let base64 = toBase64(file);
+      x.push(base64);
+    }
+
+    let y = await Promise.all(x)
+    console.log(y)
+    const res = [];
+    for (let index = 0; index < y.length; index++) {
+      res.push({ filestr: y[index] });
+
+    }
+
+    setInsights(res);
+    console.log(insights);
+  }
+
+  const handleInsightSubmit = async () => {
+    if (selectedFile == [])
+      return M.toast({
+        html: 'Atleast one post to be attached'
+      })
+    try {
+      setLoaderSubmitInsights(true)
+      await axios({
+        url: `${BASE_URL}/api/uploadInsights`,
+        method: 'POST',
+        data: { insights: insights, campaignId: props.match.params.campaignID },
+        headers: {
+          'Content-Type': 'application/json',
+          'authorization': `Bearer ${localStorage.token}`
+        },
+      }).then(res => {
+        if (res.data.error)
+          M.toast({
+            html: "An error occurred , please try later"
           })
-        try {
-          setLoaderSubmitInsights(true)
-          await axios({
-            url: `${BASE_URL}/api/uploadInsights`,
-            method: 'POST',
-            data: { insights:insights, campaignId: props.match.params.campaignID },
-            headers: {
-              'Content-Type': 'application/json',
-              'authorization': `Bearer ${localStorage.token}`
-            },
-          }).then(res => {
-            if (res.data.error)
-              M.toast({
-                html: "An error occurred , please try later"
-              })
-            refreshCampaign()
-            console.log(res)
-            setLoaderSubmitInsights(false)
-          })
-        } catch (e) {
-          console.log(e);
-          setLoaderSubmitInsights(false)
-        }
-        Swal.fire({
-          title: 'Uploaded Successfully',
-          text: 'Your insights have been uploaded successfully. Thank You!',
-          icon: 'success',
-          showCancelButton: false,
-          showConfirmButton: true,
-          confirmButtonText: 'Cool',
-        })
-      }
+        refreshCampaign()
+        console.log(res)
+        setLoaderSubmitInsights(false)
+      })
+    } catch (e) {
+      console.log(e);
+      setLoaderSubmitInsights(false)
+    }
+    Swal.fire({
+      title: 'Uploaded Successfully',
+      text: 'Your insights have been uploaded successfully. Thank You!',
+      icon: 'success',
+      showCancelButton: false,
+      showConfirmButton: true,
+      confirmButtonText: 'Cool',
+    })
+  }
   return (
     <>
       <Navbar />
@@ -826,8 +830,8 @@ const TimeForInsights=()=>{
             }
             {
               interestedInfluencer.postForUploadation.length != 0 && interestedInfluencer.status.toLowerCase() == 'accepted' && <div>
-                <h4 style={{fontFamily: "Ubuntu"}}>Provide uploaded posts details:</h4>
-                {!timeOver&&<><Select
+                <h4 style={{ fontFamily: "Ubuntu" }}>Provide uploaded posts details:</h4>
+                {!timeOver && <><Select
                   options={[
                     { 'value': 1, label: '1' },
                     { 'value': 2, label: '2' },
@@ -845,52 +849,52 @@ const TimeForInsights=()=>{
                     setpostsNo(e.value)
                   }}
                 />
-                {postLinkSubmit.map((ele, index) => {
-                  return (
-                    <>
-                      <label for="postLink">Link</label>
-                      <input id="postLink" type="text" class="materialize-textarea"  onBlur={(val) => {
-                        postLinkSubmit[index]=val.target.value;
-                        setpostLinkSubmit(postLinkSubmit)
-                      }} />
-                    </>
-                  )
-                })
-                }</>}
-              
+                  {postLinkSubmit.map((ele, index) => {
+                    return (
+                      <>
+                        <label for="postLink">Link</label>
+                        <input id="postLink" type="text" class="materialize-textarea" onBlur={(val) => {
+                          postLinkSubmit[index] = val.target.value;
+                          setpostLinkSubmit(postLinkSubmit)
+                        }} />
+                      </>
+                    )
+                  })
+                  }</>}
+
                 <div className='center'>
-                {!timeOver&&<Button className="waves-effect center" style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", margin:'8px auto', borderRadius: "5px" }} onClick={()=>{
-                  postsLinkUpload()
-                }}>Submit Links</Button>}
-                {
-                  interestedInfluencer.postForUploadation.length != 0 && interestedInfluencer.status.toLowerCase() == 'accepted' &&interestedInfluencer.acceptanceByTeam!=''&&!timeOver&&
-                  <h5>Upload insights after {timeForInsights}</h5>
-                }
-                {timeOver&&<>
-                <input type='file' name='insights' multiple value={postInputState} onChange={handleInsightsInputState} style={{ display: 'none' }} ref={hiddenFileInput} />
-                  <Button className="waves-effect center-block" onClick={handleClick} style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons left">upload</i>Upload</Button>
-                  <p>(Upload all screenshots in one go)</p>
-                  {loaderSubmitInsights &&
-                    <div class="preloader-wrapper small active" style={{ margin: '10px auto', display: 'block' }}>
-                      <div class="spinner-layer spinner-blue-only">
-                        <div class="circle-clipper left">
-                          <div class="circle"></div>
-                        </div><div class="gap-patch">
-                          <div class="circle"></div>
-                        </div><div class="circle-clipper right">
-                          <div class="circle"></div>
+                  {!timeOver && <Button className="waves-effect center" style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", margin: '8px auto', borderRadius: "5px" }} onClick={() => {
+                    postsLinkUpload()
+                  }}>Submit Links</Button>}
+                  {
+                    interestedInfluencer.postForUploadation.length != 0 && interestedInfluencer.status.toLowerCase() == 'accepted' && interestedInfluencer.acceptanceByTeam != '' && !timeOver &&
+                    <h5>Upload insights after {timeForInsights}</h5>
+                  }
+                  {timeOver && <>
+                    <input type='file' name='insights' multiple value={postInputState} onChange={handleInsightsInputState} style={{ display: 'none' }} ref={hiddenFileInput} />
+                    <Button className="waves-effect center-block" onClick={handleClick} style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons left">upload</i>Upload</Button>
+                    <p>(Upload all screenshots in one go)</p>
+                    {loaderSubmitInsights &&
+                      <div class="preloader-wrapper small active" style={{ margin: '10px auto', display: 'block' }}>
+                        <div class="spinner-layer spinner-blue-only">
+                          <div class="circle-clipper left">
+                            <div class="circle"></div>
+                          </div><div class="gap-patch">
+                            <div class="circle"></div>
+                          </div><div class="circle-clipper right">
+                            <div class="circle"></div>
+                          </div>
                         </div>
-                      </div>
-                    </div>}
-                  <Button className="waves-effect center-block" onClick={handleInsightSubmit} disabled={insights.length == 0} style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons right">send</i>Submit Insights</Button>
-           </> }
-                
+                      </div>}
+                    <Button className="waves-effect center-block" onClick={handleInsightSubmit} disabled={insights.length == 0} style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons right">send</i>Submit Insights</Button>
+                  </>}
+
                 </div>
               </div>
             }
 
             {
-              interestedInfluencer.postForUploadation.length != 0 && <h4  style={{fontFamily: "Ubuntu"}}>Posts uploaded</h4>
+              interestedInfluencer.postForUploadation.length != 0 && <h4 style={{ fontFamily: "Ubuntu" }}>Posts uploaded</h4>
 
             }
             {/* {
@@ -911,17 +915,17 @@ const TimeForInsights=()=>{
               {!selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id) ?
                 <Button className="modal-trigger waves-effect center-block" style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} href="#Modal-1" >Accept</Button>
 
-                :interestedInfluencer.status.toLowerCase()!='accepted' ?<>
+                : interestedInfluencer.status.toLowerCase() != 'accepted' ? <>
                   <input type='file' name='post' multiple value={postInputState} onChange={handlePostInputState} style={{ display: 'none' }} ref={hiddenFileInput} />
 
                   <Button className="waves-effect center-block" onClick={handleClick} style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons left">upload</i>Upload</Button>
                   <p>(Upload all posts in one go)</p>
-                </>:''
+                </> : ''
               }
               <br />
               <a href='#modaltermsandconditions' className="modal-trigger">Terms {'&'} Conditions</a>
             </div>
-            {selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id)&&interestedInfluencer.status.toLowerCase()!='accepted' ?
+            {selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id) && interestedInfluencer.status.toLowerCase() != 'accepted' ?
               <div className="col s12 center" style={{ margin: 'auto' }}>
                 <div class="input-field">
                   <textarea id="last_name" type="text" class="materialize-textarea" value={caption} onChange={(val) => setCaption(val.target.value)} />

@@ -51,7 +51,7 @@ function App(props) {
     })
     setLoader(true)
 
-    await axios.post("http://localhost:5000"+'/login', cred)
+    await axios.post(BASE_URL+'/login', cred)
     .then(res => next(res))
     .catch((e) => {console.log(e);setLoader(false)})
   }
