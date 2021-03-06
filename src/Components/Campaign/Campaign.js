@@ -18,6 +18,167 @@ import parser from 'html-react-parser'
 import CloseIcon from '@material-ui/icons/Close';
 import './Campaign.css'
 
+var html = `<html>
+<head>
+    <!-- Compiled and minified CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css'>
+    <!-- Compiled and minified JavaScript -->
+    <!-- JavaScript Bundle with Popper -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js'></script>
+    <style>@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');</style>
+    <style>@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap'); </style>
+</head>
+<body style='font-family:Poppins'>
+    <div class='container-fluid'>
+        <div class='row'>
+            <div class='col s12' style='margin:0;padding: 0;'>
+                <div style='width:100%;height:300px;margin-bottom: 25px;'>
+                    <img src='https://www.nextbigbrand.in/wp-content/uploads/2019/02/image_banner.png' style='width:100%;height:100%;object-fit:cover' />
+                </div>
+                <div class='col s12' style='margin:2;padding: 5px;'>
+                    <a href="#t&ampc" style="margin-bottom: 4px" class="waves-effect waves-light btn-small blue">Terms & Conditions</a>
+                    <a href="#contentguidlines" style="margin-bottom: 4px" class="waves-effect waves-light btn-small" green>Content Guidlines</a>
+                </div>
+                <div style='padding: 5px;'>
+                    <h2 style='margin: 10px auto;font-family: Ubuntu;'>
+                        Rethink Autumn With Marks &amp; Spencer
+                    </h2>
+                    <div style='padding-left: 10px;'>
+                        <p>
+                            Hi There!
+                        </p>
+                        <p>
+                            It’s that time of the year when a new season has set in and we are happy to announce our association with Marks and Spencer for a brand new campaign! We would love to know how you rethink your style this season and for the same, and an exciting new campaign awaits you!
+                        </p>
+                        <p>
+                            Style the marks and spencer jacket in the coolest way you can and top 3 influencers who will flaunt the marks and spencer jacket in the quirkiest way will get marks and spencer vouchers worth 10k!!
+                        </p>
+                    </div>
+                    <h4 style='font-family: Ubuntu;'>
+                        What you'll be getting?
+                    </h4>
+                    <div style='padding-left: 10px;'>
+                        <p>
+                            You will get a stunning leather jacket of your preferred size from marks and spencer latest autumn collection and an additional chance to get marks and spencer vouchers worth 10k!!
+                        </p>
+                    </div>
+                    <h4  style='font-family: Ubuntu;'>
+                        What do you need to do?
+                    </h4>
+                    <div style='padding-left: 10px;'>
+                        <p>
+                            1 Instagram Post (static post):
+                        </p>
+                        <ul>
+                            <li>
+                                Reference
+                                <a href='https://www.instagram.com/p/CGCwDHMnhcB/'>
+                                Image
+                                </a>
+                                1
+                            </li>
+                            <li>
+                                Reference
+                                <a href='https://drive.google.com/file/d/1SCfLkrH4nqUg1kx36mpci4fbT9AnAEtA/view?usp=sharing'>
+                                Image
+                                </a>
+                                2
+                            </li>
+                            <li>
+                                Reference
+                                <a href='https://drive.google.com/file/d/1PJNm0DIHF_65eY3XtmfSYu2IV_WZC3eo/view?usp=sharing'>
+                                Image
+                                </a>
+                                3
+                            </li>
+                        </ul>
+                        <p>
+                            You need to style the given product in the best possible way and flaunt it in your picture in a way that the mark and spencer product should be clearly visible. You need to submit your post and caption to the levance team before uploading it. After the brand approval, you can upload the post. After 48 hours of uploading the post, you will be required to submit the insights of your post at your levance dashboard or with the levance team.
+                        </p>
+                    </div>
+                    <h4  style='font-family: Ubuntu;'>
+                        Please note:
+                    </h4>
+                    <ol>
+                        <li>
+                            You need to follow @levance.in and @marksandspencerindia on Instagram</li>
+                        <li>
+                            Ensure that your profile is public and you have a business account</li>
+                        <li>
+                                You cannot tag the post as sponsored/paid post </li>
+                        <li>
+                                You cannot use #ad in the caption </li>
+                        <li>
+                                You need to tag @Marksandspencerindia @levance.in<br />
+                                #RethinkAutumnWithMandS #Autumn #levancexmarksandspencer </li>
+                    </ol>
+                    <h4 id="contentguidlines" style='font-family: Ubuntu;'>
+                        Content Guidlines:
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTEuOTg0IDE2LjgxNWMyLjU5NiAwIDQuNzA2LTIuMTExIDQuNzA2LTQuNzA3IDAtMS40MDktLjYyMy0yLjY3NC0xLjYwNi0zLjUzOC0uMzQ2LS4zMDMtLjczNS0uNTU2LTEuMTU4LS43NDgtLjU5My0uMjctMS4yNDktLjQyMS0xLjk0MS0uNDIxcy0xLjM0OS4xNTEtMS45NDEuNDIxYy0uNDI0LjE5NC0uODE0LjQ0Ny0xLjE1OC43NDktLjk4NS44NjQtMS42MDggMi4xMjktMS42MDggMy41MzggMCAyLjU5NSAyLjExMiA0LjcwNiA0LjcwNiA0LjcwNnptLjAxNi04LjE4NGMxLjkyMSAwIDMuNDc5IDEuNTU3IDMuNDc5IDMuNDc4IDAgMS45MjEtMS41NTggMy40NzktMy40NzkgMy40NzlzLTMuNDc5LTEuNTU3LTMuNDc5LTMuNDc5YzAtMS45MjEgMS41NTgtMy40NzggMy40NzktMy40Nzh6bTUuMjIzLjM2OWg2Ljc3N3YxMC4yNzhjMCAyLjYwOC0yLjExNCA0LjcyMi00LjcyMiA0LjcyMmgtMTQuNDkzYy0yLjYwOCAwLTQuNzg1LTIuMTE0LTQuNzg1LTQuNzIydi0xMC4yNzhoNi43NDdjLS41NDQuOTEzLS44NzIgMS45NjktLjg3MiAzLjEwOSAwIDMuMzc0IDIuNzM1IDYuMTA5IDYuMTA5IDYuMTA5czYuMTA5LTIuNzM1IDYuMTA5LTYuMTA5Yy4wMDEtMS4xNC0uMzI3LTIuMTk2LS44Ny0zLjEwOXptMi4wNTUtOWgtMTIuMjc4djVoLTF2LTVoLTF2NWgtMXYtNC45MjNjLS4zNDYuMDU3LS42ODIuMTQzLTEgLjI3djQuNjUzaC0xdi00LjEwMmMtMS4yMDIuODU3LTIgMi4yNDYtMiAzLjgyNHYzLjI3OGg3LjQ3M2MxLjE2Ny0xLjI4MiAyLjc5OC0yIDQuNTExLTIgMS43MjIgMCAzLjM1MS43MjUgNC41MTEgMmg3LjUwNXYtMy4yNzhjMC0yLjYwOC0yLjExNC00LjcyMi00LjcyMi00LjcyMnptMi43MjIgNS4yNjVjMCAuNDA2LS4zMzMuNzM1LS43NDUuNzM1aC0yLjUxMWMtLjQxMSAwLS43NDQtLjMyOS0uNzQ0LS43MzV2LTIuNTNjMC0uNDA2LjMzMy0uNzM1Ljc0NC0uNzM1aDIuNTExYy40MTIgMCAuNzQ1LjMyOS43NDUuNzM1djIuNTN6Ii8+PC9zdmc+" />
+                    </h4>
+                    <ol>
+                        <li>
+                            Guidline 1</li>
+                        <li>
+                          Guidline 2</li>
+                        <li>
+                          Guidline 3</li>
+                        <li>
+                          Guidline 4</li>
+                        <li>
+                          Guidline 5
+                        </li>
+                        <li>
+                            Guidline 1</li>
+                        <li>
+                          Guidline 2</li>
+                        <li>
+                          Guidline 3</li>
+                        <li>
+                          Guidline 4</li>
+                        <li>
+                          Guidline 5
+                        </li>
+                    </ol>
+                    <h4 id="t&ampc" >
+                        Terms and conditions:
+                    </h4>
+                    <ol>
+                        <li>
+                            Guidline 1</li>
+                        <li>
+                          Guidline 2</li>
+                        <li>
+                          Guidline 3</li>
+                        <li>
+                          Guidline 4</li>
+                        <li>
+                          Guidline 5
+                        </li>
+                        <li>
+                            Guidline 1</li>
+                        <li>
+                          Guidline 2</li>
+                        <li>
+                          Guidline 3</li>
+                        <li>
+                          Guidline 4</li>
+                        <li>
+                          Guidline 5
+                        </li>
+                    </ol>
+                    <p>
+                        Date<strong>:</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+`
+
 function App(props) {
 
   const [user, setUser] = useState(props);
@@ -821,6 +982,7 @@ function App(props) {
 
           <div class="col s12 m9 campaignBox" id="campaignBox">
             {parser(selectedCampaign.description)}
+            {/* {parser(html)} */}
             {
               interestedInfluencer.postForUploadation.length != 0 && <h6>Status: <span style={{ fontWeight: 700 }}>{interestedInfluencer.status}</span></h6>
             }
@@ -913,7 +1075,9 @@ function App(props) {
                 })
               }</div>
               {!selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id) ?
-                <Button className="modal-trigger waves-effect center-block" style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} href="#Modal-1" >Accept</Button>
+                <Button className="modal-trigger waves-effect center-block" style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} href="#Modal-1" >
+                  Accept
+                </Button>
 
                 : interestedInfluencer.status.toLowerCase() != 'accepted' ? <>
                   <input type='file' name='post' multiple value={postInputState} onChange={handlePostInputState} style={{ display: 'none' }} ref={hiddenFileInput} />
