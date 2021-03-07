@@ -7,3 +7,8 @@
     width: 25%;
     margin:auto 2%;
 }
+@media screen and (max-width: 500px){
+.modalReject{
+width: 95% !important;
+}
+}
