@@ -597,16 +597,19 @@ function generateDownload(previewCanvas, crop) {
               </div>
               }
             {campaigns.map(campaign => {
-              return (<div className="campaign">
-                <h3>{campaign.brandName}</h3>
-                <h6>Description:</h6>
-                <h6>Brief</h6>
-                <button class="btn right" value={campaign._id}
-                  onClick={(e) => { if(e.target.value)window.location.href=`/campaign/${e.target.value}` }}>Details
-    <i class="material-icons right">send</i>
-                </button>
-              {/* <Link to={"/campaign"} brand={campaign.brandName}  class="btn waves-effect waves-light right modal-trigger" description={campaign.description}>Details</Link> */}
-              </div>)
+              return (window.innerWidth > 1000) ? (
+              <div className="campaign" onClick={() => window.location.href=`/campaign/${campaign._id}`} >
+                <div className="campaign-footer">
+                  <h4>{campaign.brandName}</h4>
+                </div>
+              </div>
+              ) : (
+                <div className="campaign" onClick={() => window.location.href=`/campaign/${campaign._id}`} >
+                  <div className="campaign-footer" >
+                    <h6>{campaign.brandName}</h6>
+                  </div>
+                </div>
+              )
             })}
 
           </div>
