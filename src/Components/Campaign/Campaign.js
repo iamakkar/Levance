@@ -1030,7 +1030,7 @@ function App(props) {
           </div>
 
           <div class="col s12 m9 campaignBox" id="campaignBox" style={{paddingBottom:'60px'}}>
-            {selectedCampaign.campaignOpen
+            {selectedCampaign.description&&<>{selectedCampaign.campaignOpen
             ?
             !selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id)
             ?
@@ -1042,7 +1042,8 @@ function App(props) {
             :
             <p style={{fontFamily:'Poppins'}}><DoneAllIcon/> You have accepted this collaboration</p>
             :
-            <p style={{fontFamily:'Poppins'}}><LockIcon/> This campaign has been closed and is not accepting any participation</p>}
+            <p style={{fontFamily:'Poppins'}}><LockIcon/> This collaboration has been closed and is not accepting any participation</p>}
+           </> }
             {parser(selectedCampaign.description)}
             {/* {parser(html)} */}
             {
