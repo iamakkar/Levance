@@ -40,8 +40,8 @@ var html = `<html>
                     <img src='https://www.nextbigbrand.in/wp-content/uploads/2019/02/image_banner.png' style='width:100%;height:100%;object-fit:cover' />
                 </div>
                 <div class='col s12' style='margin:2;padding: 5px;'>
-                    <a href="#t&ampc" style="margin-bottom: 4px" class="waves-effect waves-light btn-small blue">Terms & Conditions</a>
-                    <a href="#contentguidlines" style="margin-bottom: 4px" class="waves-effect waves-light btn-small" green>Content Guidlines</a>
+                    <a href="#t&ampc" style="margin-bottom: 4px" class="btn-small blue">Terms & Conditions</a>
+                    <a href="#contentguidlines" style="margin-bottom: 4px" class="btn-small" green>Content Guidlines</a>
                 </div>
                 <div style='padding: 5px;'>
                     <h2 style='margin: 10px auto;font-family: Ubuntu;'>
@@ -1185,7 +1185,7 @@ function App(props) {
               <>
               <Button className="modal-trigger waves-effect " style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} href="#Modal-1" >
                   Accept
-                </Button> or <Button className="modal-trigger waves-effect " style={{ backgroundColor: "#26a69a", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} href="#modalReject" >
+                </Button>  <Button className="modal-trigger waves-effect red" style={{ backgroundColor: "#26a69a", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} href="#modalReject" >
                   Reject
                 </Button></>
                 </div>:''}
