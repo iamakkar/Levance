@@ -107,12 +107,23 @@
   align-items: center;
   height: 25vh;
   padding: 0px;
-  margin-top: 4px;
+  margin-top: 10px;
   cursor: pointer;
   border-radius: 20px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow: 0 0 7px grey;
   background-image: url("https://www.nextbigbrand.in/wp-content/uploads/2019/02/image_banner.png");
 }
-
+.campaign:hover{
+  animation: campaignShadow 0.4s forwards
+}
+@keyframes campaignShadow
+{
+  100%{
+  box-shadow: 0 0 20px grey;
+  }
+}
 .campaign-footer {
   display: flex;
   justify-content: center;
@@ -179,8 +190,9 @@ h4 {
     height: 25vh;
     padding: 0;
     cursor: pointer;
+    box-shadow: 0 0 7px black;
     background-image: url("https://www.nextbigbrand.in/wp-content/uploads/2019/02/image_banner.png");
-    margin-top: 4px;
+    margin-top: 10px;
   }
 
   .campaign-footer {

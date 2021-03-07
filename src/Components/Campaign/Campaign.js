@@ -1,6 +1,7 @@
 import React, { useCallback, useRef, useState } from 'react'
 import '../Dashboard/main_new.css'
 import Location from "@material-ui/icons/PersonPinCircle";
+import LockOpenIcon from '@material-ui/icons/LockOpen';
 import M from 'materialize-css'
 import Navbar from "../Home/navbar"
 import axios from 'axios';
@@ -17,7 +18,9 @@ import "react-image-crop/dist/ReactCrop.css";
 import parser from 'html-react-parser'
 import CloseIcon from '@material-ui/icons/Close';
 import './Campaign.css'
-
+import ThumbDownIcon from '@material-ui/icons/ThumbDown';
+import LockIcon from '@material-ui/icons/Lock';
+import DoneAllIcon from '@material-ui/icons/DoneAll';
 var html = `<html>
 <head>
     <!-- Compiled and minified CSS -->
@@ -185,7 +188,9 @@ function App(props) {
   const [selectedCampaign, SetSelectedCampaign] = useState({
     description: "",
     interestedInfluencer: [],
-    brandName: ""
+    rejectedInfluencer:[],
+    brandName: "",
+    campaignOpen:false
   });
   const [selectedFile, setSelectedFile] = useState([]);
   const [updateProfile, setUpdatedProfile] = useState({});
@@ -214,6 +219,7 @@ function App(props) {
   const [timeOver, setTimeOver] = useState(false)
   const [insights, setInsights] = useState([])
   const [loaderSubmitInsights, setLoaderSubmitInsights] = useState(false)
+  const [rejectReasons,setRejectRReasons] = useState([])
   var recievedPostArray = [];
   const pixelRatio = window.devicePixelRatio || 1;
 
@@ -292,7 +298,13 @@ function App(props) {
     { value: "DIY", label: "DIY" },
     { value: "Repost", label: "Repost" },
   ];
-
+  const reasons = [
+    {value:'a',label:'A'},
+    {value:'b',label:'B'},
+    {value:'c',label:'C'},
+    {value:'d',label:'D'},
+    {value:'e',label:'E'}
+  ]
   const message1 = `Hang on tight!`;
   const message2 = `Your desired campaigns might be here anytime soon!`;
 
@@ -792,6 +804,43 @@ function App(props) {
       confirmButtonText: 'Cool',
     })
   }
+
+  const handleRejectReasonsSubmit = ()=>{
+    console.log(rejectReasons)
+    if(!rejectReasons.length)
+    return Swal.fire({
+      title: 'Warning',
+      text: 'Select atleast one reason',
+      icon: 'warning',
+      showCancelButton: false,
+      showConfirmButton: true,
+      confirmButtonText: 'Okay',
+    })
+    const userId = user._id;
+    const email = props.email;
+    const fullName = props.fullName;
+    const campaignId = selectedCampaign._id;
+    const rejectededInfluencer = {
+      userId, email, fullName, campaignId,
+      reason:rejectReasons
+    }
+    axios({
+      method:'PUT',
+      url: `${BASE_URL}/rejectInfluencer`,
+      data:rejectededInfluencer
+    }).then(res => {
+      console.log(res)
+      SetSelectedCampaign(res.data)
+      M.toast({ html: 'Done' })
+      refreshCampaign()
+      document.getElementById('rejectedReasonClose').click()
+    }).catch(err => {
+      console.log(err)
+      document.getElementById('rejectedReasonClose').click()
+    })
+  }
+
+
   return (
     <>
       <Navbar />
@@ -980,7 +1029,21 @@ function App(props) {
             </Modal>
           </div>
 
-          <div class="col s12 m9 campaignBox" id="campaignBox">
+          <div class="col s12 m9 campaignBox" id="campaignBox" style={{paddingBottom:'60px'}}>
+            {selectedCampaign.description&&<>{selectedCampaign.campaignOpen
+            ?
+            !selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id)
+            ?
+            !selectedCampaign.rejectedInfluencer.some(influencer => influencer.userId == user._id)
+            ?
+            <p style={{fontFamily:'Poppins'}}><LockOpenIcon/> This collaboration is open and accepting participation</p>
+            :
+            <p style={{fontFamily:'Poppins'}}><ThumbDownIcon/> You have refused this collaboration</p>
+            :
+            <p style={{fontFamily:'Poppins'}}><DoneAllIcon/> You have accepted this collaboration</p>
+            :
+            <p style={{fontFamily:'Poppins'}}><LockIcon/> This collaboration has been closed and is not accepting any participation</p>}
+           </> }
             {parser(selectedCampaign.description)}
             {/* {parser(html)} */}
             {
@@ -1074,17 +1137,12 @@ function App(props) {
                     </video>)
                 })
               }</div>
-              {!selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id) ?
-                <Button className="modal-trigger waves-effect center-block" style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} href="#Modal-1" >
-                  Accept
-                </Button>
-
-                : interestedInfluencer.status.toLowerCase() != 'accepted' ? <>
+              {selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id) ? interestedInfluencer.status.toLowerCase() != 'accepted' ? <>
                   <input type='file' name='post' multiple value={postInputState} onChange={handlePostInputState} style={{ display: 'none' }} ref={hiddenFileInput} />
 
                   <Button className="waves-effect center-block" onClick={handleClick} style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons left">upload</i>Upload</Button>
                   <p>(Upload all posts in one go)</p>
-                </> : ''
+                </> : '':''
               }
               <br />
               <a href='#modaltermsandconditions' className="modal-trigger">Terms {'&'} Conditions</a>
@@ -1120,8 +1178,17 @@ function App(props) {
                 </div> */}
               </div>
               : <></>}
+              
           </div>
-
+          {selectedCampaign.campaignOpen&&!selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id)&& !selectedCampaign.rejectedInfluencer.some(influencer => influencer.userId == user._id)?
+          <div className='center col s12' style={{position:'fixed',bottom:'0px',zIndex:3,backgroundColor:'white',paddingTop:'10px',boxShadow:'0px -1px 3px grey'}}>
+              <>
+              <Button className="modal-trigger waves-effect " style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} href="#Modal-1" >
+                  Accept
+                </Button> or <Button className="modal-trigger waves-effect " style={{ backgroundColor: "#26a69a", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} href="#modalReject" >
+                  Reject
+                </Button></>
+                </div>:''}
         </div>
       </div>
 
@@ -1188,7 +1255,54 @@ function App(props) {
 
 
       </Modal>
+      <Modal
+        actions={[
+          <Button flat node="button" waves="#4c4b77" onClick={handleRejectReasonsSubmit} style={{fontFamily:'Poppins',color:'white',backgroundColor:'#4c4b77',marginRight:'10px'}}>Submit</Button>,
+          <Button flat modal="close" node="button" id="rejectedReasonClose" waves="red" style={{fontFamily:'Poppins',color:'white',backgroundColor:'red'}}>Close</Button>
+        ]}
+        bottomSheet={false}
+        fixedFooter={true}
+        header={<p style={{fontFamily:'Ubuntu'}}>Reason for Rejection</p>}
+        id="modalReject"
+        open={false}
+        options={{
+          dismissible: true,
+          endingTop: '10%',
+          inDuration: 250,
+          onCloseEnd: null,
+          onCloseStart: null,
+          onOpenEnd: null,
+          onOpenStart: null,
+          opacity: 0.5,
+          outDuration: 250,
+          preventScrolling: true,
+          startingTop: '4%'
+        }}
+        className='modalReject'
+        root={document.body}
+        style={{height:'500px'}}
+      >
 
+
+        <Select
+          options={reasons}
+          closeMenuOnSelect={false}
+          isMulti
+          className="select"
+          style={{
+            fontFamily:'Poppins',
+          }}
+          placeholder="Select atleast one reason"
+          onChange={(e)=>{
+            var data = e.map(ele=>{
+              return ele.value;
+            })
+            setRejectRReasons(data)
+
+          }}
+        />
+
+      </Modal>
 
 
 
