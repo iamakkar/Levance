@@ -220,6 +220,8 @@ function App(props) {
   const [insights, setInsights] = useState([])
   const [loaderSubmitInsights, setLoaderSubmitInsights] = useState(false)
   const [rejectReasons,setRejectRReasons] = useState([])
+  const [boolOther,setBoolOther] = useState(false)
+  const [otherReason,setOtherReason] = useState('')
   var recievedPostArray = [];
   const pixelRatio = window.devicePixelRatio || 1;
 
@@ -303,7 +305,8 @@ function App(props) {
     {value:'b',label:'B'},
     {value:'c',label:'C'},
     {value:'d',label:'D'},
-    {value:'e',label:'E'}
+    {value:'e',label:'E'},
+    {value:'other',label:'other'}
   ]
   const message1 = `Hang on tight!`;
   const message2 = `Your desired campaigns might be here anytime soon!`;
@@ -806,6 +809,16 @@ function App(props) {
   }
 
   const handleRejectReasonsSubmit = ()=>{
+    if(boolOther&&!otherReason)
+    return Swal.fire({
+      title: 'Warning',
+      text: 'Please give other reason',
+      icon: 'warning',
+      showCancelButton: false,
+      showConfirmButton: true,
+      confirmButtonText: 'Okay',
+    })
+    rejectReasons.push(otherReason)
     console.log(rejectReasons)
     if(!rejectReasons.length)
     return Swal.fire({
@@ -1030,6 +1043,17 @@ function App(props) {
           </div>
 
           <div class="col s12 m9 campaignBox" id="campaignBox" style={{paddingBottom:'60px'}}>
+          {!selectedCampaign.description && <div className='center' style={{ marginTop: "20px" }}><div class="preloader-wrapper small active center">
+              <div class="spinner-layer spinner-blue-only">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div><div class="gap-patch">
+                  <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                  <div class="circle"></div>
+                </div>
+              </div>
+            </div></div>}
             {selectedCampaign.description&&<>{selectedCampaign.campaignOpen
             ?
             !selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id)
@@ -1145,7 +1169,7 @@ function App(props) {
                 </> : '':''
               }
               <br />
-              <a href='#modaltermsandconditions' className="modal-trigger">Terms {'&'} Conditions</a>
+              {selectedCampaign.description &&<a href='#modaltermsandconditions' className="modal-trigger">Terms {'&'} Conditions</a>}
             </div>
             {selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id) && interestedInfluencer.status.toLowerCase() != 'accepted' ?
               <div className="col s12 center" style={{ margin: 'auto' }}>
@@ -1294,14 +1318,21 @@ function App(props) {
           }}
           placeholder="Select atleast one reason"
           onChange={(e)=>{
-            var data = e.map(ele=>{
-              return ele.value;
+           var boolCheckother=false
+            var data = [];
+            e.map(ele=>{
+              if(ele.value=='other')
+              {boolCheckother=true;}
+              else
+              data.push(ele.value);
             })
+            setBoolOther(boolCheckother)
             setRejectRReasons(data)
-
+            console.log(data  )
           }}
         />
-
+        {boolOther&&<><textarea id="otherReason" class="materialize-textarea" onChange={(e)=>{setOtherReason(e.target.value)}}></textarea>
+          <label for="otherReason">Give other Reason</label></>}
       </Modal>
 
 
