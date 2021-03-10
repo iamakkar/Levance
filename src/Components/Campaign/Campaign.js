@@ -258,11 +258,11 @@ function App(props) {
     canvas.toBlob(
       (blob) => {
         const previewUrl = window.URL.createObjectURL(blob);
-        console.log(blob)
+        
         const reader = new FileReader();
         reader.readAsDataURL(blob);
         reader.onloadend = () => {
-          console.log(reader.result);
+          
           uploadImage(reader.result);
           document.getElementById("CloseCroopedImageButton").click()
         };
@@ -338,7 +338,7 @@ function App(props) {
   const handleSubmitFile = (e) => {
     if (e.target.files && e.target.files.length > 0) {
       document.getElementById("ModalCroopedImageButton").click();
-      console.log(e.target.files[0])
+      
       const reader = new FileReader();
       reader.addEventListener("load", () => setUpImg(reader.result));
       reader.readAsDataURL(e.target.files[0]);
@@ -477,12 +477,11 @@ function App(props) {
           return console.log(res.data.err)
         SetSelectedCampaign(res.data.message);
 
-        console.log(res.data.message.interestedInfluencer)
         for (var m = 0; m < res.data.message.interestedInfluencer.length; m++) {
           if (res.data.message.interestedInfluencer[m].userId === user._id) {
             setinterestedInfluencer(res.data.message.interestedInfluencer[m]);
             timeofInsightsUploaded = res.data.message.interestedInfluencer[m].acceptanceByTeam
-            console.log(res)
+            
             TimeForInsights()
             break;
           }
@@ -576,7 +575,7 @@ function App(props) {
         if (res.data.message.interestedInfluencer[m].userId === user._id) {
           setinterestedInfluencer(res.data.message.interestedInfluencer[m]);
           timeofInsightsUploaded = res.data.message.interestedInfluencer[m].acceptanceByTeam
-          console.log(res.data.message.interestedInfluencer[m].userId)
+          
           TimeForInsights()
           break;
         }
@@ -593,7 +592,6 @@ function App(props) {
     }
     axios.put(BASE_URL + "/addInfluencer", interestedInfluencer).then(res => {
 
-      console.log(res)
       SetSelectedCampaign(res.data)
       M.toast({ html: 'Done' })
       refreshCampaign()
@@ -615,7 +613,6 @@ function App(props) {
 
   const handlePostInputState = async (e) => {
     e.preventDefault();
-    console.log(e.target.files.length)
     let abc = e.target.files.length
     let x = [];
     for (var i = 0; i < abc; i++) {
@@ -625,14 +622,13 @@ function App(props) {
     }
 
     let y = await Promise.all(x)
-    console.log(y)
+    
     const res = [];
     for (let index = 0; index < y.length; index++) {
       res.push({ filestr: y[index] });
 
     }
     setSelectedFile(res);
-    console.log(selectedFile);
     Swal.fire({
       title: 'Uploaded Successfully',
       text: 'Your latest post would be shown here when you press the SUBMIT button after entering the caption.',
@@ -672,7 +668,7 @@ function App(props) {
         }
         setLoaderSubmitfiles(false);
         refreshCampaign()
-        console.log(res)
+
       })
     } catch (e) {
       console.log(e);
@@ -693,7 +689,7 @@ function App(props) {
   }, [postsNo])
 
   const postsLinkUpload = () => {
-    console.log(postLinkSubmit)
+    
     if (postLinkSubmit.length == 0)
       return M.toast({ html: 'Fill atleast one link' })
     if (postLinkSubmit.some(ele => {
@@ -712,7 +708,6 @@ function App(props) {
         'authorization': `Bearer ${localStorage.token}`
       }
     }).then(async result => {
-      console.log(result.data)
       if (result.data.error) {
         return M.toast({ html: result.data.error });
         setTimeout(() => {
@@ -749,7 +744,6 @@ function App(props) {
   }
   const handleInsightsInputState = async (e) => {
     e.preventDefault();
-    console.log(e.target.files.length)
     let abc = e.target.files.length
     let x = [];
     for (var i = 0; i < abc; i++) {
@@ -759,7 +753,7 @@ function App(props) {
     }
 
     let y = await Promise.all(x)
-    console.log(y)
+    
     const res = [];
     for (let index = 0; index < y.length; index++) {
       res.push({ filestr: y[index] });
@@ -767,7 +761,6 @@ function App(props) {
     }
 
     setInsights(res);
-    console.log(insights);
   }
 
   const handleInsightSubmit = async () => {
@@ -791,7 +784,6 @@ function App(props) {
             html: "An error occurred , please try later"
           })
         refreshCampaign()
-        console.log(res)
         setLoaderSubmitInsights(false)
       })
     } catch (e) {
@@ -818,8 +810,9 @@ function App(props) {
       showConfirmButton: true,
       confirmButtonText: 'Okay',
     })
+    if(boolOther)
     rejectReasons.push(otherReason)
-    console.log(rejectReasons)
+
     if(!rejectReasons.length)
     return Swal.fire({
       title: 'Warning',
@@ -842,7 +835,6 @@ function App(props) {
       url: `${BASE_URL}/rejectInfluencer`,
       data:rejectededInfluencer
     }).then(res => {
-      console.log(res)
       SetSelectedCampaign(res.data)
       M.toast({ html: 'Done' })
       refreshCampaign()
@@ -1328,7 +1320,7 @@ function App(props) {
             })
             setBoolOther(boolCheckother)
             setRejectRReasons(data)
-            console.log(data  )
+            
           }}
         />
         {boolOther&&<><textarea id="otherReason" class="materialize-textarea" onChange={(e)=>{setOtherReason(e.target.value)}}></textarea>
