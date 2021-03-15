@@ -1,14 +1,15 @@
 import React from 'react';
 import {useHistory} from 'react-router-dom';
-import Navbar from '../Home/navbar'
-import Footer from '../Home/footer'
 import './Process.css';
+import Footer from '../Home/footer';
+import Navbar from '../Home/navbar';
 
 export default function App() {
     const history = useHistory();
     
     return (
-    
+        <>
+        <Navbar/>
         <div className='bp-container'>
             <div className='bp-title'>
                 <h1>How does it Work?</h1>
@@ -59,11 +60,12 @@ export default function App() {
                     <img src={require("./win.svg").default} alt={"levance-home-influencer-connected-image"} />
                 </div>
                 <div className='bp-wood-btn' >
-                    <button class="waves-effect waves-light btn-large" onClick={() => history.push('/brandregister')} style={{borderRadius: 5, backgroundColor: '#4c4b77'}}>Register Now!</button>
+                    <button class="waves-light btn-large" onClick={() => history.push('/brandregister')} style={{borderRadius: 5, backgroundColor: '#4c4b77', marginRight: 5}}>Register Now!</button>
+                    <button class="waves-light btn-large" style={{borderRadius: 5, backgroundColor: '#4c4b77'}}><a href="mailto:contact@levance.in" class='link' style={{color: 'white'}} >Contact Us</a></button>
                 </div>
+                <Footer />
             </div>
         </div>
-        
-        
+        </>
     );
 }
