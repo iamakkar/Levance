@@ -13,7 +13,7 @@ import CreateAccountFinal from './Components/CreateAccount/final';
 import ProtectedRoute1 from './Components/ProtectedRoute/ProtectedRoute1'
 import ForgotPassword from './Components/forgotpassword/forgotpassword'
 import Brand from './Components/Brand/Brand'
-import Process from './Components/Brand/Process'
+import Process from './Components/Brand/wrapper'
 import UnsubcribedEmail from './Components/UnsubscribedEmail/UnsubcribedEmail'
 import {connect} from 'react-redux';
 import axios from 'axios';
