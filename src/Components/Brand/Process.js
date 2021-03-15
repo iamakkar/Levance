@@ -1,12 +1,15 @@
 import React from 'react';
 import {useHistory} from 'react-router-dom';
+import Navbar from '../Home/navbar'
+import Footer from '../Home/footer'
 import './Process.css';
 
 export default function App() {
     const history = useHistory();
+    
     return (
-        <>
-        <div className='bp-container' >
+    
+        <div className='bp-container'>
             <div className='bp-title'>
                 <h1>How does it Work?</h1>
             </div>
@@ -60,6 +63,7 @@ export default function App() {
                 </div>
             </div>
         </div>
-        </>
+        
+        
     );
 }
