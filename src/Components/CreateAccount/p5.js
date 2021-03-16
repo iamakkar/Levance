@@ -73,7 +73,7 @@ if (props.instagram === '' && props.facebook === '' && props.youtube === '') {
               <h4>It's Time to Connect Socially</h4>
               <p>(Enter atleast one)</p>
               <div className="con-inputcreateaccount1">
-                <input placeholder="Instagram (username)" id="instagram" type="text" onChange={val => {props.setInstagram(val.target.value)}} onKeyPress={(e)=>{if(e.key=="Enter") document.getElementById("facebook").focus()}} />
+                <input placeholder="Instagram (username)" id="instagram" type="text" onChange={val => {props.setInstagram(val.target.value.toLowerCase())}} onKeyPress={(e)=>{if(e.key=="Enter") document.getElementById("facebook").focus()}} />
                 <i className="icon">
                   <Instagram />
                 </i>
@@ -83,7 +83,7 @@ if (props.instagram === '' && props.facebook === '' && props.youtube === '') {
               
               {instagram&&<p style={{color:'red'}}>Instagram username already registered</p>}
               <div className="con-inputcreateaccount1">
-                <input placeholder="Facebook (username)" id="facebook" type="text" onChange={val => props.setFacebook(val.target.value)} onKeyPress={(e)=>{if(e.key=="Enter") document.getElementById("youtube").focus()}}/>
+                <input placeholder="Facebook (username)" id="facebook" type="text" onChange={val => props.setFacebook(val.target.value.toLowerCase())} onKeyPress={(e)=>{if(e.key=="Enter") document.getElementById("youtube").focus()}}/>
                 <i className="icon">
                   <Facebook />
                 </i>
