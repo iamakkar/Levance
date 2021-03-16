@@ -140,7 +140,7 @@ const Next = async () => {
         <h1>Sign Up</h1>
         
         <div className="con-inputcreateaccount1">
-         <input placeholder="Pick username" type="text" onBlur={val => {props.setUsername(val.target.value);}} onChange={val=>checkUsername(val)} onKeyPress={(e)=>{
+         <input placeholder="Pick username" type="text" onBlur={val => {props.setUsername(val.target.value.toLowerCase());}} onChange={val=>checkUsername(val)} onKeyPress={(e)=>{
            if(e.key=="Enter") document.getElementById("password").focus()
          }} />
          <i className="icon">
