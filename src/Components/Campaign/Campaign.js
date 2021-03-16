@@ -1070,6 +1070,9 @@ function App(props) {
               interestedInfluencer.postForUploadation.length != 0 && <h6>Status: <span style={{ fontWeight: 700 }}>{interestedInfluencer.status}</span></h6>
             }
             {
+              interestedInfluencer.status == "pending" && interestedInfluencer.postForUploadation.length != 0 ? <h6>Note: Your content is pending for aproval. Please upload the content after the aproval</h6> : <></>
+            }
+            {
 
               interestedInfluencer.postForUploadation.length != 0 && interestedInfluencer.status.toLowerCase() != 'pending' && <h6>Remark: <span style={{ fontWeight: 700 }}>{interestedInfluencer.remark}</span></h6>
             }
