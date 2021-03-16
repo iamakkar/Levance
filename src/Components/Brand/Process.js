@@ -2,12 +2,14 @@ import React from 'react';
 import {useHistory} from 'react-router-dom';
 import './Process.css';
 import Footer from '../Home/footer';
+import Navbar from '../Home/navbar';
 
 export default function App() {
     const history = useHistory();
     
     return (
         <>
+        <Navbar/>
         <div className='bp-container'>
             <div className='bp-title'>
                 <h1>How does it Work?</h1>
