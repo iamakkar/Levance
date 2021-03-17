@@ -21,6 +21,7 @@ import './Campaign.css'
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import LockIcon from '@material-ui/icons/Lock';
 import DoneAllIcon from '@material-ui/icons/DoneAll';
+import Truck from '@material-ui/icons/LocalShipping'
 var html = `<html>
 <head>
     <!-- Compiled and minified CSS -->
@@ -222,6 +223,12 @@ function App(props) {
   const [rejectReasons,setRejectRReasons] = useState([])
   const [boolOther,setBoolOther] = useState(false)
   const [otherReason,setOtherReason] = useState('')
+  const [address,setAddress] = useState({
+    shippingAddress:'',
+    city:'',
+    state:'',
+    zipcode:null
+  })
   var recievedPostArray = [];
   const pixelRatio = window.devicePixelRatio || 1;
 
@@ -583,14 +590,25 @@ function App(props) {
     })
   }
   const handleChange = () => {
+    if(!address.shippingAddress||!address.state||!address.city||!address.zipcode)
+    {
+      return Swal.fire({
+        title: 'Warning',
+        text: 'Please fill all fields',
+        icon: 'warning',
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonText: 'Okay',
+      })
+    }
     const userId = user._id;
     const email = props.email;
     const fullName = props.fullName;
     const campaignId = selectedCampaign._id;
     const interestedInfluencer = {
-      userId, email, fullName, campaignId
+      userId, email, fullName, campaignId,address
     }
-    axios.put(BASE_URL + "/addInfluencer", interestedInfluencer).then(res => {
+    axios.put( `${BASE_URL}/addInfluencer`, interestedInfluencer).then(res => {
 
       SetSelectedCampaign(res.data)
       M.toast({ html: 'Done' })
@@ -1056,7 +1074,10 @@ function App(props) {
             :
             <p style={{fontFamily:'Poppins'}}><ThumbDownIcon/> You have refused this collaboration</p>
             :
+            <>
             <p style={{fontFamily:'Poppins'}}><DoneAllIcon/> You have accepted this collaboration</p>
+            <p style={{fontFamily:'Poppins'}}><Truck/> The product will be shipped to you within 7-15 days</p>
+            </>
             :
             <p style={{fontFamily:'Poppins'}}><LockIcon/> This collaboration has been closed and is not accepting any participation</p>}
            </> }
@@ -1066,12 +1087,15 @@ function App(props) {
               interestedInfluencer.postForUploadation.length != 0 && <h6>Status: <span style={{ fontWeight: 700 }}>{interestedInfluencer.status}</span></h6>
             }
             {
+              interestedInfluencer.status == "pending" && interestedInfluencer.postForUploadation.length != 0 ? <h6>Note: Your content is pending for aproval. Please upload the content after the aproval</h6> : <></>
+            }
+            {
 
               interestedInfluencer.postForUploadation.length != 0 && interestedInfluencer.status.toLowerCase() != 'pending' && <h6>Remark: <span style={{ fontWeight: 700 }}>{interestedInfluencer.remark}</span></h6>
             }
             {
               interestedInfluencer.postForUploadation.length != 0 && interestedInfluencer.status.toLowerCase() == 'accepted' && <div>
-                <h4 style={{ fontFamily: "Ubuntu" }}>Provide uploaded posts details:</h4>
+                <h4 style={{ fontFamily: "Ubuntu" }}>Provide uploaded content details:</h4>
                 {!timeOver && <><Select
                   options={[
                     { 'value': 1, label: '1' },
@@ -1156,12 +1180,12 @@ function App(props) {
               {selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id) ? interestedInfluencer.status.toLowerCase() != 'accepted' ? <>
                   <input type='file' name='post' multiple value={postInputState} onChange={handlePostInputState} style={{ display: 'none' }} ref={hiddenFileInput} />
 
-                  <Button className="waves-effect center-block" onClick={handleClick} style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons left">upload</i>Upload</Button>
+                  <Button className="waves-effect center-block" onClick={handleClick} style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons left">upload</i>Upload Content</Button>
                   <p>(Upload all posts in one go)</p>
                 </> : '':''
               }
               <br />
-              {selectedCampaign.description &&<a href='#modaltermsandconditions' className="modal-trigger">Terms {'&'} Conditions</a>}
+              {/* {selectedCampaign.description &&<a href='#modaltermsandconditions' className="modal-trigger">Terms {'&'} Conditions</a>} */}
             </div>
             {selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id) && interestedInfluencer.status.toLowerCase() != 'accepted' ?
               <div className="col s12 center" style={{ margin: 'auto' }}>
@@ -1210,7 +1234,7 @@ function App(props) {
 
       <Modal
         actions={[
-          <Button flat modal="close" node="button" waves="green" onClick={handleChange}>Agree</Button>,
+          <Button flat modal="close" node="button" disabled={!address.shippingAddress||!address.state||!address.city||!address.zipcode} waves="green" onClick={handleChange}>Agree</Button>,
           <Button flat modal="close" node="button" waves="green">Close</Button>
         ]}
         bottomSheet={false}
@@ -1235,9 +1259,58 @@ function App(props) {
 
       >
 
+<div class="row">
+    <div class="col s12">
+      <div class="row">
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="address" type="text" class="validate" onChange={(e)=>{
+            setAddress({
+              ...address,
+              shippingAddress:e.target.value
+            })
+          }} placeholder="House No./Flat No./Street Name" />
+          <label for="address">Shipping Address</label>
+        </div>
 
-        <p>Are you sure to accept campaign by {selectedCampaign.brandName} ?</p>
-        <a href='#modaltermsandconditions' className="modal-trigger">Terms {'&'} Conditions</a>
+      </div>
+      <div class="input-field col s12 m6">
+          <input placeholder="City" id="city" onChange={(e)=>{
+            setAddress({
+              ...address,
+              city:e.target.value.toLowerCase()
+            })
+          }} type="text" class="validate"/>
+          <label for="city">City</label>
+      </div>
+      <div class="input-field col s12 m6">
+          <input placeholder="State" id="state" onChange={(e)=>{
+            setAddress({
+              ...address,
+              state:e.target.value.toLowerCase()
+            })
+          }} type="text" class="validate"/>
+          <label for="state">State</label>
+      </div>
+      <div class="input-field col s12 m6">
+          <input placeholder="ZIP Code" id="zip" onChange={(e)=>{
+            setAddress({
+              ...address,
+              zipcode:e.target.value.trim()
+            })
+          }} type="tel" class="validate"/>
+          <label for="zip">ZIP Code</label>
+      </div>
+
+      </div>
+    </div>
+</div>
+{(!address.shippingAddress||!address.state||!address.city||!address.zipcode)&&<p style={{color:'red'}}>Please fill all fields!</p>}
+        <p style={{fontWeight:700}}>Before accepting the campaign, do read the terms & conditions and content guidelines carefully.</p>
+        <div class='col s12' style={{margin: 2, padding: 5}} >
+            <a href="#modaltermsandconditions" style={{marginTop:4,marginBottom: 4, marginRight: 5}} className="modal-trigger"><a class="btn-small blue">Terms & Conditions</a></a>
+            <a href='#modalcontentguidelines' style={{marginTop:4,marginBottom: 4}} className="modal-trigger"><a class="btn-small" green>Content Guidlines</a></a>
+        </div>
 
       </Modal>
       <Modal
@@ -1263,7 +1336,6 @@ function App(props) {
           startingTop: '4%'
         }}
         root={document.body}
-
       >
 
 
@@ -1271,6 +1343,34 @@ function App(props) {
 
 
       </Modal>
+
+      <Modal
+        actions={[
+          <Button flat modal="close" node="button" waves="green">Close</Button>
+        ]}
+        bottomSheet={false}
+        fixedFooter={false}
+        header="Content Guidelines"
+        id="modalcontentguidelines"
+        open={false}
+        options={{
+          dismissible: true,
+          endingTop: '10%',
+          inDuration: 250,
+          onCloseEnd: null,
+          onCloseStart: null,
+          onOpenEnd: null,
+          onOpenStart: null,
+          opacity: 0.5,
+          outDuration: 250,
+          preventScrolling: true,
+          startingTop: '4%'
+        }}
+        root={document.body}
+      >
+        <p>{parser(String(selectedCampaign.contentguidelines))}</p>
+      </Modal>
+
       <Modal
         actions={[
           <Button flat node="button" waves="#4c4b77" onClick={handleRejectReasonsSubmit} style={{fontFamily:'Poppins',color:'white',backgroundColor:'#4c4b77',marginRight:'10px'}}>Submit</Button>,
