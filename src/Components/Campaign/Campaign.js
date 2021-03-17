@@ -223,6 +223,12 @@ function App(props) {
   const [rejectReasons,setRejectRReasons] = useState([])
   const [boolOther,setBoolOther] = useState(false)
   const [otherReason,setOtherReason] = useState('')
+  const [address,setAddress] = useState({
+    shippingAddress:'',
+    city:'',
+    state:'',
+    zipcode:null
+  })
   var recievedPostArray = [];
   const pixelRatio = window.devicePixelRatio || 1;
 
@@ -584,14 +590,25 @@ function App(props) {
     })
   }
   const handleChange = () => {
+    if(!address.shippingAddress||!address.state||!address.city||!address.zipcode)
+    {
+      return Swal.fire({
+        title: 'Warning',
+        text: 'Please fill all fields',
+        icon: 'warning',
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonText: 'Okay',
+      })
+    }
     const userId = user._id;
     const email = props.email;
     const fullName = props.fullName;
     const campaignId = selectedCampaign._id;
     const interestedInfluencer = {
-      userId, email, fullName, campaignId
+      userId, email, fullName, campaignId,address
     }
-    axios.put(BASE_URL + "/addInfluencer", interestedInfluencer).then(res => {
+    axios.put( `${BASE_URL}/addInfluencer`, interestedInfluencer).then(res => {
 
       SetSelectedCampaign(res.data)
       M.toast({ html: 'Done' })
@@ -1217,7 +1234,7 @@ function App(props) {
 
       <Modal
         actions={[
-          <Button flat modal="close" node="button" waves="green" onClick={handleChange}>Agree</Button>,
+          <Button flat modal="close" node="button" disabled={!address.shippingAddress||!address.state||!address.city||!address.zipcode} waves="green" onClick={handleChange}>Agree</Button>,
           <Button flat modal="close" node="button" waves="green">Close</Button>
         ]}
         bottomSheet={false}
@@ -1247,29 +1264,52 @@ function App(props) {
       <div class="row">
       <div class="row">
         <div class="input-field col s12">
-          <input id="address" type="text" class="validate" placeholder="House No./Flat No./Street Name" />
+          <input id="address" type="text" class="validate" onChange={(e)=>{
+            setAddress({
+              ...address,
+              shippingAddress:e.target.value
+            })
+          }} placeholder="House No./Flat No./Street Name" />
           <label for="address">Shipping Address</label>
         </div>
+
       </div>
       <div class="input-field col s12 m6">
-          <input placeholder="City" id="city" type="text" class="validate"/>
+          <input placeholder="City" id="city" onChange={(e)=>{
+            setAddress({
+              ...address,
+              city:e.target.value.toLowerCase()
+            })
+          }} type="text" class="validate"/>
           <label for="city">City</label>
       </div>
       <div class="input-field col s12 m6">
-          <input placeholder="State" id="state" type="text" class="validate"/>
+          <input placeholder="State" id="state" onChange={(e)=>{
+            setAddress({
+              ...address,
+              state:e.target.value.toLowerCase()
+            })
+          }} type="text" class="validate"/>
           <label for="state">State</label>
       </div>
       <div class="input-field col s12 m6">
-          <input placeholder="ZIP Code" id="zip" type="tel" class="validate"/>
+          <input placeholder="ZIP Code" id="zip" onChange={(e)=>{
+            setAddress({
+              ...address,
+              zipcode:e.target.value.trim()
+            })
+          }} type="tel" class="validate"/>
           <label for="zip">ZIP Code</label>
       </div>
+
       </div>
     </div>
 </div>
-        <p>Before accepting the campaign, do read the terms & conditions and content guidelines carefully.</p>
+{(!address.shippingAddress||!address.state||!address.city||!address.zipcode)&&<p style={{color:'red'}}>Please fill all fields!</p>}
+        <p style={{fontWeight:700}}>Before accepting the campaign, do read the terms & conditions and content guidelines carefully.</p>
         <div class='col s12' style={{margin: 2, padding: 5}} >
-            <a href="#modaltermsandconditions" style={{marginBottom: 4, marginRight: 5}} className="modal-trigger"><a class="btn-small blue">Terms & Conditions</a></a>
-            <a href='#modalcontentguidelines' style={{marginBottom: 4}} className="modal-trigger"><a class="btn-small" green>Content Guidlines</a></a>
+            <a href="#modaltermsandconditions" style={{marginTop:4,marginBottom: 4, marginRight: 5}} className="modal-trigger"><a class="btn-small blue">Terms & Conditions</a></a>
+            <a href='#modalcontentguidelines' style={{marginTop:4,marginBottom: 4}} className="modal-trigger"><a class="btn-small" green>Content Guidlines</a></a>
         </div>
 
       </Modal>
@@ -1328,7 +1368,7 @@ function App(props) {
         }}
         root={document.body}
       >
-        <p>{parser(String(selectedCampaign.termsandcondition))}</p>
+        <p>{parser(String(selectedCampaign.contentguidelines))}</p>
       </Modal>
 
       <Modal
