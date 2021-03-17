@@ -113,7 +113,6 @@
   background-repeat: no-repeat;
   background-size: cover;
   box-shadow: 0 0 7px grey;
-  background-image: url("https://www.nextbigbrand.in/wp-content/uploads/2019/02/image_banner.png");
 }
 .campaign:hover{
   animation: campaignShadow 0.4s forwards

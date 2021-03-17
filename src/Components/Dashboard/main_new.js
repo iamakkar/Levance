@@ -295,7 +295,7 @@ function generateDownload(previewCanvas, crop) {
       setUpdatedCategories(x);
       axios({
         method:'GET',
-        url:BASE_URL + "/campaign",
+        url: `${BASE_URL}/campaign`,
         headers: {
           'authorization': `Bearer ${localStorage.token}`
         }
@@ -598,13 +598,13 @@ function generateDownload(previewCanvas, crop) {
               }
             {campaigns.map(campaign => {
               return (window.innerWidth > 1000) ? (
-              <div className="campaign" onClick={() => window.location.href=`/campaign/${campaign._id}`} >
+              <div className="campaign" style={{backgroundImage:`url(${campaign.campaignBanner})`}} onClick={() => window.location.href=`/campaign/${campaign._id}`} >
                 <div className="campaign-footer">
                   <h4>{campaign.brandName}</h4>
                 </div>
               </div>
               ) : (
-                <div className="campaign" onClick={() => window.location.href=`/campaign/${campaign._id}`} >
+                <div className="campaign" style={{backgroundImage:`url(${campaign.campaignBanner})`}} onClick={() => window.location.href=`/campaign/${campaign._id}`} >
                   <div className="campaign-footer" >
                     <h6>{campaign.brandName}</h6>
                   </div>
