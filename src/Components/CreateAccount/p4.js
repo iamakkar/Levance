@@ -23,6 +23,7 @@ const categories = [
   { value: "Luxury", label: "Luxury" },
   { value: "DIY", label: "DIY" },
   { value: "Repost", label: "Repost" },
+  {value: "Organic/Gardening", label: "Organic/Gardening"}
 ];
 
 var x = [];
