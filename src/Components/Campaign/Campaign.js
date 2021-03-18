@@ -739,24 +739,34 @@ function App(props) {
     })
   }
 
-  const TimeForInsights = () => {
-
-
-
+  const TimeForInsights =async () => {
+    var currentTime ;
+    await axios.get(`${BASE_URL}/curentTimeAndDate`).then(data=>currentTime=data.data)
+    // console.log(currentTime)
+    var curr = new Date(currentTime)
+    function pad(value) {
+      return value > 9 ? value : "0" + value;
+  }
+  var t = new Date(timeofInsightsUploaded)
+      t.setHours(t.getHours() + 48);
+      // console.log(t)
     var insightsTimer = setInterval(() => {
-      var t = new Date(timeofInsightsUploaded)
-      t.setHours(t.getHours() + 24);
-      var curr = new Date()
+      
+      curr.setSeconds(curr.getSeconds()+1)
+      
       var res = (t - curr) / 1000;
+      // console.log(res)
       if (res <= 0) {
-        clearInterval(insightsTimer);
         setTimeOver(true);
+        clearInterval(insightsTimer);
       }
-      var hours = Math.floor(res / 3600) % 24;
-      var minutes = Math.floor(res / 60) % 60;
-      var seconds = res % 60;
+      var hours = Math.floor(res / 3600);
+      res=res%3600;
+      var minutes = Math.floor(res / 60);
+      res=res%60;
+      var seconds = res ;
 
-      settimeForInsights(`${hours}hrs:${minutes}min:${Math.floor(seconds)}s`)
+      settimeForInsights(`${hours}hrs : ${minutes}min : ${Math.floor(seconds)}s`)
     }, 1000);
 
   }
