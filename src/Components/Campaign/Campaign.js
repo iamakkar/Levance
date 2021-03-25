@@ -217,6 +217,7 @@ function App(props) {
   const [caption, setCaption] = useState('');
   const [postsNo, setpostsNo] = useState(0);
   const [postLinkSubmit, setpostLinkSubmit] = useState([]);
+  const [content, setContent] = useState([]);
   const [timeOver, setTimeOver] = useState(false)
   const [insights, setInsights] = useState([])
   const [loaderSubmitInsights, setLoaderSubmitInsights] = useState(false)
@@ -608,7 +609,7 @@ function App(props) {
     const interestedInfluencer = {
       userId, email, fullName, campaignId,address
     }
-    axios.put( `${BASE_URL}/addInfluencer`, interestedInfluencer).then(res => {
+    axios.put( `http://www.localhost:5000/addInfluencer`, interestedInfluencer).then(res => {
 
       SetSelectedCampaign(res.data)
       M.toast({ html: 'Done' })
@@ -703,6 +704,19 @@ function App(props) {
       }
     }
     setpostLinkSubmit(postlink)
+
+  }, [postsNo])
+
+  useEffect(() => {
+    var postlink = []
+    for (let index = 0; index < postsNo; index++) {
+      if (index < content.length)
+        postlink.push(content[index]);
+      else {
+        postlink.push('')
+      }
+    }
+    setContent(postlink)
 
   }, [postsNo])
 
@@ -1093,7 +1107,7 @@ function App(props) {
            </> }
             {parser(selectedCampaign.description)}
             {/* {parser(html)} */}
-            {
+            {/* {
               interestedInfluencer.postForUploadation.length != 0 && <h6>Status: <span style={{ fontWeight: 700 }}>{interestedInfluencer.status}</span></h6>
             }
             {
@@ -1102,8 +1116,8 @@ function App(props) {
             {
 
               interestedInfluencer.postForUploadation.length != 0 && interestedInfluencer.status.toLowerCase() != 'pending' && <h6>Remark: <span style={{ fontWeight: 700 }}>{interestedInfluencer.remark}</span></h6>
-            }
-            {
+            } */}
+            {/* {
               interestedInfluencer.postForUploadation.length != 0 && interestedInfluencer.status.toLowerCase() == 'accepted' && <div>
                 <h4 style={{ fontFamily: "Ubuntu" }}>Provide uploaded content details:</h4>
                 {!timeOver && <><Select
@@ -1175,8 +1189,7 @@ function App(props) {
             {/* {
               interestedInfluencer.postForUploadation.length != 0 && <h3>Posts uploaded</h3>
             } */}
-            <div className="col s12 center">
-
+            {/* <div className="col s12 center">
               <div class='postsUploadedPreviewBox'>{
                 interestedInfluencer.postForUploadation.map(ele => {
                   if (ele.url.includes('image'))
@@ -1195,9 +1208,9 @@ function App(props) {
                 </> : '':''
               }
               <br />
-              {/* {selectedCampaign.description &&<a href='#modaltermsandconditions' className="modal-trigger">Terms {'&'} Conditions</a>} */}
-            </div>
-            {selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id) && interestedInfluencer.status.toLowerCase() != 'accepted' ?
+              {selectedCampaign.description &&<a href='#modaltermsandconditions' className="modal-trigger">Terms {'&'} Conditions</a>}
+            </div> */}
+            {/* {selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id) && interestedInfluencer.status.toLowerCase() != 'accepted' ?
               <div className="col s12 center" style={{ margin: 'auto' }}>
                 <div class="input-field">
                   <textarea id="last_name" type="text" class="materialize-textarea" value={caption} onChange={(val) => setCaption(val.target.value)} />
@@ -1216,18 +1229,48 @@ function App(props) {
                       </div>
                     </div>}
                   <Button className="waves-effect center-block" onClick={handlePostSubmit} disabled={caption == '' || selectedFile.length == 0} style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons right">send</i>Submit</Button>
-                </div>
-                {/* <div class='col s12 center'>
-                  {(() => {
-                    switch (status) {
-                      case "pending": return (recievedPostArray === [] ? null : <p>Pending</p>);
-                      case "accepted": return <div><p>Accepted</p></div>;
-                      case "rejected": return <p>Rejected</p>;
-                    }
-                  })}
-                </div> */}
+                </div> 
               </div>
-              : <></>}
+              : <></>} */}
+
+            <div className="row" >
+              <div className="col s12">
+              <Select
+                  options={[
+                    { 'value': 1, label: '1' },
+                    { 'value': 2, label: '2' },
+                    { 'value': 3, label: '3' },
+                    { 'value': 4, label: '4' },
+                    { 'value': 5, label: '5' },
+                    { 'value': 6, label: '6' },
+                    { 'value': 7, label: '7' }
+                  ]}
+                  placeholder='No. of posts uploaded'
+                  closeMenuOnSelect={true}
+                  className="select"
+                  value={postsNo}
+                  onChange={(e) => {
+                    setpostsNo(e.value)
+                  }}
+                />
+              </div>
+                {content.map((val, index) => {
+                  return (
+                    <div className="row">
+                    <div className="col m6 s12">
+                    <label for="postLink">Link</label>
+                    <input id="postLink" type="text" class="materialize-textarea" />
+                    </div>
+                    <div className="col m3 s6 center">
+                    <Button className="btn center-block"  style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons right">send</i>Submit</Button>
+                    </div>
+                    <div className="col m3 s6 center">
+                    <Button className="btn center-block"  style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons right">send</i>Insights</Button>
+                    </div>
+                    </div>
+                  )
+                })}
+            </div>
               
           </div>
           {selectedCampaign.campaignOpen&&!selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id)&& !selectedCampaign.rejectedInfluencer.some(influencer => influencer.userId == user._id)?
