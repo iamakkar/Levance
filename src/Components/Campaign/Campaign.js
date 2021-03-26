@@ -650,7 +650,7 @@ function App(props) {
     setSelectedFile(res);
     Swal.fire({
       title: 'Uploaded Successfully',
-      text: 'Your latest post would be shown here when you press the SUBMIT button after entering the caption.',
+      text: '',
       icon: 'success',
       showCancelButton: false,
       showConfirmButton: true,
@@ -1245,7 +1245,7 @@ function App(props) {
                     { 'value': 6, label: '6' },
                     { 'value': 7, label: '7' }
                   ]}
-                  placeholder='No. of posts uploaded'
+                  placeholder='No. of content pieces uploaded'
                   closeMenuOnSelect={true}
                   className="select"
                   value={postsNo}
@@ -1261,8 +1261,10 @@ function App(props) {
                     <label for="postLink">Link</label>
                     <input id="postLink" type="text" class="materialize-textarea" />
                     </div>
-                    <div className="col m3 s6 center">
-                    <Button className="btn center-block"  style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons right">send</i>Submit</Button>
+                    <div className="col m3 s6 center" style={{display: 'flex', flexDirection: 'column'}} >
+                    <input type='file' name='post' multiple value={postInputState} onChange={handlePostInputState} style={{ display: 'none' }} ref={hiddenFileInput} />
+                    <Button className="btn center-block" onClick={handleClick} style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons right">send</i>Upload</Button>
+                    <p style={{fontSize: 10, color: 'gray'}} >Don't have a link? Upload a screenshot here</p>
                     </div>
                     <div className="col m3 s6 center">
                     <Button className="btn center-block"  style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons right">send</i>Insights</Button>
