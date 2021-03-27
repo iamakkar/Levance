@@ -189,9 +189,9 @@ function App(props) {
   const [selectedCampaign, SetSelectedCampaign] = useState({
     description: "",
     interestedInfluencer: [],
-    rejectedInfluencer:[],
+    rejectedInfluencer: [],
     brandName: "",
-    campaignOpen:false
+    campaignOpen: false
   });
   const [selectedFile, setSelectedFile] = useState([]);
   const [updateProfile, setUpdatedProfile] = useState({});
@@ -204,15 +204,10 @@ function App(props) {
   const [postInputState, setPostInputState] = useState('')
   const [timeForInsights, settimeForInsights] = useState('')
   const [interestedInfluencer, setinterestedInfluencer] = useState({
-    acceptanceByTeam: "",
-    caption: "",
     email: "",
-    postAfterUploadation: [],
-    postForUploadation: [],
-    remark: "",
-    status: "",
     userId: "",
-    _id: ""
+    _id: "",
+    content: []
   })
   const [caption, setCaption] = useState('');
   const [postsNo, setpostsNo] = useState(0);
@@ -221,15 +216,17 @@ function App(props) {
   const [timeOver, setTimeOver] = useState(false)
   const [insights, setInsights] = useState([])
   const [loaderSubmitInsights, setLoaderSubmitInsights] = useState(false)
-  const [rejectReasons,setRejectRReasons] = useState([])
-  const [boolOther,setBoolOther] = useState(false)
-  const [otherReason,setOtherReason] = useState('')
-  const [address,setAddress] = useState({
-    shippingAddress:'',
-    city:'',
-    state:'',
-    zipcode:null
+  const [rejectReasons, setRejectRReasons] = useState([])
+  const [boolOther, setBoolOther] = useState(false)
+  const [otherReason, setOtherReason] = useState('')
+  const [address, setAddress] = useState({
+    shippingAddress: '',
+    city: '',
+    state: '',
+    zipcode: null
   })
+  const [currentTime, setCurrentTime] = useState('')
+  const [timeForEachPost, settimeForEachPost] = useState([])
   var recievedPostArray = [];
   const pixelRatio = window.devicePixelRatio || 1;
 
@@ -266,11 +263,11 @@ function App(props) {
     canvas.toBlob(
       (blob) => {
         const previewUrl = window.URL.createObjectURL(blob);
-        
+
         const reader = new FileReader();
         reader.readAsDataURL(blob);
         reader.onloadend = () => {
-          
+
           uploadImage(reader.result);
           document.getElementById("CloseCroopedImageButton").click()
         };
@@ -309,12 +306,12 @@ function App(props) {
     { value: "Repost", label: "Repost" },
   ];
   const reasons = [
-    {value:'a',label:'A'},
-    {value:'b',label:'B'},
-    {value:'c',label:'C'},
-    {value:'d',label:'D'},
-    {value:'e',label:'E'},
-    {value:'other',label:'other'}
+    { value: 'a', label: 'A' },
+    { value: 'b', label: 'B' },
+    { value: 'c', label: 'C' },
+    { value: 'd', label: 'D' },
+    { value: 'e', label: 'E' },
+    { value: 'other', label: 'other' }
   ]
   const message1 = `Hang on tight!`;
   const message2 = `Your desired campaigns might be here anytime soon!`;
@@ -346,7 +343,7 @@ function App(props) {
   const handleSubmitFile = (e) => {
     if (e.target.files && e.target.files.length > 0) {
       document.getElementById("ModalCroopedImageButton").click();
-      
+
       const reader = new FileReader();
       reader.addEventListener("load", () => setUpImg(reader.result));
       reader.readAsDataURL(e.target.files[0]);
@@ -381,7 +378,7 @@ function App(props) {
     try {
       setLoader(true)
       const res = await axios({
-        url: BASE_URL + '/api/upload',
+        url: "http://localhost:5000" + '/api/upload',
         method: 'POST',
         data: JSON.stringify({ data: base64EncodedImage, lastPic: lastPic }),
         headers: {
@@ -442,7 +439,7 @@ function App(props) {
 
   useEffect(async () => {
     const res = await axios({
-      url: BASE_URL + "/getdetails",
+      url: "http://localhost:5000" + "/getdetails",
       method: "GET",
       headers: {
         'authorization': `Bearer ${localStorage.token}`
@@ -478,7 +475,7 @@ function App(props) {
         headers: {
           'authorization': `Bearer ${localStorage.token}`
         },
-        url: `${BASE_URL}/individualCampaign/${props.match.params.campaignID}`
+        url: `http://localhost:5000/individualCampaign/${props.match.params.campaignID}`
       }
       ).then(res => {
         if (res.data.err)
@@ -488,9 +485,8 @@ function App(props) {
         for (var m = 0; m < res.data.message.interestedInfluencer.length; m++) {
           if (res.data.message.interestedInfluencer[m].userId === user._id) {
             setinterestedInfluencer(res.data.message.interestedInfluencer[m]);
-            timeofInsightsUploaded = res.data.message.interestedInfluencer[m].acceptanceByTeam
-            
-            TimeForInsights()
+            setContent(res.data.message.interestedInfluencer[m].content)
+
             break;
           }
         }
@@ -514,7 +510,7 @@ function App(props) {
     else {
       setLoader(true)
       const result = await axios({
-        url: BASE_URL + "/updateprofile",
+        url: "http://localhost:5000" + "/updateprofile",
         method: "PUT",
         data: updateProfile
         ,
@@ -530,7 +526,7 @@ function App(props) {
         M.toast({ html: "Updated Successfully" })
         document.getElementById("updateModal").click();
         const res = await axios({
-          url: BASE_URL + "/getdetails",
+          url: "http://localhost:5000" + "/getdetails",
           method: "GET",
           headers: {
             'authorization': `Bearer ${localStorage.token}`
@@ -574,7 +570,7 @@ function App(props) {
       headers: {
         'authorization': `Bearer ${localStorage.token}`
       },
-      url: `${BASE_URL}/individualCampaign/${props.match.params.campaignID}`
+      url: `http://localhost:5000/individualCampaign/${props.match.params.campaignID}`
     }).then(res => {
       if (res.data.err)
         return console.log(res.data.err)
@@ -582,17 +578,15 @@ function App(props) {
       for (var m = 0; m < res.data.message.interestedInfluencer.length; m++) {
         if (res.data.message.interestedInfluencer[m].userId === user._id) {
           setinterestedInfluencer(res.data.message.interestedInfluencer[m]);
-          timeofInsightsUploaded = res.data.message.interestedInfluencer[m].acceptanceByTeam
-          
-          TimeForInsights()
+          setContent(res.data.message.interestedInfluencer[m].content)
+
           break;
         }
       }
     })
   }
   const handleChange = () => {
-    if(!address.shippingAddress||!address.state||!address.city||!address.zipcode)
-    {
+    if (!address.shippingAddress || !address.state || !address.city || !address.zipcode) {
       return Swal.fire({
         title: 'Warning',
         text: 'Please fill all fields',
@@ -607,9 +601,9 @@ function App(props) {
     const fullName = props.fullName;
     const campaignId = selectedCampaign._id;
     const interestedInfluencer = {
-      userId, email, fullName, campaignId,address
+      userId, email, fullName, campaignId, address
     }
-    axios.put( `http://www.localhost:5000/addInfluencer`, interestedInfluencer).then(res => {
+    axios.put(`http://www.localhost:5000/addInfluencer`, interestedInfluencer).then(res => {
 
       SetSelectedCampaign(res.data)
       M.toast({ html: 'Done' })
@@ -619,9 +613,7 @@ function App(props) {
     })
   }
 
-  const handleClick = e => {
-    hiddenFileInput.current.click();
-  }
+
 
   const toBase64 = file => new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -630,7 +622,8 @@ function App(props) {
     reader.onerror = error => reject(error);
   });
 
-  const handlePostInputState = async (e) => {
+  const handlePostInputState = async (e, index) => {
+    
     e.preventDefault();
     let abc = e.target.files.length
     let x = [];
@@ -639,60 +632,78 @@ function App(props) {
       let base64 = toBase64(file);
       x.push(base64);
     }
-
     let y = await Promise.all(x)
     
-    const res = [];
-    for (let index = 0; index < y.length; index++) {
-      res.push({ filestr: y[index] });
-
-    }
-    setSelectedFile(res);
-    Swal.fire({
-      title: 'Uploaded Successfully',
-      text: '',
-      icon: 'success',
-      showCancelButton: false,
-      showConfirmButton: true,
-      confirmButtonText: 'Cool',
-    })
+    content[index].post = y[0]
+    // var res = [];
+    // for (let index = 0; index < y.length; index++) {
+    //   res.push( y[index] );
+    // }
+    // }
+    // setSelectedFile(res);
+    // Swal.fire({
+    //   title: 'Uploaded Successfully',
+    //   text: '',
+    //   icon: 'success',
+    //   showCancelButton: false,
+    //   showConfirmButton: true,
+    //   confirmButtonText: 'Cool',
+    // })
   }
 
   const handlePostSubmit = async () => {
-    if (selectedFile == [])
+    if (content.length == 0)
       return M.toast({
         html: 'Atleast one post to be attached'
       })
-    setLoaderSubmitfiles(true)
-    try {
-      await axios({
-        url: `${BASE_URL}/api/uploadPosts`,
-        method: 'POST',
-        data: { caption: caption,
-           posts: selectedFile, 
-           campaignId: props.match.params.campaignID,
-            previousPost:interestedInfluencer.postForUploadation },
-        headers: {
-          'Content-Type': 'application/json',
-          'authorization': `Bearer ${localStorage.token}`
-        },
-      }).then(res => {
-        if (res.data.error)
-         { M.toast({
-            html: "An error occurred , please try later"
-          })
-          setTimeout(() => {
-            window.location.reload()
-          }, 1000);
-        }
-        setLoaderSubmitfiles(false);
-        refreshCampaign()
+    var check = false
+    content.forEach(async (ele, index) => {
+      if (ele.post.length == 0 && ele.link == '') {
+        
+        check = true;
 
-      })
-    } catch (e) {
-      console.log(e);
-      setLoaderSubmitfiles(false)
-    }
+      }
+      if (index + 1 == content.length && check) {
+        return M.toast({
+          html: 'Please fill atleast link or upload screenshot for each content pieces!'
+        })
+      }
+      if (index + 1 == content.length && !check) {
+        
+        setLoaderSubmitfiles(true)
+        try {
+          await axios({
+            url: `http://localhost:5000/api/uploadPosts`,
+            method: 'POST',
+            data: {
+              campaignId: props.match.params.campaignID,
+              content: content
+            },
+            headers: {
+              'Content-Type': 'application/json',
+              'authorization': `Bearer ${localStorage.token}`
+            },
+          }).then(res => {
+            if (res.data.error) {
+              M.toast({
+                html: "An error occurred , please try later"
+              })
+              setTimeout(() => {
+                window.location.reload()
+              }, 1000);
+            }
+            setLoaderSubmitfiles(false);
+            refreshCampaign()
+
+          })
+        } catch (e) {
+          console.log(e);
+          setLoaderSubmitfiles(false)
+        }
+      }
+    })
+
+
   }
   useEffect(() => {
     var postlink = []
@@ -713,7 +724,7 @@ function App(props) {
       if (index < content.length)
         postlink.push(content[index]);
       else {
-        postlink.push('')
+        postlink.push({ post: '', link: '', insights: '' })
       }
     }
     setContent(postlink)
@@ -721,7 +732,7 @@ function App(props) {
   }, [postsNo])
 
   const postsLinkUpload = () => {
-    
+
     if (postLinkSubmit.length == 0)
       return M.toast({ html: 'Fill atleast one link' })
     if (postLinkSubmit.some(ele => {
@@ -729,7 +740,7 @@ function App(props) {
     }))
       return M.toast({ html: 'Please fill all fields' })
     axios({
-      url: `${BASE_URL}/postsLinkUpload`,
+      url: `http://localhost:5000/postsLinkUpload`,
       method: 'POST',
       data: {
         postLinkSubmit: postLinkSubmit,
@@ -753,38 +764,50 @@ function App(props) {
     })
   }
 
-  const TimeForInsights =async () => {
-    var currentTime ;
-    await axios.get(`${BASE_URL}/curentTimeAndDate`).then(data=>currentTime=data.data)
-    // console.log(currentTime)
+  useEffect(() => {
+    axios.get(`http://localhost:5000/curentTimeAndDate`).then(data => setCurrentTime(data.data))
+  }, [])
+  useEffect(() => {
+    var postsTime = []
+    content.map((ele) => {
+      postsTime.push({ timeLeft: '', timeOver: false })
+    })
+    settimeForEachPost(postsTime)
+    console.log(postsTime)
+  }, [content])
+  const TimeForInsights = async (submitTime, index) => {
+    console.log(currentTime)
     var curr = new Date(currentTime)
     function pad(value) {
       return value > 9 ? value : "0" + value;
-  }
-  var t = new Date(timeofInsightsUploaded)
-      t.setHours(t.getHours() + 48);
-      // console.log(t)
-    var insightsTimer = setInterval(() => {
-      
-      curr.setSeconds(curr.getSeconds()+1)
-      
-      var res = (t - curr) / 1000;
-      // console.log(res)
-      if (res <= 0) {
-        setTimeOver(true);
-        clearInterval(insightsTimer);
-      }
-      var hours = Math.floor(res / 3600);
-      res=res%3600;
-      var minutes = Math.floor(res / 60);
-      res=res%60;
-      var seconds = res ;
+    }
+    console.log(submitTime)
+    var t = new Date(submitTime)
+    t.setHours(t.getHours() + 48);
+    console.log(t)
+    // var insightsTimer = setInterval(() => {
+    curr.setSeconds(curr.getSeconds() + 1)
+    var res = (t - curr) / 1000;
 
-      settimeForInsights(`${hours}hrs : ${minutes}min : ${Math.floor(seconds)}s`)
-    }, 1000);
+    // if (res <= 0) {
+    //   clearInterval(insightsTimer);
+    // }
+    var hours = Math.floor(res / 3600);
+    res = res % 3600;
+    var minutes = Math.floor(res / 60);
+    res = res % 60;
+    var seconds = res;
+    var temp = timeForEachPost;
+    temp[index].timeLeft = `${hours}hrs : ${minutes}min : ${Math.floor(seconds)}s`
+
+    settimeForEachPost(temp)
+    console.log(timeForEachPost)
+    // })
+
 
   }
-  const handleInsightsInputState = async (e) => {
+  const handleInsightsInputState = async (e, index) => {
+    
     e.preventDefault();
     let abc = e.target.files.length
     let x = [];
@@ -793,89 +816,102 @@ function App(props) {
       let base64 = toBase64(file);
       x.push(base64);
     }
-
     let y = await Promise.all(x)
     
-    const res = [];
-    for (let index = 0; index < y.length; index++) {
-      res.push({ filestr: y[index] });
+    content[index].insight = y[0]
 
-    }
 
-    setInsights(res);
   }
 
   const handleInsightSubmit = async () => {
-    if (selectedFile == [])
+    if (content.length == 0)
       return M.toast({
         html: 'Atleast one post to be attached'
       })
-    try {
-      setLoaderSubmitInsights(true)
-      await axios({
-        url: `${BASE_URL}/api/uploadInsights`,
-        method: 'POST',
-        data: { insights: insights, campaignId: props.match.params.campaignID },
-        headers: {
-          'Content-Type': 'application/json',
-          'authorization': `Bearer ${localStorage.token}`
-        },
-      }).then(res => {
-        if (res.data.error)
-          M.toast({
-            html: "An error occurred , please try later"
+    var check = false
+    content.forEach(async (ele, index) => {
+      if (ele.insight == '') {
+
+        check = true;
+
+      }
+      if (index + 1 == content.length && check) {
+        return M.toast({
+          html: 'Please upload all insights!'
+        })
+      }
+      if (index + 1 == content.length && !check) {
+        
+        setLoaderSubmitInsights(true)
+        try {
+          await axios({
+            url: `http://localhost:5000/api/uploadInsights`,
+            method: 'POST',
+            data: {
+              campaignId: props.match.params.campaignID,
+              content: content
+            },
+            headers: {
+              'Content-Type': 'application/json',
+              'authorization': `Bearer ${localStorage.token}`
+            },
+          }).then(res => {
+            if (res.data.error) {
+              M.toast({
+                html: "An error occurred , please try later"
+              })
+              setTimeout(() => {
+                window.location.reload()
+              }, 1000);
+            }
+            setLoaderSubmitInsights(false);
+            refreshCampaign()
+
           })
-        refreshCampaign()
-        setLoaderSubmitInsights(false)
-      })
-    } catch (e) {
-      console.log(e);
-      setLoaderSubmitInsights(false)
-    }
-    Swal.fire({
-      title: 'Uploaded Successfully',
-      text: 'Your insights have been uploaded successfully. Thank You!',
-      icon: 'success',
-      showCancelButton: false,
-      showConfirmButton: true,
-      confirmButtonText: 'Cool',
+        } catch (e) {
+          console.log(e);
+          setLoaderSubmitInsights(false)
+        }
+
+
+      }
     })
   }
 
-  const handleRejectReasonsSubmit = ()=>{
-    if(boolOther&&!otherReason)
-    return Swal.fire({
-      title: 'Warning',
-      text: 'Please give other reason',
-      icon: 'warning',
-      showCancelButton: false,
-      showConfirmButton: true,
-      confirmButtonText: 'Okay',
-    })
-    if(boolOther)
-    rejectReasons.push(otherReason)
+  const handleRejectReasonsSubmit = () => {
+    if (boolOther && !otherReason)
+      return Swal.fire({
+        title: 'Warning',
+        text: 'Please give other reason',
+        icon: 'warning',
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonText: 'Okay',
+      })
+    if (boolOther)
+      rejectReasons.push(otherReason)
 
-    if(!rejectReasons.length)
-    return Swal.fire({
-      title: 'Warning',
-      text: 'Select atleast one reason',
-      icon: 'warning',
-      showCancelButton: false,
-      showConfirmButton: true,
-      confirmButtonText: 'Okay',
-    })
+    if (!rejectReasons.length)
+      return Swal.fire({
+        title: 'Warning',
+        text: 'Select atleast one reason',
+        icon: 'warning',
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonText: 'Okay',
+      })
     const userId = user._id;
     const email = props.email;
     const fullName = props.fullName;
     const campaignId = selectedCampaign._id;
     const rejectededInfluencer = {
       userId, email, fullName, campaignId,
-      reason:rejectReasons
+      reason: rejectReasons
     }
     axios({
-      method:'PUT',
-      url: `${BASE_URL}/rejectInfluencer`,
-      data:rejectededInfluencer
+      method: 'PUT',
+      url: `http://localhost:5000/rejectInfluencer`,
+      data: rejectededInfluencer
     }).then(res => {
       SetSelectedCampaign(res.data)
       M.toast({ html: 'Done' })
@@ -1076,8 +1112,8 @@ function App(props) {
             </Modal>
           </div>
 
-          <div class="col s12 m9 campaignBox" id="campaignBox" style={{paddingBottom:'60px'}}>
-          {!selectedCampaign.description && <div className='center' style={{ marginTop: "20px" }}><div class="preloader-wrapper small active center">
+          <div class="col s12 m9 campaignBox" id="campaignBox" style={{ paddingBottom: '60px' }}>
+            {!selectedCampaign.description && <div className='center' style={{ marginTop: "20px" }}><div class="preloader-wrapper small active center">
               <div class="spinner-layer spinner-blue-only">
                 <div class="circle-clipper left">
                   <div class="circle"></div>
@@ -1088,23 +1124,23 @@ function App(props) {
                 </div>
               </div>
             </div></div>}
-            {selectedCampaign.description&&<>{selectedCampaign.campaignOpen
-            ?
-            !selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id)
-            ?
-            !selectedCampaign.rejectedInfluencer.some(influencer => influencer.userId == user._id)
-            ?
-            <p style={{fontFamily:'Poppins'}}><LockOpenIcon/> This collaboration is open and accepting participation</p>
-            :
-            <p style={{fontFamily:'Poppins'}}><ThumbDownIcon/> You have refused this collaboration</p>
-            :
-            <>
-            <p style={{fontFamily:'Poppins'}}><DoneAllIcon/> You have accepted this collaboration</p>
-            <p style={{fontFamily:'Poppins'}}><Truck/> The product will be shipped to you within 7-15 days</p>
-            </>
-            :
-            <p style={{fontFamily:'Poppins'}}><LockIcon/> This collaboration has been closed and is not accepting any participation</p>}
-           </> }
+            {selectedCampaign.description && <>{selectedCampaign.campaignOpen
+              ?
+              !selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id)
+                ?
+                !selectedCampaign.rejectedInfluencer.some(influencer => influencer.userId == user._id)
+                  ?
+                  <p style={{ fontFamily: 'Poppins' }}><LockOpenIcon /> This collaboration is open and accepting participation</p>
+                  :
+                  <p style={{ fontFamily: 'Poppins' }}><ThumbDownIcon /> You have refused this collaboration</p>
+                :
+                <>
+                  <p style={{ fontFamily: 'Poppins' }}><DoneAllIcon /> You have accepted this collaboration</p>
+                  <p style={{ fontFamily: 'Poppins' }}><Truck /> The product will be shipped to you within 7-15 days</p>
+                </>
+              :
+              <p style={{ fontFamily: 'Poppins' }}><LockIcon /> This collaboration has been closed and is not accepting any participation</p>}
+            </>}
             {parser(selectedCampaign.description)}
             {/* {parser(html)} */}
             {/* {
@@ -1232,10 +1268,9 @@ function App(props) {
                 </div> 
               </div>
               : <></>} */}
-
-            <div className="row" >
+            {interestedInfluencer.content.length == 0 && selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id)&&<div className="row" >
               <div className="col s12">
-              <Select
+                <Select
                   options={[
                     { 'value': 1, label: '1' },
                     { 'value': 2, label: '2' },
@@ -1254,42 +1289,161 @@ function App(props) {
                   }}
                 />
               </div>
+              <div style={{ padding: '25px auto auto 10px' }}>
                 {content.map((val, index) => {
                   return (
-                    <div className="row">
-                    <div className="col m6 s12">
-                    <label for="postLink">Link</label>
-                    <input id="postLink" type="text" class="materialize-textarea" />
+                    <div className="row" >
+                      <div className="col m6 s12" style={{ paddingLeft: '25px' }}>
+                        <label for="postLink">Link</label>
+                        <input id="postLink" type="text" class="materialize-textarea" onChange={(e) => { content[index].link = e.target.value; }} />
+                      </div>
+                      <div className="col m6 s12 center" style={{ display: 'flex', flexDirection: 'column' }} >
+                        <input type='file' name='post' accept="image/*" id={`post${index}`} onChange={(e) => {
+                          handlePostInputState(e, index); 
+                        }
+                        } style={{ display: 'none' }} />
+                        <label className="btn center-block" for={`post${index}`} style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons right">send</i>Upload</label>
+                        <p style={{ fontSize: 10, color: 'gray' }} >Don't have a link? Upload a screenshot here</p>
+                      </div>
+
                     </div>
-                    <div className="col m3 s6 center" style={{display: 'flex', flexDirection: 'column'}} >
-                    <input type='file' name='post' multiple value={postInputState} onChange={handlePostInputState} style={{ display: 'none' }} ref={hiddenFileInput} />
-                    <Button className="btn center-block" onClick={handleClick} style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons right">send</i>Upload</Button>
-                    <p style={{fontSize: 10, color: 'gray'}} >Don't have a link? Upload a screenshot here</p>
-                    </div>
-                    <div className="col m3 s6 center">
-                    <Button className="btn center-block"  style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons right">send</i>Insights</Button>
-                    </div>
-                    </div>
+
+
                   )
-                })}
+                })
+                }
+                <div className='row'>
+                  <div className="col s12 center">
+                    {loaderSubmitfiles &&
+                      <>
+                        <div class="preloader-wrapper small active" style={{ marginTop: "10px" }}>
+                          <div class="spinner-layer spinner-blue-only">
+                            <div class="circle-clipper left">
+                              <div class="circle"></div>
+                            </div><div class="gap-patch">
+                              <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                              <div class="circle"></div>
+                            </div>
+                          </div>
+                        </div></>
+                    }
+
+                    <br />
+                    <Button className="btn center-block" onClick={handlePostSubmit} style={{ backgroundColor: "#26a69a", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons right">send</i>Submit</Button>
+                  </div>
+                </div>
+              </div>
+            </div>}
+            {interestedInfluencer.content.length != 0 && interestedInfluencer.content[0].insight == '' && <div className="row" >
+              <div className="col s12">
+                
+                {
+                  content.map((val, index) => {
+                    return (
+                      val.insight == '' && <div className="row" style={{borderBottom:'0.5px dashed gray'}}>
+                        <div className="col  s4 " style={{ paddingLeft: '25px' }}>
+                          {val.link != '' && <a href={val.link}>Post</a>}
+                        </div>
+                        <div className="col  s4 center" >
+                          {val.post&&<img src={val.post} style={{width:'70%'}}/>}
+                        </div>
+                        <div className="col  s4 center">
+                          <a href={`#insights${index}`} className="btn center-block modal-trigger" style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons right">send</i>Insights</a>
+                        </div>
+
+                        <Modal
+                          actions={[
+                            <Button flat modal="close" node="button" waves="green" id={`closeInsight${index}`}>Close</Button>
+                          ]}
+                          bottomSheet={false}
+                          fixedFooter={false}
+                          header={`Upload insights for post ${index + 1}`}
+                          id={`insights${index}`}
+                          open={false}
+                          options={{
+                            dismissible: true,
+                            endingTop: '10%',
+                            inDuration: 250,
+                            onCloseEnd: null,
+                            onCloseStart: null,
+                            onOpenEnd: null,
+                            onOpenStart: null,
+                            opacity: 0.5,
+                            outDuration: 250,
+                            preventScrolling: true,
+                            startingTop: '4%'
+                          }}
+                          root={document.body}
+                        >
+
+
+                          <p>
+                            {/* {
+                                JSON.stringify(timeForEachPost[index])
+                              } */}
+                            <div className="col m6 s12 center" style={{ display: 'flex', flexDirection: 'column' }} >
+                              <input type='file' name='post' accept="image/*" id={`insight${index}`} multiple onChange={(e) => {
+                                handleInsightsInputState(e, index);
+                                document.getElementById(`closeInsight${index}`).click()
+                                return M.toast({
+                                  html: "Uploaded Successfully"
+                                })
+                              }
+                              } style={{ display: 'none' }} />
+                              <label className="btn center-block" for={`insight${index}`} style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons right">send</i>Upload</label>
+
+                            </div>
+                          </p>
+
+
+                        </Modal>
+
+                      </div>
+
+
+                    )
+                  })
+                }
+              </div>
+              <div className="col s12 center">
+              {loaderSubmitInsights &&
+                      <>
+                        <div class="preloader-wrapper small active" style={{ marginTop: "10px" }}>
+                          <div class="spinner-layer spinner-blue-only">
+                            <div class="circle-clipper left">
+                              <div class="circle"></div>
+                            </div><div class="gap-patch">
+                              <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                              <div class="circle"></div>
+                            </div>
+                          </div>
+                        </div></>
+                    }
+                    <br/>
+                <Button className="btn center-block" onClick={handleInsightSubmit} style={{ backgroundColor: "#26a69a", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons right">send</i>Submit</Button>
+              </div>
             </div>
-              
+            }
+  {interestedInfluencer.content.length != 0 && interestedInfluencer.content[0].insight != ''&&<p style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "400", color: "#fff",display:'inline-block',padding:'10px',borderRadius:'10px'}}>You have Successfully Uploaded content pieces and insights</p>}
+
           </div>
-          {selectedCampaign.campaignOpen&&!selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id)&& !selectedCampaign.rejectedInfluencer.some(influencer => influencer.userId == user._id)?
-          <div className='center col s12' style={{position:'fixed',bottom:'0px',zIndex:3,backgroundColor:'white',paddingTop:'10px',boxShadow:'0px -1px 3px grey'}}>
+          {selectedCampaign.campaignOpen && !selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id) && !selectedCampaign.rejectedInfluencer.some(influencer => influencer.userId == user._id) ?
+            <div className='center col s12' style={{ position: 'fixed', bottom: '0px', zIndex: 3, backgroundColor: 'white', paddingTop: '10px', boxShadow: '0px -1px 3px grey' }}>
               <>
-              <Button className="modal-trigger waves-effect " style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} href="#Modal-1" >
+                <Button className="modal-trigger waves-effect " style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} href="#Modal-1" >
                   Accept
                 </Button>  <Button className="modal-trigger waves-effect red" style={{ backgroundColor: "#26a69a", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} href="#modalReject" >
                   Reject
                 </Button></>
-                </div>:''}
+            </div> : ''}
         </div>
       </div>
 
       <Modal
         actions={[
-          <Button flat modal="close" node="button" disabled={!address.shippingAddress||!address.state||!address.city||!address.zipcode} waves="green" onClick={handleChange}>Agree</Button>,
+          <Button flat modal="close" node="button" disabled={!address.shippingAddress || !address.state || !address.city || !address.zipcode} waves="green" onClick={handleChange}>Agree</Button>,
           <Button flat modal="close" node="button" waves="green">Close</Button>
         ]}
         bottomSheet={false}
@@ -1314,57 +1468,57 @@ function App(props) {
 
       >
 
-<div class="row">
-    <div class="col s12">
-      <div class="row">
-      <div class="row">
-        <div class="input-field col s12">
-          <input id="address" type="text" class="validate" onChange={(e)=>{
-            setAddress({
-              ...address,
-              shippingAddress:e.target.value
-            })
-          }} placeholder="House No./Flat No./Street Name" />
-          <label for="address">Shipping Address</label>
+        <div class="row">
+          <div class="col s12">
+            <div class="row">
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="address" type="text" class="validate" onChange={(e) => {
+                    setAddress({
+                      ...address,
+                      shippingAddress: e.target.value
+                    })
+                  }} placeholder="House No./Flat No./Street Name" />
+                  <label for="address">Shipping Address</label>
+                </div>
+
+              </div>
+              <div class="input-field col s12 m6">
+                <input placeholder="City" id="city" onChange={(e) => {
+                  setAddress({
+                    ...address,
+                    city: e.target.value.toLowerCase()
+                  })
+                }} type="text" class="validate" />
+                <label for="city">City</label>
+              </div>
+              <div class="input-field col s12 m6">
+                <input placeholder="State" id="state" onChange={(e) => {
+                  setAddress({
+                    ...address,
+                    state: e.target.value.toLowerCase()
+                  })
+                }} type="text" class="validate" />
+                <label for="state">State</label>
+              </div>
+              <div class="input-field col s12 m6">
+                <input placeholder="ZIP Code" id="zip" onChange={(e) => {
+                  setAddress({
+                    ...address,
+                    zipcode: e.target.value.trim()
+                  })
+                }} type="tel" class="validate" />
+                <label for="zip">ZIP Code</label>
+              </div>
+
+            </div>
+          </div>
         </div>
-
-      </div>
-      <div class="input-field col s12 m6">
-          <input placeholder="City" id="city" onChange={(e)=>{
-            setAddress({
-              ...address,
-              city:e.target.value.toLowerCase()
-            })
-          }} type="text" class="validate"/>
-          <label for="city">City</label>
-      </div>
-      <div class="input-field col s12 m6">
-          <input placeholder="State" id="state" onChange={(e)=>{
-            setAddress({
-              ...address,
-              state:e.target.value.toLowerCase()
-            })
-          }} type="text" class="validate"/>
-          <label for="state">State</label>
-      </div>
-      <div class="input-field col s12 m6">
-          <input placeholder="ZIP Code" id="zip" onChange={(e)=>{
-            setAddress({
-              ...address,
-              zipcode:e.target.value.trim()
-            })
-          }} type="tel" class="validate"/>
-          <label for="zip">ZIP Code</label>
-      </div>
-
-      </div>
-    </div>
-</div>
-{(!address.shippingAddress||!address.state||!address.city||!address.zipcode)&&<p style={{color:'red'}}>Please fill all fields!</p>}
-        <p style={{fontWeight:700}}>Before accepting the campaign, do read the terms & conditions and content guidelines carefully.</p>
-        <div class='col s12' style={{margin: 2, padding: 5}} >
-            <a href="#modaltermsandconditions" style={{marginTop:4,marginBottom: 4, marginRight: 5}} className="modal-trigger"><a class="btn-small blue">Terms & Conditions</a></a>
-            <a href='#modalcontentguidelines' style={{marginTop:4,marginBottom: 4}} className="modal-trigger"><a class="btn-small" green>Content Guidlines</a></a>
+        {(!address.shippingAddress || !address.state || !address.city || !address.zipcode) && <p style={{ color: 'red' }}>Please fill all fields!</p>}
+        <p style={{ fontWeight: 700 }}>Before accepting the campaign, do read the terms & conditions and content guidelines carefully.</p>
+        <div class='col s12' style={{ margin: 2, padding: 5 }} >
+          <a href="#modaltermsandconditions" style={{ marginTop: 4, marginBottom: 4, marginRight: 5 }} className="modal-trigger"><a class="btn-small blue">Terms & Conditions</a></a>
+          <a href='#modalcontentguidelines' style={{ marginTop: 4, marginBottom: 4 }} className="modal-trigger"><a class="btn-small" green>Content Guidlines</a></a>
         </div>
 
       </Modal>
@@ -1428,12 +1582,12 @@ function App(props) {
 
       <Modal
         actions={[
-          <Button flat node="button" waves="#4c4b77" onClick={handleRejectReasonsSubmit} style={{fontFamily:'Poppins',color:'white',backgroundColor:'#4c4b77',marginRight:'10px'}}>Submit</Button>,
-          <Button flat modal="close" node="button" id="rejectedReasonClose" waves="red" style={{fontFamily:'Poppins',color:'white',backgroundColor:'red'}}>Close</Button>
+          <Button flat node="button" waves="#4c4b77" onClick={handleRejectReasonsSubmit} style={{ fontFamily: 'Poppins', color: 'white', backgroundColor: '#4c4b77', marginRight: '10px' }}>Submit</Button>,
+          <Button flat modal="close" node="button" id="rejectedReasonClose" waves="red" style={{ fontFamily: 'Poppins', color: 'white', backgroundColor: 'red' }}>Close</Button>
         ]}
         bottomSheet={false}
         fixedFooter={true}
-        header={<p style={{fontFamily:'Ubuntu'}}>Reason for Rejection</p>}
+        header={<p style={{ fontFamily: 'Ubuntu' }}>Reason for Rejection</p>}
         id="modalReject"
         open={false}
         options={{
@@ -1451,7 +1605,7 @@ function App(props) {
         }}
         className='modalReject'
         root={document.body}
-        style={{height:'500px'}}
+        style={{ height: '500px' }}
       >
 
 
@@ -1461,24 +1615,23 @@ function App(props) {
           isMulti
           className="select"
           style={{
-            fontFamily:'Poppins',
+            fontFamily: 'Poppins',
           }}
           placeholder="Select atleast one reason"
-          onChange={(e)=>{
-           var boolCheckother=false
+          onChange={(e) => {
+            var boolCheckother = false
             var data = [];
-            e.map(ele=>{
-              if(ele.value=='other')
-              {boolCheckother=true;}
+            e.map(ele => {
+              if (ele.value == 'other') { boolCheckother = true; }
               else
-              data.push(ele.value);
+                data.push(ele.value);
             })
             setBoolOther(boolCheckother)
             setRejectRReasons(data)
-            
+
           }}
         />
-        {boolOther&&<><textarea id="otherReason" class="materialize-textarea" onChange={(e)=>{setOtherReason(e.target.value)}}></textarea>
+        {boolOther && <><textarea id="otherReason" class="materialize-textarea" onChange={(e) => { setOtherReason(e.target.value) }}></textarea>
           <label for="otherReason">Give other Reason</label></>}
       </Modal>
 
