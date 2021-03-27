@@ -204,15 +204,10 @@ function App(props) {
   const [postInputState, setPostInputState] = useState('')
   const [timeForInsights, settimeForInsights] = useState('')
   const [interestedInfluencer, setinterestedInfluencer] = useState({
-    acceptanceByTeam: "",
-    caption: "",
     email: "",
-    postAfterUploadation: [],
-    postForUploadation: [],
-    remark: "",
-    status: "",
     userId: "",
-    _id: ""
+    _id: "",
+    content: []
   })
   const [caption, setCaption] = useState('');
   const [postsNo, setpostsNo] = useState(0);
@@ -230,6 +225,8 @@ function App(props) {
     state: '',
     zipcode: null
   })
+  const [currentTime, setCurrentTime] = useState('')
+  const [timeForEachPost, settimeForEachPost] = useState([])
   var recievedPostArray = [];
   const pixelRatio = window.devicePixelRatio || 1;
 
@@ -488,9 +485,8 @@ function App(props) {
         for (var m = 0; m < res.data.message.interestedInfluencer.length; m++) {
           if (res.data.message.interestedInfluencer[m].userId === user._id) {
             setinterestedInfluencer(res.data.message.interestedInfluencer[m]);
-            timeofInsightsUploaded = res.data.message.interestedInfluencer[m].acceptanceByTeam
+            setContent(res.data.message.interestedInfluencer[m].content)
 
-            TimeForInsights()
             break;
           }
         }
@@ -582,9 +578,8 @@ function App(props) {
       for (var m = 0; m < res.data.message.interestedInfluencer.length; m++) {
         if (res.data.message.interestedInfluencer[m].userId === user._id) {
           setinterestedInfluencer(res.data.message.interestedInfluencer[m]);
-          timeofInsightsUploaded = res.data.message.interestedInfluencer[m].acceptanceByTeam
+          setContent(res.data.message.interestedInfluencer[m].content)
 
-          TimeForInsights()
           break;
         }
       }
@@ -618,9 +613,7 @@ function App(props) {
     })
   }
 
-  const handleClick = e => {
-    hiddenFileInput.current.click();
-  }
+
 
   const toBase64 = file => new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -629,7 +622,8 @@ function App(props) {
     reader.onerror = error => reject(error);
   });
 
-  const handlePostInputState = async (e) => {
+  const handlePostInputState = async (e, index) => {
+    
     e.preventDefault();
     let abc = e.target.files.length
     let x = [];
@@ -638,61 +632,78 @@ function App(props) {
       let base64 = toBase64(file);
       x.push(base64);
     }
-
     let y = await Promise.all(x)
-
-    const res = [];
-    for (let index = 0; index < y.length; index++) {
-      res.push({ filestr: y[index] });
-
-    }
-    setSelectedFile(res);
-    Swal.fire({
-      title: 'Uploaded Successfully',
-      text: 'Your latest post would be shown here when you press the SUBMIT button after entering the caption.',
-      icon: 'success',
-      showCancelButton: false,
-      showConfirmButton: true,
-      confirmButtonText: 'Cool',
-    })
+    
+    content[index].post = y[0]
+    // var res = [];
+    // for (let index = 0; index < y.length; index++) {
+    //   res.push( y[index] );
+    // }
+    // }
+    // setSelectedFile(res);
+    // Swal.fire({
+    //   title: 'Uploaded Successfully',
+    //   text: '',
+    //   icon: 'success',
+    //   showCancelButton: false,
+    //   showConfirmButton: true,
+    //   confirmButtonText: 'Cool',
+    // })
   }
 
-  const handlePostSubmit = async (file,index) => {
-    if (file.length == 0)
+  const handlePostSubmit = async () => {
+    if (content.length == 0)
       return M.toast({
         html: 'Atleast one post to be attached'
       })
-    setLoaderSubmitfiles(true)
-    try {
-      await axios({
-        url: `http://localhost:5000/api/uploadPosts`,
-        method: 'POST',
-        data: {
-          posts: selectedFile,
-          campaignId: props.match.params.campaignID,
-          previousPost: interestedInfluencer.content[index]
-        },
-        headers: {
-          'Content-Type': 'application/json',
-          'authorization': `Bearer ${localStorage.token}`
-        },
-      }).then(res => {
-        if (res.data.error) {
-          M.toast({
-            html: "An error occurred , please try later"
-          })
-          setTimeout(() => {
-            window.location.reload()
-          }, 1000);
-        }
-        setLoaderSubmitfiles(false);
-        refreshCampaign()
+    var check = false
+    content.forEach(async (ele, index) => {
+      if (ele.post.length == 0 && ele.link == '') {
+        
+        check = true;
 
-      })
-    } catch (e) {
-      console.log(e);
-      setLoaderSubmitfiles(false)
-    }
+      }
+      if (index + 1 == content.length && check) {
+        return M.toast({
+          html: 'Please fill atleast link or upload screenshot for each content pieces!'
+        })
+      }
+      if (index + 1 == content.length && !check) {
+        
+        setLoaderSubmitfiles(true)
+        try {
+          await axios({
+            url: `http://localhost:5000/api/uploadPosts`,
+            method: 'POST',
+            data: {
+              campaignId: props.match.params.campaignID,
+              content: content
+            },
+            headers: {
+              'Content-Type': 'application/json',
+              'authorization': `Bearer ${localStorage.token}`
+            },
+          }).then(res => {
+            if (res.data.error) {
+              M.toast({
+                html: "An error occurred , please try later"
+              })
+              setTimeout(() => {
+                window.location.reload()
+              }, 1000);
+            }
+            setLoaderSubmitfiles(false);
+            refreshCampaign()
+
+          })
+        } catch (e) {
+          console.log(e);
+          setLoaderSubmitfiles(false)
+        }
+      }
+    })
+
+
   }
   useEffect(() => {
     var postlink = []
@@ -713,7 +724,7 @@ function App(props) {
       if (index < content.length)
         postlink.push(content[index]);
       else {
-        postlink.push('')
+        postlink.push({ post: '', link: '', insights: '' })
       }
     }
     setContent(postlink)
@@ -753,38 +764,50 @@ function App(props) {
     })
   }
 
-  const TimeForInsights = async () => {
-    var currentTime;
-    await axios.get(`http://localhost:5000/curentTimeAndDate`).then(data => currentTime = data.data)
-    // console.log(currentTime)
+  useEffect(() => {
+    axios.get(`http://localhost:5000/curentTimeAndDate`).then(data => setCurrentTime(data.data))
+  }, [])
+  useEffect(() => {
+    var postsTime = []
+    content.map((ele) => {
+      postsTime.push({ timeLeft: '', timeOver: false })
+    })
+    settimeForEachPost(postsTime)
+    console.log(postsTime)
+  }, [content])
+  const TimeForInsights = async (submitTime, index) => {
+    console.log(currentTime)
     var curr = new Date(currentTime)
     function pad(value) {
       return value > 9 ? value : "0" + value;
     }
-    var t = new Date(timeofInsightsUploaded)
+    console.log(submitTime)
+    var t = new Date(submitTime)
     t.setHours(t.getHours() + 48);
-    // console.log(t)
-    var insightsTimer = setInterval(() => {
+    console.log(t)
+    // var insightsTimer = setInterval(() => {
+    curr.setSeconds(curr.getSeconds() + 1)
+    var res = (t - curr) / 1000;
 
-      curr.setSeconds(curr.getSeconds() + 1)
+    // if (res <= 0) {
+    //   clearInterval(insightsTimer);
+    // }
+    var hours = Math.floor(res / 3600);
+    res = res % 3600;
+    var minutes = Math.floor(res / 60);
+    res = res % 60;
+    var seconds = res;
+    var temp = timeForEachPost;
+    temp[index].timeLeft = `${hours}hrs : ${minutes}min : ${Math.floor(seconds)}s`
 
-      var res = (t - curr) / 1000;
-      // console.log(res)
-      if (res <= 0) {
-        setTimeOver(true);
-        clearInterval(insightsTimer);
-      }
-      var hours = Math.floor(res / 3600);
-      res = res % 3600;
-      var minutes = Math.floor(res / 60);
-      res = res % 60;
-      var seconds = res;
+    settimeForEachPost(temp)
+    console.log(timeForEachPost)
+    // })
 
-      settimeForInsights(`${hours}hrs : ${minutes}min : ${Math.floor(seconds)}s`)
-    }, 1000);
 
   }
-  const handleInsightsInputState = async (e) => {
+  const handleInsightsInputState = async (e, index) => {
+    
     e.preventDefault();
     let abc = e.target.files.length
     let x = [];
@@ -793,52 +816,65 @@ function App(props) {
       let base64 = toBase64(file);
       x.push(base64);
     }
-
     let y = await Promise.all(x)
+    
+    content[index].insight = y[0]
 
-    const res = [];
-    for (let index = 0; index < y.length; index++) {
-      res.push({ filestr: y[index] });
 
-    }
-
-    setInsights(res);
   }
 
   const handleInsightSubmit = async () => {
-    if (selectedFile == [])
+    if (content.length == 0)
       return M.toast({
         html: 'Atleast one post to be attached'
       })
-    try {
-      setLoaderSubmitInsights(true)
-      await axios({
-        url: `http://localhost:5000/api/uploadInsights`,
-        method: 'POST',
-        data: { insights: insights, campaignId: props.match.params.campaignID },
-        headers: {
-          'Content-Type': 'application/json',
-          'authorization': `Bearer ${localStorage.token}`
-        },
-      }).then(res => {
-        if (res.data.error)
-          M.toast({
-            html: "An error occurred , please try later"
+    var check = false
+    content.forEach(async (ele, index) => {
+      if (ele.insight == '') {
+
+        check = true;
+
+      }
+      if (index + 1 == content.length && check) {
+        return M.toast({
+          html: 'Please upload all insights!'
+        })
+      }
+      if (index + 1 == content.length && !check) {
+        
+        setLoaderSubmitInsights(true)
+        try {
+          await axios({
+            url: `http://localhost:5000/api/uploadInsights`,
+            method: 'POST',
+            data: {
+              campaignId: props.match.params.campaignID,
+              content: content
+            },
+            headers: {
+              'Content-Type': 'application/json',
+              'authorization': `Bearer ${localStorage.token}`
+            },
+          }).then(res => {
+            if (res.data.error) {
+              M.toast({
+                html: "An error occurred , please try later"
+              })
+              setTimeout(() => {
+                window.location.reload()
+              }, 1000);
+            }
+            setLoaderSubmitInsights(false);
+            refreshCampaign()
+
           })
-        refreshCampaign()
-        setLoaderSubmitInsights(false)
-      })
-    } catch (e) {
-      console.log(e);
-      setLoaderSubmitInsights(false)
-    }
-    Swal.fire({
-      title: 'Uploaded Successfully',
-      text: 'Your insights have been uploaded successfully. Thank You!',
-      icon: 'success',
-      showCancelButton: false,
-      showConfirmButton: true,
-      confirmButtonText: 'Cool',
+        } catch (e) {
+          console.log(e);
+          setLoaderSubmitInsights(false)
+        }
+
+
+      }
     })
   }
 
@@ -1232,8 +1268,7 @@ function App(props) {
                 </div> 
               </div>
               : <></>} */}
-
-            <div className="row" >
+            {interestedInfluencer.content.length == 0 && selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id)&&<div className="row" >
               <div className="col s12">
                 <Select
                   options={[
@@ -1245,7 +1280,7 @@ function App(props) {
                     { 'value': 6, label: '6' },
                     { 'value': 7, label: '7' }
                   ]}
-                  placeholder='No. of posts uploaded'
+                  placeholder='No. of content pieces uploaded'
                   closeMenuOnSelect={true}
                   className="select"
                   value={postsNo}
@@ -1254,31 +1289,144 @@ function App(props) {
                   }}
                 />
               </div>
-              <div style={{padding:'25px auto auto 10px'}}>
-              {content.map((val, index) => {
-                return (<>
-                  <div className="row" >
-                    <div className="col m6 s6">
-                    <Button className="btn center-block" style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons right">send</i>Select post index+1</Button> 
+              <div style={{ padding: '25px auto auto 10px' }}>
+                {content.map((val, index) => {
+                  return (
+                    <div className="row" >
+                      <div className="col m6 s12" style={{ paddingLeft: '25px' }}>
+                        <label for="postLink">Link</label>
+                        <input id="postLink" type="text" class="materialize-textarea" onChange={(e) => { content[index].link = e.target.value; }} />
+                      </div>
+                      <div className="col m6 s12 center" style={{ display: 'flex', flexDirection: 'column' }} >
+                        <input type='file' name='post' accept="image/*" id={`post${index}`} onChange={(e) => {
+                          handlePostInputState(e, index); 
+                        }
+                        } style={{ display: 'none' }} />
+                        <label className="btn center-block" for={`post${index}`} style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons right">send</i>Upload</label>
+                        <p style={{ fontSize: 10, color: 'gray' }} >Don't have a link? Upload a screenshot here</p>
+                      </div>
+
                     </div>
-                    </div>
-                  <div className="row" >
-                    <div className="col m6 s12">
-                      <label for="postLink">Link</label>
-                      <input id="postLink" type="text" class="materialize-textarea" />
-                    </div>
-                    <div className="col m3 s6 center">
-                      <Button className="btn center-block" style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons right">send</i>Submit</Button>
-                    </div>
-                    <div className="col m3 s6 center">
-                      <Button className="btn center-block" style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons right">send</i>Insights</Button>
-                    </div>
+
+
+                  )
+                })
+                }
+                <div className='row'>
+                  <div className="col s12 center">
+                    {loaderSubmitfiles &&
+                      <>
+                        <div class="preloader-wrapper small active" style={{ marginTop: "10px" }}>
+                          <div class="spinner-layer spinner-blue-only">
+                            <div class="circle-clipper left">
+                              <div class="circle"></div>
+                            </div><div class="gap-patch">
+                              <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                              <div class="circle"></div>
+                            </div>
+                          </div>
+                        </div></>
+                    }
+
+                    <br />
+                    <Button className="btn center-block" onClick={handlePostSubmit} style={{ backgroundColor: "#26a69a", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons right">send</i>Submit</Button>
                   </div>
-                  </>
-                )
-              })}
+                </div>
+              </div>
+            </div>}
+            {interestedInfluencer.content.length != 0 && interestedInfluencer.content[0].insight == '' && <div className="row" >
+              <div className="col s12">
+                
+                {
+                  content.map((val, index) => {
+                    return (
+                      val.insight == '' && <div className="row" style={{borderBottom:'0.5px dashed gray'}}>
+                        <div className="col  s4 " style={{ paddingLeft: '25px' }}>
+                          {val.link != '' && <a href={val.link}>Post</a>}
+                        </div>
+                        <div className="col  s4 center" >
+                          {val.post&&<img src={val.post} style={{width:'70%'}}/>}
+                        </div>
+                        <div className="col  s4 center">
+                          <a href={`#insights${index}`} className="btn center-block modal-trigger" style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons right">send</i>Insights</a>
+                        </div>
+
+                        <Modal
+                          actions={[
+                            <Button flat modal="close" node="button" waves="green" id={`closeInsight${index}`}>Close</Button>
+                          ]}
+                          bottomSheet={false}
+                          fixedFooter={false}
+                          header={`Upload insights for post ${index + 1}`}
+                          id={`insights${index}`}
+                          open={false}
+                          options={{
+                            dismissible: true,
+                            endingTop: '10%',
+                            inDuration: 250,
+                            onCloseEnd: null,
+                            onCloseStart: null,
+                            onOpenEnd: null,
+                            onOpenStart: null,
+                            opacity: 0.5,
+                            outDuration: 250,
+                            preventScrolling: true,
+                            startingTop: '4%'
+                          }}
+                          root={document.body}
+                        >
+
+
+                          <p>
+                            {/* {
+                                JSON.stringify(timeForEachPost[index])
+                              } */}
+                            <div className="col m6 s12 center" style={{ display: 'flex', flexDirection: 'column' }} >
+                              <input type='file' name='post' accept="image/*" id={`insight${index}`} multiple onChange={(e) => {
+                                handleInsightsInputState(e, index);
+                                document.getElementById(`closeInsight${index}`).click()
+                                return M.toast({
+                                  html: "Uploaded Successfully"
+                                })
+                              }
+                              } style={{ display: 'none' }} />
+                              <label className="btn center-block" for={`insight${index}`} style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons right">send</i>Upload</label>
+
+                            </div>
+                          </p>
+
+
+                        </Modal>
+
+                      </div>
+
+
+                    )
+                  })
+                }
+              </div>
+              <div className="col s12 center">
+              {loaderSubmitInsights &&
+                      <>
+                        <div class="preloader-wrapper small active" style={{ marginTop: "10px" }}>
+                          <div class="spinner-layer spinner-blue-only">
+                            <div class="circle-clipper left">
+                              <div class="circle"></div>
+                            </div><div class="gap-patch">
+                              <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                              <div class="circle"></div>
+                            </div>
+                          </div>
+                        </div></>
+                    }
+                    <br/>
+                <Button className="btn center-block" onClick={handleInsightSubmit} style={{ backgroundColor: "#26a69a", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons right">send</i>Submit</Button>
+              </div>
             </div>
-            </div>
+            }
+  {interestedInfluencer.content.length != 0 && interestedInfluencer.content[0].insight != ''&&<p style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "400", color: "#fff",display:'inline-block',padding:'10px',borderRadius:'10px'}}>You have Successfully Uploaded content pieces and insights</p>}
 
           </div>
           {selectedCampaign.campaignOpen && !selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id) && !selectedCampaign.rejectedInfluencer.some(influencer => influencer.userId == user._id) ?
