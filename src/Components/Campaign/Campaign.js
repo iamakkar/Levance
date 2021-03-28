@@ -1305,16 +1305,29 @@ var BASE_URL = "http://localhost:5000"
                   return (
                     <div className="row" >
                       <div className="col m6 s12" style={{ paddingLeft: '25px' }}>
+                        { content[index].post ?
+                        <>
+                        <label for="postLink">Image</label>
+                        <input id="postLink" type="text" class="materialize-textarea" placeholder={content[index].post?content[index].post:"Enter link please"} disabled={content[index].submitTime} onChange={(e) => { if(!content[index].submitTime)content[index].link = e.target.value;else e.target.value='';  }} />
+                        </> : 
+                        <>
                         <label for="postLink">Link</label>
                         <input id="postLink" type="text" class="materialize-textarea" placeholder={content[index].link?content[index].link:"Enter link please"} disabled={content[index].submitTime} onChange={(e) => { if(!content[index].submitTime)content[index].link = e.target.value;else e.target.value='';  }} />
+                        </>
+                        }
                       </div>
                       <div className="col m6 s12 center" style={{ display: 'flex', flexDirection: 'column' }} >
+                        { !content[index].submitTime ? 
+                        <>
                         <input type='file' name='post' accept="image/*" id={`post${index}`} onChange={(e) => {
                           handlePostInputState(e, index); 
                         }
                         } style={{ display: 'none' }} />
-                        <label className="btn center-block" for={content[index].submitTime?null:`post${index}`} disabled={content[index].submitTime} style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons right">send</i>Upload</label>
-                        <p style={{ fontSize: 10, color: 'gray' }} >Don't have a link? Upload a screenshot here</p>
+                        {/* <label className="btn center-block" for={content[index].submitTime?null:`post${index}`} disabled={content[index].submitTime} style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons right">send</i>Upload</label> */}
+                        <p style={{ fontSize: 10, color: 'gray', justifySelf: 'center', alignSelf: 'center' }} >Don't have a link? Upload a screenshot <label for={content[index].submitTime?null:`post${index}`} disabled={content[index].submitTime} style={{color: 'blue', textDecoration: 'underline',}} >here</label></p>
+                        </>
+                        : <></>
+                      }
                       </div>
 
                     </div>
@@ -1356,7 +1369,7 @@ var BASE_URL = "http://localhost:5000"
                         <div className="col  s4 " style={{ paddingLeft: '25px' }}>
                           {val.link != '' && <a href={val.link} target="_blank">Post Link</a>}
                         </div>
-                        <div className="col  s4 center" >
+                        <div className="col  s4 " >
                           {val.post&&<a href={val.post} style={{width:'70%'}} target="_blank">Uploaded Post</a>}
                         </div>
                         <div className="col  s4 center">
