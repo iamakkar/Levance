@@ -1300,13 +1300,13 @@ var BASE_URL = "http://localhost:5000"
                 />
               </div>
               <div style={{ padding: '25px auto auto 10px' }}>
-                {console.log(content)}
+                
                 {content.map((val, index) => {
                   return (
                     <div className="row" >
                       <div className="col m6 s12" style={{ paddingLeft: '25px' }}>
                         <label for="postLink">Link</label>
-                        <input id="postLink" type="text" class="materialize-textarea" placeholder={content[index].link?content[index].link:"Enter link please"} disabled={content[index].submitTime} onChange={(e) => { if(!content[index].submitTime)content[index].link = e.target.value;else e.target.value=''; console.log(content) }} />
+                        <input id="postLink" type="text" class="materialize-textarea" placeholder={content[index].link?content[index].link:"Enter link please"} disabled={content[index].submitTime} onChange={(e) => { if(!content[index].submitTime)content[index].link = e.target.value;else e.target.value='';  }} />
                       </div>
                       <div className="col m6 s12 center" style={{ display: 'flex', flexDirection: 'column' }} >
                         <input type='file' name='post' accept="image/*" id={`post${index}`} onChange={(e) => {
