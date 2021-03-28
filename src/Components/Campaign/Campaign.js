@@ -184,7 +184,7 @@ var html = `<html>
 `
 
 function App(props) {
-
+var BASE_URL = "http://localhost:5000"
   const [user, setUser] = useState(props);
   const [selectedCampaign, SetSelectedCampaign] = useState({
     description: "",
@@ -227,6 +227,7 @@ function App(props) {
   })
   const [currentTime, setCurrentTime] = useState('')
   const [timeForEachPost, settimeForEachPost] = useState([])
+  const [alreadyUploadedContent,setAlreadyUploadedContent] = useState([])
   var recievedPostArray = [];
   const pixelRatio = window.devicePixelRatio || 1;
 
@@ -378,7 +379,7 @@ function App(props) {
     try {
       setLoader(true)
       const res = await axios({
-        url: "http://localhost:5000" + '/api/upload',
+        url: `${BASE_URL}/api/upload`,
         method: 'POST',
         data: JSON.stringify({ data: base64EncodedImage, lastPic: lastPic }),
         headers: {
@@ -439,7 +440,7 @@ function App(props) {
 
   useEffect(async () => {
     const res = await axios({
-      url: "http://localhost:5000" + "/getdetails",
+      url: `${BASE_URL}/getdetails`,
       method: "GET",
       headers: {
         'authorization': `Bearer ${localStorage.token}`
@@ -475,7 +476,7 @@ function App(props) {
         headers: {
           'authorization': `Bearer ${localStorage.token}`
         },
-        url: `http://localhost:5000/individualCampaign/${props.match.params.campaignID}`
+        url: `${BASE_URL}/individualCampaign/${props.match.params.campaignID}`
       }
       ).then(res => {
         if (res.data.err)
@@ -486,7 +487,7 @@ function App(props) {
           if (res.data.message.interestedInfluencer[m].userId === user._id) {
             setinterestedInfluencer(res.data.message.interestedInfluencer[m]);
             setContent(res.data.message.interestedInfluencer[m].content)
-
+            setAlreadyUploadedContent(res.data.message.interestedInfluencer[m].content)
             break;
           }
         }
@@ -510,7 +511,7 @@ function App(props) {
     else {
       setLoader(true)
       const result = await axios({
-        url: "http://localhost:5000" + "/updateprofile",
+        url: `${BASE_URL}/updateprofile`,
         method: "PUT",
         data: updateProfile
         ,
@@ -526,7 +527,7 @@ function App(props) {
         M.toast({ html: "Updated Successfully" })
         document.getElementById("updateModal").click();
         const res = await axios({
-          url: "http://localhost:5000" + "/getdetails",
+          url: `${BASE_URL}/getdetails`,
           method: "GET",
           headers: {
             'authorization': `Bearer ${localStorage.token}`
@@ -570,7 +571,7 @@ function App(props) {
       headers: {
         'authorization': `Bearer ${localStorage.token}`
       },
-      url: `http://localhost:5000/individualCampaign/${props.match.params.campaignID}`
+      url: `${BASE_URL}/individualCampaign/${props.match.params.campaignID}`
     }).then(res => {
       if (res.data.err)
         return console.log(res.data.err)
@@ -579,7 +580,7 @@ function App(props) {
         if (res.data.message.interestedInfluencer[m].userId === user._id) {
           setinterestedInfluencer(res.data.message.interestedInfluencer[m]);
           setContent(res.data.message.interestedInfluencer[m].content)
-
+          setAlreadyUploadedContent(res.data.message.interestedInfluencer[m].content)
           break;
         }
       }
@@ -656,6 +657,12 @@ function App(props) {
       return M.toast({
         html: 'Atleast one post to be attached'
       })
+      if(content.length<=alreadyUploadedContent.length)
+      {
+        return M.toast({
+          html: 'No. of posts cannot be less than or equal to already uploaded posts number!'
+        })
+      }
     var check = false
     content.forEach(async (ele, index) => {
       if (ele.post.length == 0 && ele.link == '') {
@@ -673,7 +680,7 @@ function App(props) {
         setLoaderSubmitfiles(true)
         try {
           await axios({
-            url: `http://localhost:5000/api/uploadPosts`,
+            url: `${BASE_URL}/api/uploadPosts`,
             method: 'POST',
             data: {
               campaignId: props.match.params.campaignID,
@@ -740,7 +747,7 @@ function App(props) {
     }))
       return M.toast({ html: 'Please fill all fields' })
     axios({
-      url: `http://localhost:5000/postsLinkUpload`,
+      url: `${BASE_URL}/postsLinkUpload`,
       method: 'POST',
       data: {
         postLinkSubmit: postLinkSubmit,
@@ -765,7 +772,7 @@ function App(props) {
   }
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/curentTimeAndDate`).then(data => setCurrentTime(data.data))
+    axios.get(`${BASE_URL}/curentTimeAndDate`).then(data => setCurrentTime(data.data))
   }, [])
   useEffect(() => {
     var postsTime = []
@@ -845,7 +852,7 @@ function App(props) {
         setLoaderSubmitInsights(true)
         try {
           await axios({
-            url: `http://localhost:5000/api/uploadInsights`,
+            url: `${BASE_URL}/api/uploadInsights`,
             method: 'POST',
             data: {
               campaignId: props.match.params.campaignID,
@@ -910,7 +917,7 @@ function App(props) {
     }
     axios({
       method: 'PUT',
-      url: `http://localhost:5000/rejectInfluencer`,
+      url: `${BASE_URL}/rejectInfluencer`,
       data: rejectededInfluencer
     }).then(res => {
       SetSelectedCampaign(res.data)
@@ -1268,7 +1275,7 @@ function App(props) {
                 </div> 
               </div>
               : <></>} */}
-            {interestedInfluencer.content.length == 0 && selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id)&&<div className="row" >
+            {selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id)&&<div className="row" >
               <div className="col s12">
                 <Select
                   options={[
@@ -1283,26 +1290,30 @@ function App(props) {
                   placeholder='No. of content pieces uploaded'
                   closeMenuOnSelect={true}
                   className="select"
-                  value={postsNo}
+                  value={postsNo>content.length?postsNo:alreadyUploadedContent.length}
                   onChange={(e) => {
+                    if(e.value<=alreadyUploadedContent.length)
+                    {setpostsNo(alreadyUploadedContent.length);M.toast({html:'No. of posts cannot be less than or equal to already uploaded posts number!'})}
+                    else
                     setpostsNo(e.value)
                   }}
                 />
               </div>
               <div style={{ padding: '25px auto auto 10px' }}>
+                {console.log(content)}
                 {content.map((val, index) => {
                   return (
                     <div className="row" >
                       <div className="col m6 s12" style={{ paddingLeft: '25px' }}>
                         <label for="postLink">Link</label>
-                        <input id="postLink" type="text" class="materialize-textarea" onChange={(e) => { content[index].link = e.target.value; }} />
+                        <input id="postLink" type="text" class="materialize-textarea" placeholder={content[index].link?content[index].link:"Enter link please"} disabled={content[index].submitTime} onChange={(e) => { if(!content[index].submitTime)content[index].link = e.target.value;else e.target.value=''; console.log(content) }} />
                       </div>
                       <div className="col m6 s12 center" style={{ display: 'flex', flexDirection: 'column' }} >
                         <input type='file' name='post' accept="image/*" id={`post${index}`} onChange={(e) => {
                           handlePostInputState(e, index); 
                         }
                         } style={{ display: 'none' }} />
-                        <label className="btn center-block" for={`post${index}`} style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons right">send</i>Upload</label>
+                        <label className="btn center-block" for={content[index].submitTime?null:`post${index}`} disabled={content[index].submitTime} style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons right">send</i>Upload</label>
                         <p style={{ fontSize: 10, color: 'gray' }} >Don't have a link? Upload a screenshot here</p>
                       </div>
 
@@ -1330,26 +1341,26 @@ function App(props) {
                     }
 
                     <br />
-                    <Button className="btn center-block" onClick={handlePostSubmit} style={{ backgroundColor: "#26a69a", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons right">send</i>Submit</Button>
+                    <Button className="btn center-block" onClick={handlePostSubmit} disabled={content.length<=alreadyUploadedContent.length} style={{ backgroundColor: "#26a69a", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons right">send</i>Submit</Button>
                   </div>
                 </div>
               </div>
             </div>}
-            {interestedInfluencer.content.length != 0 && interestedInfluencer.content[0].insight == '' && <div className="row" >
+            {interestedInfluencer.content.length != 0 && <div className="row" >
               <div className="col s12">
                 
                 {
-                  content.map((val, index) => {
+                  alreadyUploadedContent.map((val, index) => {
                     return (
-                      val.insight == '' && <div className="row" style={{borderBottom:'0.5px dashed gray'}}>
+                       <div className="row" style={{borderBottom:'0.5px dashed gray'}}>
                         <div className="col  s4 " style={{ paddingLeft: '25px' }}>
-                          {val.link != '' && <a href={val.link}>Post</a>}
+                          {val.link != '' && <a href={val.link} target="_blank">Post Link</a>}
                         </div>
                         <div className="col  s4 center" >
-                          {val.post&&<img src={val.post} style={{width:'70%'}}/>}
+                          {val.post&&<a href={val.post} style={{width:'70%'}} target="_blank">Uploaded Post</a>}
                         </div>
                         <div className="col  s4 center">
-                          <a href={`#insights${index}`} className="btn center-block modal-trigger" style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons right">send</i>Insights</a>
+                          <a href={`#insights${index}`} disabled={interestedInfluencer.content[index].insight != ''} className="btn center-block modal-trigger" style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "700", color: "#fff", marginBottom: "8px", borderRadius: "5px" }} ><i class="material-icons right">send</i>Insights</a>
                         </div>
 
                         <Modal
@@ -1426,7 +1437,7 @@ function App(props) {
               </div>
             </div>
             }
-  {interestedInfluencer.content.length != 0 && interestedInfluencer.content[0].insight != ''&&<p style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "400", color: "#fff",display:'inline-block',padding:'10px',borderRadius:'10px'}}>You have Successfully Uploaded content pieces and insights</p>}
+  {interestedInfluencer.content.length != 0 && !interestedInfluencer.content.some(content=>{return content.insight==''})&&<p style={{ backgroundColor: "#4c4b77", fontFamily: "Poppins", fontWeight: "400", color: "#fff",display:'inline-block',padding:'10px',borderRadius:'10px'}}>You have Successfully Uploaded content pieces and insights</p>}
 
           </div>
           {selectedCampaign.campaignOpen && !selectedCampaign.interestedInfluencer.some(influencer => influencer.userId == user._id) && !selectedCampaign.rejectedInfluencer.some(influencer => influencer.userId == user._id) ?
