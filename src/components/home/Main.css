@@ -1,0 +1,96 @@
+.bg-image {
+  max-width: 100%;
+  max-height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.bg-image-div {
+  height: 80vh;
+}
+
+.home-btn1 {
+  position: absolute;
+  top: 50%;
+  left: 10%;
+}
+
+.home-btn2 {
+  position: absolute;
+  top: 50%;
+  left: 21%;
+}
+
+.btn1-style {
+  border-radius: 0;
+  padding-left: 7.5px;
+  padding-right: 7.5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-family: "Open sans", sans-serif;
+  background: aliceblue;
+  border: solid aliceblue 4px;
+  color: black;
+}
+
+.btn1-style:hover {
+  border-radius: 0;
+  padding-left: 7.5px;
+  padding-right: 7.5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-family: "Open sans", sans-serif;
+  background: transparent;
+  border: solid aliceblue 4px;
+  color: aliceblue;
+}
+
+.btn2-style {
+  border-radius: 0;
+  padding-left: 7.5px;
+  padding-right: 7.5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-family: "Open sans", sans-serif;
+  background: transparent;
+  border: solid aliceblue 4px;
+  color: aliceblue;
+}
+
+.btn2-style:hover {
+  border-radius: 0;
+  padding-left: 7.5px;
+  padding-right: 7.5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-family: "Open sans", sans-serif;
+  background: aliceblue;
+  border: solid aliceblue 4px;
+  color: black;
+}
+
+@media (max-width: 768px) {
+  .bg-image {
+    max-width: 100%;
+    max-height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .bg-image-div {
+    height: 80vh;
+  }
+
+  .home-btn1 {
+    position: absolute;
+    top: 45%;
+    left: 10%;
+  }
+
+  .home-btn2 {
+    position: absolute;
+    top: 55%;
+    left: 10%;
+  }
+}
