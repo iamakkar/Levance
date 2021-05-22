@@ -2,8 +2,9 @@ import React from 'react'
 import './Main.css'
 import { Parallax } from 'react-parallax';
 import { SocialIcon } from 'react-social-icons'; 
+import {withRouter} from 'react-router-dom'
 
-function App() {
+function App(props) {
 
     const Card = ({num, des, head}) => {
         return(
@@ -52,7 +53,7 @@ function App() {
                 <Card num="2" head="Creating a Campaign" des="Our team will find the best set of influencers for the campaign and will send a sample list for you to approve. We'll also design the whole campaign." />
                 <Card num="3" head="Results & Chill" des="Our creators build innovative content to showcase your brand on social media. We'll send you complete campaign metrics and analytics." />
             </div>
-            <button className="home-brand-btn" >Know More →</button>
+            <button className="home-brand-btn" onClick={() => props.history.push("/brand")} >Know More →</button>
         </div>
         <div className="home-brand" style={{marginTop: 0, backgroundColor: '#58d3e6'}} >
             <h2 className="home-brand-hd" style={{color: '#3d3d3d'}}>Are You an Influencer?</h2>
@@ -80,4 +81,4 @@ function App() {
     )
 }
 
-export default App;
+export default withRouter(App);

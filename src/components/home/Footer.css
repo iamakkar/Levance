@@ -24,7 +24,7 @@
   color: white;
   font-weight: bolder;
   margin: 0;
-  font-size: 4rem;
+  font-size: 3.7rem;
   font-family: "Fjalla One", sans-serif;
 }
 
@@ -65,6 +65,14 @@
 
 .footer-ser span {
   color: gray;
+  font-family: "Ubuntu", sans-serif;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  transition: 100ms ease;
+}
+
+.footer-ser span:hover {
+  color: white;
   font-family: "Ubuntu", sans-serif;
   margin-top: 5%;
   margin-bottom: 5%;

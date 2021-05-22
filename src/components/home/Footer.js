@@ -1,13 +1,14 @@
 import React from 'react'
 import "./Footer.css";
 import { SocialIcon } from 'react-social-icons'; 
+import {Link} from 'react-router-dom';
 
 export default function App() {
     return (
         <>
         <div className="footer-cont" >
             <div className="footer-des" >
-                <h2>Levance.in</h2>
+                <h2>levance.in</h2>
                 <span>"Grow Good, Evolve Better"</span>
                 <div className="footer-ico" >
                 <SocialIcon className="socialicon" network="linkedin" url="https://www.linkedin.com/in/deepansh-makkar-175012197/" fgColor='#fff' />
@@ -18,7 +19,7 @@ export default function App() {
             </div>
             <div className="footer-ser" >
                 <h4>Our Services:</h4>
-                <span>I am a Brand</span>
+                <Link to="/brand" style={{textDecoration: 'none'}} ><span>I am a Brand</span></Link>
                 <span>I am an Influencer</span>
             </div>
             <div className="footer-des" >
@@ -41,8 +42,8 @@ export default function App() {
             </div>
         </div>
         <div style={{display: 'flex', flexDirection: 'column', alignContent: 'center', justifyContent: 'center', backgroundColor: 'black'}} >
-            <span style={{color: 'gray', textAlign: 'center'}} >Developed by iamakkar{'\n'}</span>
-            <span style={{color: 'gray', textAlign: 'center'}} >&#169; 2021 Levance.in</span>
+            <span style={{color: 'gray', textAlign: 'center'}} >Designed & Developed by iamakkar{'\n'}</span>
+            <span style={{color: 'gray', textAlign: 'center'}} >&#169; 2021 Levance.in All Rights Reserved</span>
         </div>
         </>
     )
