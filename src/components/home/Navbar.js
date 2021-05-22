@@ -29,7 +29,7 @@ const Example = (props) => {
               <NavLink href="/components/">I'm an Influencer</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="https://github.com/reactstrap/reactstrap">I'm a Brand</NavLink>
+              <NavLink href="/brand">I'm a Brand</NavLink>
             </NavItem>
           </Nav>
         </Collapse>
@@ -40,7 +40,7 @@ const Example = (props) => {
                 <div className='nav-options'>
                     <a className="nav-link" href="/components/">Home</a>
                     <a className="nav-link" href="/components/">I'm an Influencer</a>
-                    <a className="nav-link" href="/components/">I'm a Brand</a>
+                    <a className="nav-link" href="/brand">I'm a Brand</a>
                 </div>
             </div>
         </>
