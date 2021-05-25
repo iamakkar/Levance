@@ -20,7 +20,7 @@ export default function App() {
             <div className="footer-ser" >
                 <h4>Our Services:</h4>
                 <Link to="/brand" style={{textDecoration: 'none'}} ><span>I am a Brand</span></Link>
-                <span>I am an Influencer</span>
+                <Link to="/influencer" style={{textDecoration: 'none'}} ><span>I am an Influencer</span></Link>
             </div>
             <div className="footer-des" >
                 <h4>About Us:</h4>

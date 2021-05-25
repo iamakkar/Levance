@@ -26,7 +26,10 @@ const Example = (props) => {
         <Collapse isOpen={isOpen} navbar >
           <Nav navbar >
             <NavItem>
-              <NavLink href="/components/">I'm an Influencer</NavLink>
+              <NavLink href="/">Home</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="/influencer">I'm an Influencer</NavLink>
             </NavItem>
             <NavItem>
               <NavLink href="/brand">I'm a Brand</NavLink>
@@ -38,8 +41,8 @@ const Example = (props) => {
             <div className="navbar-container" >
                 <img src='/assets/2.png' alt='err' />
                 <div className='nav-options'>
-                    <a className="nav-link" href="/components/">Home</a>
-                    <a className="nav-link" href="/components/">I'm an Influencer</a>
+                    <a className="nav-link" href="/">Home</a>
+                    <a className="nav-link" href="/influencer">I'm an Influencer</a>
                     <a className="nav-link" href="/brand">I'm a Brand</a>
                 </div>
             </div>

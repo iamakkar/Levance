@@ -31,10 +31,10 @@ function App(props) {
         <Parallax bgImage={"/assets/home.jpg"} strength={500} className="bg-image" >
             <div className="bg-image-div">
             <div className="home-btn1">
-                <button className="btn1-style" >I'm an Influencer</button>
+                <button className="btn1-style" onClick={() => props.history.push("/influencer")} >I'm an Influencer</button>
             </div>
             <div className="home-btn2">
-                <button outline className="btn2-style" >I'm a Brand</button>
+                <button outline className="btn2-style" onClick={() => props.history.push("/brand")} >I'm a Brand</button>
             </div>
             </div>
         </Parallax>
@@ -63,7 +63,7 @@ function App(props) {
                 <CardI num="2" head="Creating a Campaign" des="Our team will find the best set of influencers for the campaign and will send a sample list for you to approve. We'll also design the whole campaign." />
                 <CardI num="3" head="Results & Chill" des="Our creators build innovative content to showcase your brand on social media. We'll send you complete campaign metrics and analytics." />
             </div>
-            <button className="home-brand-btn" >Know More →</button>
+            <button className="home-brand-btn" onClick={() => props.history.push("/influencer")} >Know More →</button>
         </div>
         <div className="home-team">
             <div className="home-team-chld" >

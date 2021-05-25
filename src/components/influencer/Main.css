@@ -1,0 +1,152 @@
+#countrycode {
+  width: 12%;
+}
+
+#phone {
+  width: 85%;
+}
+
+#male {
+  width: 10%;
+}
+
+#female {
+  width: 10%;
+}
+
+#other {
+  width: 10%;
+}
+
+.infl-form-cont {
+  display: flex;
+  flex: 0 1 auto;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.infl-form {
+  display: flex;
+  flex: 0 1 auto;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-top: 5%;
+  margin-left: 3%;
+  width: 47%;
+}
+
+.infl-form h2 {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: bold;
+}
+
+.infl-form-cmpt {
+  display: flex;
+  flex: 0 1 auto;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 94%;
+}
+
+.infl-form-cmpt span {
+  font-family: "Ubuntu", sans-serif;
+}
+
+.infl-form-cmpt input,
+textarea,
+select {
+  font-family: "Ubuntu", sans-serif;
+  width: 75%;
+  border-radius: 5px;
+  border: 1px solid #cccccc;
+  padding: 4px;
+  box-shadow: none;
+}
+
+.infl-form-sub {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.infl-form-btn {
+  border-radius: 0;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  font-family: "Open sans", sans-serif;
+  background: transparent;
+  border: solid #58d3e6 2px;
+  color: black;
+  font-weight: bold;
+}
+
+.infl-form-btn:hover {
+  border-radius: 0;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  font-family: "Open sans", sans-serif;
+  background: #58d3e6;
+  border: solid #58d3e6 2px;
+  color: white;
+  font-weight: bold;
+  transition: ease 200ms;
+}
+
+@media (max-width: 768px) {
+  #phone {
+    width: 72%;
+  }
+  #countrycode {
+    width: 15%;
+    margin-left: 8%;
+  }
+  #blank {
+    display: none;
+  }
+  .infl-form-cont {
+    display: flex;
+    flex: 0 1 auto;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .infl-form {
+    display: flex;
+    flex: 0 1 auto;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 90%;
+    margin-top: 5%;
+  }
+
+  .infl-form-cmpt {
+    display: flex;
+    flex: 0 1 auto;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding-right: 2%;
+  }
+
+  .infl-form-sub {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+}

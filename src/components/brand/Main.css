@@ -1,0 +1,168 @@
+.brnd-form-cont {
+  display: flex;
+  flex-direction: row;
+  flex: 0 1 auto;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.brnd-form {
+  display: flex;
+  flex: 0 1 auto;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 50%;
+  margin-left: 5%;
+  margin-top: 5%;
+}
+
+.brnd-form h2 {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: bold;
+}
+
+.brnd-form-cmpt {
+  display: flex;
+  flex: 0 1 auto;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.brnd-form-cmpt span {
+  font-family: "Ubuntu", sans-serif;
+}
+
+.brnd-form-cmpt input,
+textarea,
+select {
+  font-family: "Ubuntu", sans-serif;
+  width: 75%;
+  border-radius: 5px;
+  border: 1px solid #cccccc;
+  padding: 4px;
+  box-shadow: none;
+}
+
+.brnd-form-sub {
+  display: flex;
+  width: 50%;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.brnd-form-btn {
+  border-radius: 0;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  font-family: "Open sans", sans-serif;
+  background: #58d3e6;
+  border: solid #58d3e6 2px;
+  color: white;
+  font-weight: bold;
+  transition: ease 200ms;
+}
+
+.brnd-form-btn:hover {
+  border-radius: 0;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  font-family: "Open sans", sans-serif;
+  background: transparent;
+  border: solid #58d3e6 2px;
+  color: black;
+  font-weight: bold;
+}
+
+.brnd-line {
+  margin-top: 10%;
+  height: 40vh;
+  width: 2px;
+  opacity: 0.5;
+  background: gray;
+  border-radius: 1px;
+  margin-left: 5%;
+}
+
+.brnd-qr {
+  display: flex;
+  flex-direction: column;
+  flex: 0 1 auto;
+  justify-content: flex-start;
+  align-items: center;
+  width: 45%;
+  height: 100%;
+  margin-top: 5%;
+}
+
+.brnd-qr h2 {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .brnd-form-cont {
+    display: flex;
+    flex-direction: column;
+    flex: 0 1 auto;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+  }
+
+  .brnd-form {
+    display: flex;
+    flex: 0 1 auto;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 90%;
+    margin-top: 5%;
+    margin-left: 0;
+  }
+
+  .brnd-form-cmpt {
+    display: flex;
+    flex: 0 1 auto;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding-right: 2%;
+  }
+
+  .brnd-form-sub {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .brnd-line {
+    height: 2px;
+    width: 60%;
+    opacity: 0.5;
+    background: gray;
+    border-radius: 1px;
+  }
+
+  .brnd-qr {
+    display: flex;
+    flex-direction: column;
+    flex: 0 1 auto;
+    justify-content: flex-start;
+    align-items: center;
+    width: 90%;
+    height: 100%;
+    margin-top: 5%;
+  }
+}
