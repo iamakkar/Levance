@@ -5,7 +5,6 @@ import { SocialIcon } from 'react-social-icons';
 import {withRouter} from 'react-router-dom'
 
 function App(props) {
-
     const Card = ({num, des, head}) => {
         return(
             <div className="home-brand-pr-crd">

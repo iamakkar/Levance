@@ -18,6 +18,11 @@
   width: 10%;
 }
 
+#infl-inpt-err {
+  -webkit-appearance: none;
+  box-shadow: 0 0 5px red;
+}
+
 #social {
   justify-content: center;
   align-items: center;
@@ -73,6 +78,21 @@ select {
   box-shadow: none;
 }
 
+.infl-form-cmpt-cat {
+  font-family: "Ubuntu", sans-serif;
+  width: 75%;
+  border-radius: 5px;
+  border: 1px solid #cccccc;
+  padding: 4px;
+  box-shadow: none;
+}
+
+.infl-err {
+  align-self: center;
+  color: red;
+  font-size: 0.8rem;
+}
+
 .infl-form-sub {
   display: flex;
   width: 100%;
@@ -119,6 +139,7 @@ select {
   #blank {
     display: none;
   }
+
   .infl-form-cont {
     display: flex;
     flex: 0 1 auto;
