@@ -100,6 +100,7 @@
 .home-abtus-txt2 {
   margin-left: 5%;
   margin-right: 5%;
+  text-align: justify;
   font-family: "Roboto", sans-serif;
   color: #3d3d3d;
   font-size: 1.2rem;
@@ -193,6 +194,7 @@
   color: white;
   font-family: "Ubuntu", sans-serif;
   font-weight: bold;
+  text-align: center;
 }
 
 .home-brand-pr-crd div {
@@ -320,6 +322,10 @@
     height: 80vh;
   }
 
+  .home-abtus-txt2 {
+    text-align: justify;
+  }
+
   .home-btn1 {
     position: absolute;
     top: 45%;
@@ -338,6 +344,7 @@
     font-weight: bold;
     font-size: 2rem;
     color: white;
+    text-align: center;
   }
 
   .home-brand-und {

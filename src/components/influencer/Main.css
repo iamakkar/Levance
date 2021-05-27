@@ -18,6 +18,12 @@
   width: 10%;
 }
 
+#social {
+  justify-content: center;
+  align-items: center;
+  margin-left: 0;
+}
+
 .infl-form-cont {
   display: flex;
   flex: 0 1 auto;
