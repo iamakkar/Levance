@@ -42,8 +42,8 @@ export default function App() {
             </div>
         </div>
         <div style={{display: 'flex', flexDirection: 'column', alignContent: 'center', justifyContent: 'center', backgroundColor: 'black'}} >
-            <span style={{color: 'gray', textAlign: 'center'}} >Designed & Developed by iamakkar{'\n'}</span>
-            <span style={{color: 'gray', textAlign: 'center'}} >&#169; 2021 Levance.in All Rights Reserved</span>
+            <span style={{color: 'gray', textAlign: 'center'}} >&#169; 2021 Levance.in All Rights Reserved{'\n'}</span>
+            <span style={{color: 'gray', textAlign: 'center'}} >Designed & Developed by <a rel="noopener noreferrer" target="_blank" href="https://www.linkedin.com/in/deepansh-makkar-175012197/" >iamakkar</a></span>
         </div>
         </>
     )

@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
 import './Main.css'
 import {Parallax, Background} from 'react-parallax'
+import axios from 'axios'
+import Swal from 'sweetalert2'
 
 function App() {
 
@@ -11,12 +13,40 @@ function App() {
         Phone: "",
         Website: "",
         Budget: null,
+        Reference: "",
         Comments: "", 
     })
 
     const handleSubmit = () => {
         if(detail.Budget === "--select--") detail.Budget = null
-        console.log(detail)
+        if(detail.FullName === "" || detail.Email === "" || detail.Brand === "" || detail.Phone === "" || detail.Website === "") {
+            return Swal.fire({
+                title: 'Empty Fields',
+                text: 'Please fill all the fields with red asterisk',
+                icon: 'warning',
+                confirmButtonText: 'Okay'
+            })
+        }
+        axios.post('http://localhost:5000/registerbrand', detail).then(res => {
+            const status = res.status;
+            res.json();
+            if(status === 200) {
+                return Swal.fire({
+                    title: 'Done!',
+                    text: 'We will contact you ASAP',
+                    icon: 'sucess',
+                    confirmButtonText: 'Cool'
+                })
+            }
+            else {
+                return Swal.fire({
+                    title: 'Oops!',
+                    text: `${res.error}`,
+                    icon: 'error',
+                    confirmButtonText: 'Okay'
+                })
+            }
+        })
     }
 
     return (
@@ -78,7 +108,12 @@ function App() {
                 <option value={3} >3</option>
             </select>
         </div>
-        <br/>  
+        <br/>
+        <div className="brnd-form-cmpt" >
+            <span>Reference</span>
+            <input value={detail.Reference} type="url" onChange={(e) => setDetail({...detail, Reference: e.target.value})} />
+        </div>
+        <br/>
         <div className="brnd-form-cmpt" >
             <span>Comments</span>
             <textarea value={detail.Comments} onChange={(e) => setDetail({...detail, Comments: e.target.value})} />

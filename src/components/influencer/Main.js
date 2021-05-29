@@ -4,6 +4,7 @@ import {Parallax, Background} from 'react-parallax'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated';
 import Swal from 'sweetalert2'
+import axios from 'axios';
 
 const options = [
     { value: 'chocolate', label: 'Chocolate' },
@@ -33,17 +34,79 @@ function App() {
     })
 
     const handleNext = () => {
+        if(!validemail) return Swal.fire({
+            title: 'Invalid Email',
+            text: 'Please enter a valid email id',
+            icon: 'warning',
+            confirmButtonText: 'Okay'
+        })
         setBase(true)
     }
 
     const handleBack = () => {
         setBase(false)
-        console.log(detail)
     }
 
-    const handleSubmit = () => {
-        setDetail({...detail, Phone: `${code} ${detail.Phone}`})
+    const handleSubmit = async () => {
+        if(detail.FullName === "" || detail.Email === "" || detail.Phone === "" || detail.Gender === "" || detail.DOB === "" || detail.State === "" || detail.State === "--select--" || detail.City === "" || detail.Category.length === 0) {
+            return Swal.fire({
+                title: 'Empty Fields',
+                text: 'Please fill all the fields with red asterisk',
+                icon: 'warning',
+                confirmButtonText: 'Okay'
+            })
+        }
+        if(!validemail) return Swal.fire({
+            title: 'Invalid Email',
+            text: 'Please enter a valid email id',
+            icon: 'warning',
+            confirmButtonText: 'Okay'
+        })
+        if(!validinsta) return Swal.fire({
+            title: 'Invalid Instagram Username',
+            text: 'Please enter a valid instagram username',
+            icon: 'warning',
+            confirmButtonText: 'Okay'
+        })
+        if(detail.Instagram === "" && detail.Youtube === "") {
+            return Swal.fire({
+                title: 'No Social Media',
+                text: 'Please provide atleast 1 social media handle',
+                icon: 'warning',
+                confirmButtonText: 'Okay'
+            })
+        }
+        await setDetail({...detail, Phone: `${code} ${detail.Phone}`})
         console.log(detail)
+        axios.post('http://localhost:5000/registerinfluencer', {...detail, Phone: `${code} ${detail.Phone}`}).then(res => {
+            const status = res.status;
+            res.json();
+            if(status === 200) {
+                return Swal.fire({
+                    title: 'Done!',
+                    text: 'Your information is with us. We wll contact you soon!',
+                    icon: 'sucess',
+                    confirmButtonText: 'Cool'
+                })
+            }
+            else {
+                return Swal.fire({
+                    title: 'Oops!',
+                    text: `${res.error}`,
+                    icon: 'error',
+                    confirmButtonText: 'Okay'
+                })
+            }
+        }).then(setDetail({FullName: "",
+        Email: "",
+        Phone: "",
+        Gender: "",
+        DOB: "",
+        State: "",
+        City: "",
+        Category: [],
+        Instagram: "",
+        Youtube: ""}))
     }
 
     function validateEmail(email) {
