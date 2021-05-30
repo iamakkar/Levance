@@ -5,17 +5,27 @@ import Select from 'react-select'
 import makeAnimated from 'react-select/animated';
 import Swal from 'sweetalert2'
 import axios from 'axios';
+import {useHistory} from 'react-router-dom'
 
 const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'strawerry', label: 'Strawrry' },
-    { value: 'vanilla', label: 'Vanilla' }
+    { value: 'Beauty', label: 'Beauty' },
+    { value: 'Fashion', label: 'Fashion' },
+    { value: 'Fiitness', label: 'Strawrry' },
+    { value: 'Lifestyle', label: 'Lifestyle' },
+    { value: 'Food', label: 'Food' },
+    { value: 'Travel', label: 'Travel' },
+    { value: 'Tech', label: 'Tech' },
+    { value: 'Entertainment', label: 'Entertainment' },
+    { value: 'Photography', label: 'Photography' },
+    { value: 'Organic', label: 'Organic' },
+    { value: 'Health', label: 'Health' },
   ]
 
 const animatedComponents = makeAnimated();
 
 function App() {
+
+    const history = useHistory();
     const [base, setBase] = useState(false);
     const [validemail, setValidemail] = useState(true)
     const [validinsta, setValidinsta] = useState(true)
@@ -78,14 +88,13 @@ function App() {
         }
         await setDetail({...detail, Phone: `${code} ${detail.Phone}`})
         console.log(detail)
-        axios.post('http://localhost:5000/registerinfluencer', {...detail, Phone: `${code} ${detail.Phone}`}).then(res => {
+        axios.post('https://levance.herokuapp.com/registerinfluencer', {...detail, Phone: `${code} ${detail.Phone}`}).then(res => {
             const status = res.status;
-            res.json();
             if(status === 200) {
                 return Swal.fire({
                     title: 'Done!',
                     text: 'Your information is with us. We wll contact you soon!',
-                    icon: 'sucess',
+                    icon: 'success',
                     confirmButtonText: 'Cool'
                 })
             }
@@ -106,7 +115,7 @@ function App() {
         City: "",
         Category: [],
         Instagram: "",
-        Youtube: ""}))
+        Youtube: ""})).then(() => history.push('/'))
     }
 
     function validateEmail(email) {

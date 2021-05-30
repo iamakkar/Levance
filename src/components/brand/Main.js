@@ -3,8 +3,11 @@ import './Main.css'
 import {Parallax, Background} from 'react-parallax'
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import {useHistory} from 'react-router-dom'
 
 function App() {
+
+    const history = useHistory();
 
     const [detail, setDetail] = useState({
         FullName: "",
@@ -27,15 +30,15 @@ function App() {
                 confirmButtonText: 'Okay'
             })
         }
-        axios.post('http://localhost:5000/registerbrand', detail).then(res => {
+        axios.post('https://levance.herokuapp.com/registerbrand', detail).then(res => {
             const status = res.status;
-            res.json();
+            console.log(res)
             if(status === 200) {
                 return Swal.fire({
                     title: 'Done!',
                     text: 'We will contact you ASAP',
-                    icon: 'sucess',
-                    confirmButtonText: 'Cool'
+                    icon: 'success',
+                    confirmButtonText: 'Cool',
                 })
             }
             else {
@@ -46,7 +49,7 @@ function App() {
                     confirmButtonText: 'Okay'
                 })
             }
-        })
+        }).then(() => history.push('/'))
     }
 
     return (
@@ -101,12 +104,13 @@ function App() {
         <br/>
         <div className="brnd-form-cmpt" >
             <span>Budget<sup style={{color: 'red'}} >*</sup></span>
-            <select defaultValue="--select--" value={detail.Budget} id="budget" onChange={(e) => setDetail({...detail, Budget: e.target.value})} >
+            {/* <select defaultValue="--select--" value={detail.Budget} id="budget" onChange={(e) => setDetail({...detail, Budget: e.target.value})} >
                 <option value="--select--" >--select--</option>
                 <option value={1} >1</option>
                 <option value={2} >2</option>
                 <option value={3} >3</option>
-            </select>
+            </select> */}
+            <input value={detail.Budget} type="text" onChange={(e) => setDetail({...detail, Budget: e.target.value})} />
         </div>
         <br/>
         <div className="brnd-form-cmpt" >
