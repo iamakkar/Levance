@@ -26,7 +26,7 @@ function App(props) {
 
     return(
         <>
-        <Parallax bgImage={"/assets/home.jpg"} strength={500} className="bg-image" >
+        <Parallax bgImage={"/assets/home1c.png"} strength={500} className="bg-image" >
             <div className="bg-image-div">
             <div className="home-btn1">
                 <button className="btn1-style" onClick={() => props.history.push("/influencer")} >I'm an Influencer</button>

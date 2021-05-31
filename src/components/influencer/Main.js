@@ -156,10 +156,10 @@ function App() {
 
     return (
         <>
-        {/* <img src="/assets/brand.png" /> */}
+        {/* <img src={window.innerWidth < 768 ? "/assets/brand.png" : "/assets/brandc.png"} /> */}
         <Parallax strength={300}>
       <Background className="custom-bg">
-      <img alt="err" src="/assets/brand.png" /> 
+      <img alt="err" src={window.innerWidth > 768 ? "/assets/brand.png" : "/assets/brandc.png"} /> 
       </Background>
       <div>
         <br />
@@ -213,7 +213,7 @@ function App() {
             <>
             <div className="infl-form-cont">
             <div className="infl-form" >
-                <h2>Fill the FormI</h2><br/>
+                <h2>Fill the Form</h2><br/>
                 <div className="infl-form-cmpt" >
                     <span>Full Name<sup style={{color: 'red'}} >*</sup></span>
                     <input type="text" value={detail.FullName} onChange={(e) => setDetail({...detail, FullName: e.target.value})} />

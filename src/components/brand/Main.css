@@ -109,6 +109,16 @@ select {
 }
 
 @media (max-width: 768px) {
+  .brnd-bg-img {
+    height: auto;
+    min-width: 100%;
+    object-fit: cover;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+
   .brnd-form-cont {
     display: flex;
     flex-direction: column;
@@ -153,6 +163,7 @@ select {
     opacity: 0.5;
     background: gray;
     border-radius: 1px;
+    margin-left: 0;
   }
 
   .brnd-qr {

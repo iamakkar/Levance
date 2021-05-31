@@ -317,11 +317,13 @@
 
 @media (max-width: 768px) {
   .bg-image {
-    max-width: 100%;
-    max-height: 100%;
+    /* max-width: 768px;
+    max-height: 450px; */
+    width: 100%;
+    height: auto;
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: auto;
   }
   .bg-image-div {
     height: 80vh;

@@ -17,7 +17,7 @@ function App() {
         Website: "",
         Budget: null,
         Reference: "",
-        Comments: "", 
+        Comments: "",
     })
 
     const handleSubmit = () => {
@@ -54,10 +54,10 @@ function App() {
 
     return (
         <>
-        {/* <img src="/assets/brand.png" /> */}
+        {/* <img src={window.innerWidth < 768 ? "/assets/brand.png" : "/assets/brandc.png"} /> */}
         <Parallax strength={500}>
       <Background className="custom-bg">
-      <img alt="err" src="/assets/brand.png" /> 
+      <img alt="err" src={window.innerWidth > 768 ? "/assets/brand.png" : "/assets/brandc.png"} className="brnd-bg-img" /> 
       </Background>
       <div>
         <br />
