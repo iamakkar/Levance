@@ -130,7 +130,7 @@ function App() {
     </div>
     <div className="brnd-line" ></div>
     <div className="brnd-qr" >
-        <h2>Chat with us</h2><br/>
+        <h2>Chat with us on  WhatsApp</h2><br/>
         <a href="https://wa.me/+917082811778" ><img src="/assets/qrcode.svg" alt="err" /></a>
         <span >scan/tap the code</span>
     </div>

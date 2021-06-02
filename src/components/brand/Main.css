@@ -21,6 +21,7 @@
 .brnd-form h2 {
   font-family: "Ubuntu", sans-serif;
   font-weight: bold;
+  text-align: center;
 }
 
 .brnd-form-cmpt {
@@ -106,6 +107,7 @@ select {
 .brnd-qr h2 {
   font-family: "Ubuntu", sans-serif;
   font-weight: bold;
+  text-align: center;
 }
 
 @media (max-width: 768px) {
