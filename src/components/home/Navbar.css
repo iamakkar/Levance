@@ -8,6 +8,11 @@
   background-color: white;
 }
 
+.navbar-container img {
+  margin-left: 5%;
+  cursor: pointer;
+}
+
 .nav-options {
   display: flex;
   flex-direction: row;

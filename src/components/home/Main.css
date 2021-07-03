@@ -54,8 +54,8 @@
   padding-top: 10px;
   padding-bottom: 10px;
   font-family: "Open sans", sans-serif;
-  background: transparent;
-  border: solid aliceblue 4px;
+  background: #4c4b77;
+  border: solid #4c4b77 4px;
   color: aliceblue;
   transition: ease 200ms;
 }
@@ -67,9 +67,9 @@
   padding-top: 10px;
   padding-bottom: 10px;
   font-family: "Open sans", sans-serif;
-  background: aliceblue;
-  border: solid aliceblue 4px;
-  color: black;
+  background: transparent;
+  border: solid #4c4b77 4px;
+  color: aliceblue;
 }
 
 .home-abtus {

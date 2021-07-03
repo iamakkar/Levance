@@ -2,7 +2,7 @@
 
 .footer-cont {
   width: 100%;
-  height: 40vh;
+  height: 100%;
   background: #3d3d3d;
   display: flex;
   flex: 0 1 auto;
@@ -61,6 +61,7 @@
   color: white;
   margin-bottom: 5%;
   font-family: "Ubuntu", sans-serif;
+  font-weight: bolder;
 }
 
 .footer-ser span {
@@ -69,6 +70,7 @@
   margin-top: 5%;
   margin-bottom: 5%;
   transition: 100ms ease;
+  cursor: pointer;
 }
 
 .footer-ser span:hover {

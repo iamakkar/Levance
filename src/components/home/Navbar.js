@@ -9,18 +9,20 @@ import {
   NavLink,
 } from 'reactstrap';
 import './Navbar.css';
+import { useHistory } from 'react-router'
 
 const Example = (props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
+  const history = useHistory();
 
 
   return (
     <div>
-        {window.innerWidth < 768 ? <Navbar color="white" light expand="md">
-        <NavbarBrand href="/">
-            <img src='/assets/2.png' alt='err' />
+      {window.innerWidth < 768 ? <Navbar color="white" light expand="md">
+        <NavbarBrand href="/" style={{ margin: 0, width: 50 }}>
+          <img src='/assets/2.png' alt='err' s />
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar >
@@ -36,18 +38,18 @@ const Example = (props) => {
             </NavItem>
           </Nav>
         </Collapse>
-        </Navbar> :
+      </Navbar> :
         <>
-            <div className="navbar-container" >
-                <img src='/assets/2.png' alt='err' />
-                <div className='nav-options'>
-                    <a className="nav-link" href="/">Home</a>
-                    <a className="nav-link" href="/influencer">I'm an Influencer</a>
-                    <a className="nav-link" href="/brand">I'm a Brand</a>
-                </div>
+          <div className="navbar-container" >
+            <img src='/assets/2.png' alt='err' onClick={() => history.push("/")} />
+            <div className='nav-options'>
+              <a className="nav-link" href="/">Home</a>
+              <a className="nav-link" href="/influencer">I'm an Influencer</a>
+              <a className="nav-link" href="/brand">I'm a Brand</a>
             </div>
+          </div>
         </>
-        }
+      }
     </div>
   );
 }
