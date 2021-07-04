@@ -26,7 +26,6 @@ const animatedComponents = makeAnimated();
 function App() {
 
     const history = useHistory();
-    const [base, setBase] = useState(false);
     const [validemail, setValidemail] = useState(true)
     const [validinsta, setValidinsta] = useState(true)
     const [code, setCode] = useState("+91");
@@ -35,7 +34,7 @@ function App() {
         Email: "",
         Phone: "",
         Gender: "",
-        DOB: "",
+        // DOB: "",
         State: "",
         City: "",
         Category: [],
@@ -43,22 +42,8 @@ function App() {
         Youtube: ""
     })
 
-    const handleNext = () => {
-        if(!validemail) return Swal.fire({
-            title: 'Invalid Email',
-            text: 'Please enter a valid email id',
-            icon: 'warning',
-            confirmButtonText: 'Okay'
-        })
-        setBase(true)
-    }
-
-    const handleBack = () => {
-        setBase(false)
-    }
-
     const handleSubmit = async () => {
-        if(detail.FullName === "" || detail.Email === "" || detail.Phone === "" || detail.Gender === "" || detail.DOB === "" || detail.State === "" || detail.State === "--select--" || detail.City === "" || detail.Category.length === 0) {
+        if(detail.FullName === "" || detail.Email === "" || detail.Phone === "" || detail.Gender === "--select--" || detail.State === "" || detail.State === "--select--" || detail.City === "" || detail.Category.length === 0) {
             return Swal.fire({
                 title: 'Empty Fields',
                 text: 'Please fill all the fields with red asterisk',
@@ -110,7 +95,7 @@ function App() {
         Email: "",
         Phone: "",
         Gender: "",
-        DOB: "",
+        // DOB: "",
         State: "",
         City: "",
         Category: [],
@@ -176,44 +161,10 @@ function App() {
         <br />
       </div> 
     </Parallax>
-    {base ? <>
+    <>
         <div className="infl-form-cont" id="social">
             <div className="infl-form" id="social" >
-                <h2>Let's Connect Socially</h2><br/>
-                <div className="infl-form-cmpt" >
-                <span>Category<sup style={{color: 'red'}} >*</sup></span>
-                {/* <select defaultValue="--select--" id="category" value={detail.Category} onChange={(e) => setDetail({...detail, Category: e.target.value})} >
-                        <option value="--select--" >--select--</option>
-                        <option value="A" >A</option>
-                        <option value="B" >B</option>
-                        <option value="c" >c</option>
-                </select> */}
-                <Select className="infl-form-cmpt-cat" isMulti components={animatedComponents} options={options} onChange={(e) => handleCategory(e)} />
-                </div>
-                <br/>
-                <div className="infl-form-cmpt" >
-                <span>Instagram Handle</span>
-                <input id={!validinsta ? "infl-inpt-err" : "y"} type="text" value={detail.Instagram} onChange={(e) => handleInstagram(e)} />
-                </div>
-                {!validinsta && <span className="infl-err" >Please enter a valid instagram username</span>}
-                <br/>
-                <div className="infl-form-cmpt" >
-                    <span>Youtube Handle</span>
-                    <input id="youtube" type="text" value={detail.Youtube} onChange={(e) => setDetail({...detail, Youtube: e.target.value})} />
-                </div>
-                <br/>
-                <div className="infl-form-sub"  >
-                <button style={{marginRight: 5}} className="infl-form-btn" onClick={() => handleBack()} >← Back</button>
-                <button className="brnd-form-btn" onClick={() => handleSubmit()} >Submit</button>
-                </div>
-                <br/>
-            </div>
-            </div><br/>
-            </> : 
-            <>
-            <div className="infl-form-cont">
-            <div className="infl-form" >
-                <h2>Fill the Form</h2><br/>
+                <h2>Welcome Aboard</h2><br/>
                 <div className="infl-form-cmpt" >
                     <span>Full Name<sup style={{color: 'red'}} >*</sup></span>
                     <input type="text" value={detail.FullName} onChange={(e) => setDetail({...detail, FullName: e.target.value})} />
@@ -233,23 +184,27 @@ function App() {
                     </div>
                 </div>
                 <br/>
-            </div>
-            <div className="infl-form">
-            <h2 id="blank" >&#8203;</h2><br/>
-            <div className="infl-form-cmpt" >
-                    <span>Gender<sup style={{color: 'red'}} >*</sup></span>
+                <div className="infl-form-cmpt" >
+                <span>Gender<sup style={{color: 'red'}} >*</sup></span>
+                <select defaultValue="--select--" id="gender" value={detail.Gender} onChange={(e) => setDetail({...detail, Gender: e.target.value})} >
+                    <option value="--select--" >--select--</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+                    {/* <span>Gender<sup style={{color: 'red'}} >*</sup></span>
                     <span>Male</span><input type="radio" id="male" name="gender" value={"male"} checked={detail.Gender === "male"} onChange={(e) => setDetail({...detail, Gender: e.target.value})} />
                     
                     <span>Female</span><input type="radio" id="female" name="gender" value="female" checked={detail.Gender === "female"} onChange={(e) => setDetail({...detail, Gender: e.target.value})} />
                     
-                    <span>Other</span><input type="radio" id="other" name="gender" value="other" checked={detail.Gender === "other"} onChange={(e) => setDetail({...detail, Gender: e.target.value})} />
-            </div>
-            <br/>
-            <div className="infl-form-cmpt" >
-                <span>Date of Birth<sup style={{color: 'red'}} >*</sup></span>
-                <input id="date" type="date" value={detail.DOB} onChange={(e) => setDetail({...detail, DOB: e.target.value})} />
-            </div>
+                    <span>Other</span><input type="radio" id="other" name="gender" value="other" checked={detail.Gender === "other"} onChange={(e) => setDetail({...detail, Gender: e.target.value})} /> */}
+                </div>
                 <br/>
+                {/* <div className="infl-form-cmpt" >
+                    <span>Date of Birth<sup style={{color: 'red'}} >*</sup></span>
+                    <input id="date" type="date" value={detail.DOB} onChange={(e) => setDetail({...detail, DOB: e.target.value})} />
+                </div>
+                <br/> */}
                 <div className="infl-form-cmpt" >
                     <span>State<sup style={{color: 'red'}} >*</sup></span>
                     <select defaultValue="--select--" id="state" value={detail.State} onChange={(e) => setDetail({...detail, State: e.target.value})} >
@@ -298,15 +253,35 @@ function App() {
                     <input type="text" value={detail.City} onChange={(e) => setDetail({...detail, City: e.target.value})} />
                 </div>
                 <br/>
+                <div className="infl-form-cmpt" >
+                <span>Category<sup style={{color: 'red'}} >*</sup></span>
+                {/* <select defaultValue="--select--" id="category" value={detail.Category} onChange={(e) => setDetail({...detail, Category: e.target.value})} >
+                        <option value="--select--" >--select--</option>
+                        <option value="A" >A</option>
+                        <option value="B" >B</option>
+                        <option value="c" >c</option>
+                </select> */}
+                <Select className="infl-form-cmpt-cat" isMulti components={animatedComponents} options={options} onChange={(e) => handleCategory(e)} />
+                </div>
+                <br/>
+                <div className="infl-form-cmpt" >
+                <span>Instagram Handle</span>
+                <input id={!validinsta ? "infl-inpt-err" : "y"} type="text" value={detail.Instagram} onChange={(e) => handleInstagram(e)} />
+                </div>
+                {!validinsta && <span className="infl-err" >Please enter a valid instagram username</span>}
+                <br/>
+                <div className="infl-form-cmpt" >
+                    <span>Youtube Handle</span>
+                    <input id="youtube" type="text" value={detail.Youtube} onChange={(e) => setDetail({...detail, Youtube: e.target.value})} />
+                </div>
+                <br/>
+                <br/>
+                <div className="infl-form-sub"  >
+                <button className="brnd-form-btn" onClick={() => handleSubmit()} >Submit</button>
+                </div>
             </div>
-            </div>
-            <br/>
-            <div className="infl-form-sub"  >
-                <button className="infl-form-btn" onClick={() => handleNext()} >Next →</button>
-            </div>
-            <br/>
+            </div><br/>
             </>
-            }
         </>
     )
 }

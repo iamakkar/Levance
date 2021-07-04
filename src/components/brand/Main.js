@@ -30,6 +30,14 @@ function App() {
                 confirmButtonText: 'Okay'
             })
         }
+        if(detail.Phone.length > 0 && detail.Phone.length < 10) {
+            return Swal.fire({
+                title: 'Invalid Phone Number',
+                text: 'Phone number should be of 10 digits',
+                icon: 'warning',
+                confirmButtonText: 'Okay'
+            })
+        }
         axios.post('https://levance.herokuapp.com/registerbrand', detail).then(res => {
             const status = res.status;
             console.log(res)
@@ -103,7 +111,7 @@ function App() {
         </div>
         <br/>
         <div className="brnd-form-cmpt" >
-            <span>Budget<sup style={{color: 'red'}} >*</sup></span>
+            <span>Budget</span>
             {/* <select defaultValue="--select--" value={detail.Budget} id="budget" onChange={(e) => setDetail({...detail, Budget: e.target.value})} >
                 <option value="--select--" >--select--</option>
                 <option value={1} >1</option>
