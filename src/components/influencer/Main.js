@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState} from 'react'
 import './Main.css'
 import {Parallax, Background} from 'react-parallax'
 import Select from 'react-select'
@@ -6,6 +6,7 @@ import makeAnimated from 'react-select/animated';
 import Swal from 'sweetalert2'
 import axios from 'axios';
 import {useHistory} from 'react-router-dom'
+import ReactLoading from 'react-loading';
 
 const options = [
     { value: 'Beauty', label: 'Beauty' },
@@ -28,6 +29,7 @@ function App() {
     const history = useHistory();
     const [validemail, setValidemail] = useState(true)
     const [validinsta, setValidinsta] = useState(true)
+    const [loading, setisLoading] = useState(false);
     const [code, setCode] = useState("+91");
     const [detail, setDetail] = useState({
         FullName: "",
@@ -51,6 +53,12 @@ function App() {
                 confirmButtonText: 'Okay'
             })
         }
+        if(detail.Phone.length > 0 && detail.Phone.length !== 10) return Swal.fire({
+            title: 'Invalid Phone Number',
+            text: 'Please enter a valid phone number',
+            icon: 'warning',
+            confirmButtonText: 'Okay'
+        })
         if(!validemail) return Swal.fire({
             title: 'Invalid Email',
             text: 'Please enter a valid email id',
@@ -71,9 +79,12 @@ function App() {
                 confirmButtonText: 'Okay'
             })
         }
+        setisLoading(true);
         await setDetail({...detail, Phone: `${code} ${detail.Phone}`})
         console.log(detail)
-        axios.post('https://levance.herokuapp.com/registerinfluencer', {...detail, Phone: `${code} ${detail.Phone}`}).then(res => {
+        axios.post('https://levance.herokuapp.com/registerinfluencer', {...detail, Phone: `${code} ${detail.Phone}`})
+        .then(res => {
+            setisLoading(false);
             const status = res.status;
             if(status === 200) {
                 return Swal.fire({
@@ -141,27 +152,34 @@ function App() {
 
     return (
         <>
-        {/* <img src={window.innerWidth < 768 ? "/assets/brand.png" : "/assets/brandc.png"} /> */}
-        <Parallax strength={300}>
-      <Background className="custom-bg">
-      <img alt="err" src={window.innerWidth > 768 ? "/assets/brand.png" : "/assets/brandc.png"} /> 
-      </Background>
-      <div>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-      </div> 
-    </Parallax>
-    <>
+        {window.innerWidth < 768 ? <img alt="err" src="/assets/brand.png" className="main-img" /> : 
+            <Parallax strength={300}>
+            <Background className="custom-bg">
+            <img alt="err" src={window.innerWidth > 768 ? "/assets/brand.png" : "/assets/brandc.png"} /> 
+            </Background>
+            <div>
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+            </div> 
+          </Parallax>
+        }
+        {loading ? <>
+            <div className="infl-load" >
+            <ReactLoading type={"bars"} color={"#4c4b77"} height={window.innerWidth > 768 ? '25%' : '50%'} width={window.innerWidth > 768 ? '25%' : '50%'} />
+            <h4>Collecting all your details...</h4>
+            </div>
+        </> : 
+        <>
         <div className="infl-form-cont" id="social">
             <div className="infl-form" id="social" >
                 <h2>Welcome Aboard</h2><br/>
@@ -261,7 +279,7 @@ function App() {
                         <option value="B" >B</option>
                         <option value="c" >c</option>
                 </select> */}
-                <Select className="infl-form-cmpt-cat" isMulti components={animatedComponents} options={options} onChange={(e) => handleCategory(e)} />
+                <Select placeholder="Select upto 3 categories" className="infl-form-cmpt-cat" isMulti components={animatedComponents} options={options} onChange={(e) => handleCategory(e)} />
                 </div>
                 <br/>
                 <div className="infl-form-cmpt" >
@@ -280,8 +298,9 @@ function App() {
                 <button className="brnd-form-btn" onClick={() => handleSubmit()} >Submit</button>
                 </div>
             </div>
-            </div><br/>
+            </div>
             </>
+            }
         </>
     )
 }

@@ -1,3 +1,21 @@
+.main-img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
+.brnd-load {
+  display: flex;
+  flex: 0 1 auto;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.brnd-load h4 {
+  font-family: "Ubuntu", "sans-serif";
+}
+
 .brnd-form-cont {
   display: flex;
   flex-direction: row;

@@ -44,24 +44,24 @@ function App(props) {
             <p className="home-abtus-txt3">"Grow Good, Evolve Better"</p><br />
             {/* <button className="home-abtus-btn" >Contact Us →</button> */}
             <div className="home-brand" >
-                <h2 className="home-brand-hd" >How it Works for Brands</h2>
+                <h2 className="home-brand-hd" >How it Works for Influencers</h2>
                 <div className="home-brand-und" ></div>
                 <div className="home-brand-pr">
-                    <Card num="1" head="Campaign Brief" des="Tell us about your campaign objectives, expectations, and your product. These may also include the influencer's niche, content type etc. Receive a custom sample list of influencers for your product, approve the list and proceed further." />
-                    <Card num="2" head="Creating a Campaign" des="Our team will design the most suitable and cost-effective campaign with the best set of influencers for your product/service. We will train the influencers according to your requirements and regular follow-ups will be done throughout the campaign." />
-                    <Card num="3" head="Results & Chill" des="Sit back and enjoy the ever-engaging content made by our creators to showcase your brand on social media. Once all the content goes live, we'll send you complete campaign metrics and analytics along with all content links." />
-                </div>
-                <button className="home-brand-btn" onClick={() => props.history.push("/brand")} >Get a Quote →</button>
-            </div>
-            <div className="home-brand" style={{ marginTop: 0, backgroundColor: '#58d3e6' }} >
-                <h2 className="home-brand-hd" style={{ color: '#3d3d3d' }}>How it Works for Influencers</h2>
-                <div className="home-infl-und" ></div>
-                <div className="home-brand-pr" style={{ backgroundColor: '#58d3e6' }} >
-                    <CardI num="1" head="Join the Community" des={`Click the "Register Now" button below to get yourself registered with us in less than 2 minutes. Fill in your basic details, your social media handles and choose the categories that suit best your content.`} />
-                    <CardI num="2" head="Participate in Campaigns" des="Follow us on Instagram, where we post details about all the ongoing campaigns, participate in the one's you like. Else, our campaign managers are always there to reach out to you with all the suitable campaigns." />
-                    <CardI num="3" head="Create for Credit" des="Blow the trumpet with your jaw-dropping content and make your audience believe in the brand you are promoting. Finally, get paid on successfully campaign completion and wait for the next one!" />
+                    <Card num="1" head="Join the Community" des={`Click the "Register Now" button below to get yourself registered with us in less than 2 minutes. Fill in your basic details, your social media handles and choose the categories that suit best your content.`} />
+                    <Card num="2" head="Participate in Campaigns" des="Follow us on Instagram, where we post details about all the ongoing campaigns, participate in the one's you like. Else, our campaign managers are always there to reach out to you with all the suitable campaigns." />
+                    <Card num="3" head="Create for Credit" des="Blow the trumpet with your jaw-dropping content and make your audience believe in the brand you are promoting. Finally, get paid on successfully campaign completion and wait for the next one!" />
                 </div>
                 <button className="home-brand-btn" onClick={() => props.history.push("/influencer")} >Register Now →</button>
+            </div>
+            <div className="home-brand" style={{ marginTop: 0, backgroundColor: '#58d3e6' }} >
+                <h2 className="home-brand-hd" style={{ color: '#3d3d3d' }}>How it Works for Brands</h2>
+                <div className="home-infl-und" ></div>
+                <div className="home-brand-pr" style={{ backgroundColor: '#58d3e6' }} >
+                    <CardI num="1" head="Campaign Brief" des="Tell us about your campaign objectives, expectations, and your product. These may also include the influencer's niche, content type etc. Receive a custom sample list of influencers for your product, approve the list and proceed further." />
+                    <CardI num="2" head="Creating a Campaign" des="Our team will design the most suitable and cost-effective campaign with the best set of influencers for your product/service. We will train the influencers according to your requirements and regular follow-ups will be done throughout the campaign." />
+                    <CardI num="3" head="Results & Chill" des="Sit back and enjoy the ever-engaging content made by our creators to showcase your brand on social media. Once all the content goes live, we'll send you complete campaign metrics and analytics along with all content links." />
+                </div>
+                <button className="home-brand-btn" onClick={() => props.history.push("/brand")} >Get a Quote →</button>
             </div>
             <div className="home-why-top" >
                 <h1 className="home-why-head">Why Levance?</h1>

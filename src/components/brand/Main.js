@@ -4,11 +4,13 @@ import {Parallax, Background} from 'react-parallax'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import {useHistory} from 'react-router-dom'
+import ReactLoading from 'react-loading';
 
 function App() {
 
     const history = useHistory();
 
+    const [loading, setisLoading] = useState(false);
     const [detail, setDetail] = useState({
         FullName: "",
         Email: "",
@@ -38,7 +40,10 @@ function App() {
                 confirmButtonText: 'Okay'
             })
         }
-        axios.post('https://levance.herokuapp.com/registerbrand', detail).then(res => {
+        setisLoading(true);
+        axios.post('https://levance.herokuapp.com/registerbrand', detail)
+        .then(res => {
+            setisLoading(false);
             const status = res.status;
             console.log(res)
             if(status === 200) {
@@ -62,26 +67,33 @@ function App() {
 
     return (
         <>
-        {/* <img src={window.innerWidth < 768 ? "/assets/brand.png" : "/assets/brandc.png"} /> */}
-        <Parallax strength={500}>
-      <Background className="custom-bg">
-      <img alt="err" src={window.innerWidth > 768 ? "/assets/brand.png" : "/assets/brandc.png"} className="brnd-bg-img" /> 
-      </Background>
-      <div>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-      </div> 
-    </Parallax>
+        {window.innerWidth < 768 ? <img alt="err" src="/assets/brand.png" className="main-img" /> : 
+            <Parallax strength={300}>
+            <Background className="custom-bg">
+            <img alt="err" src={window.innerWidth > 768 ? "/assets/brand.png" : "/assets/brandc.png"} /> 
+            </Background>
+            <div>
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+            </div> 
+          </Parallax>
+        }
+    {loading ? <>
+        <div className="brnd-load" >
+        <ReactLoading type={"bars"} color={"#4c4b77"} height={window.innerWidth > 768 ? '25%' : '50%'} width={window.innerWidth > 768 ? '25%' : '50%'} />
+        <h4>Collecting all your details...</h4>
+        </div>
+    </> : <>
     <div className="brnd-form-cont" >
     <div className="brnd-form" >
         <h2>Fill the Form</h2><br/>
@@ -144,7 +156,8 @@ function App() {
     </div>
     </div>
     <br/>
-        </>
+    </>}
+    </>
     )
 }
 
