@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React, { useState, useEffect} from 'react'
 import './Main.css'
 import {Parallax, Background} from 'react-parallax'
 import Select from 'react-select'
@@ -9,17 +9,20 @@ import {useHistory} from 'react-router-dom'
 import ReactLoading from 'react-loading';
 
 const options = [
-    { value: 'Beauty', label: 'Beauty' },
-    { value: 'Fashion', label: 'Fashion' },
-    { value: 'Fiitness', label: 'Strawrry' },
-    { value: 'Lifestyle', label: 'Lifestyle' },
-    { value: 'Food', label: 'Food' },
-    { value: 'Travel', label: 'Travel' },
-    { value: 'Tech', label: 'Tech' },
-    { value: 'Entertainment', label: 'Entertainment' },
-    { value: 'Photography', label: 'Photography' },
-    { value: 'Organic', label: 'Organic' },
-    { value: 'Health', label: 'Health' },
+    { value: 'beauty/makeup', label: 'Beauty/Makeup' },
+    { value: 'fashion', label: 'Fashion' },
+    { value: 'fitness', label: 'Fitness' },
+    { value: 'lifestyle', label: 'Lifestyle' },
+    { value: 'food', label: 'Food' },
+    { value: 'travel', label: 'Travel' },
+    { value: 'parenting', label: 'Parenting' },
+    { value: 'health & wellness', label: 'Health & Wellness' },
+    { value: 'tech', label: 'Tech' },
+    { value: 'comedy', label: 'Comedy' },
+    { value: 'dance', label: 'Dance' },
+    { value: 'music', label: 'Music' },
+    { value: 'photography', label: 'Photography' },
+    { value: 'organic/gardening', label: 'Organic/Gardening' },
   ]
 
 const animatedComponents = makeAnimated();
@@ -43,6 +46,10 @@ function App() {
         Instagram: "",
         Youtube: ""
     })
+
+    useEffect(() => {
+        if(detail.Instagram === "") setValidinsta(true);
+    }, [detail.Instagram])
 
     const handleSubmit = async () => {
         if(detail.FullName === "" || detail.Email === "" || detail.Phone === "" || detail.Gender === "--select--" || detail.State === "" || detail.State === "--select--" || detail.City === "" || detail.Category.length === 0) {
@@ -283,13 +290,13 @@ function App() {
                 </div>
                 <br/>
                 <div className="infl-form-cmpt" >
-                <span>Instagram Handle</span>
+                <span>Instagram Username</span>
                 <input id={!validinsta ? "infl-inpt-err" : "y"} type="text" value={detail.Instagram} onChange={(e) => handleInstagram(e)} />
                 </div>
                 {!validinsta && <span className="infl-err" >Please enter a valid instagram username</span>}
                 <br/>
                 <div className="infl-form-cmpt" >
-                    <span>Youtube Handle</span>
+                    <span>Youtube Channel Link</span>
                     <input id="youtube" type="text" value={detail.Youtube} onChange={(e) => setDetail({...detail, Youtube: e.target.value})} />
                 </div>
                 <br/>
@@ -299,6 +306,7 @@ function App() {
                 </div>
             </div>
             </div>
+            <br/>
             </>
             }
         </>
