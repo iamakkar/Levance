@@ -87,7 +87,7 @@ function App() {
             })
         }
         setisLoading(true);
-        await setDetail({...detail, Phone: `${code} ${detail.Phone}`})
+        await setDetail({...detail, Phone: `${code}-${detail.Phone}`})
         console.log(detail)
         axios.post('https://levance.herokuapp.com/registerinfluencer', {...detail, Phone: `${code} ${detail.Phone}`})
         .then(res => {
