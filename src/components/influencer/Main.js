@@ -180,9 +180,9 @@ function App() {
             </div> 
           </Parallax>
         }
-        {loading ? <>
+        {!loading ? <>
             <div className="infl-load" >
-            <ReactLoading type={"bars"} color={"#4c4b77"} height={window.innerWidth > 768 ? '25%' : '50%'} width={window.innerWidth > 768 ? '25%' : '50%'} />
+            <ReactLoading type={"bars"} color={"#4c4b77"} height={window.innerWidth > 768 ? '100%' : '100%'} width={window.innerWidth > 768 ? '25%' : '50%'} />
             <h4>Collecting all your details...</h4>
             </div>
         </> : 
