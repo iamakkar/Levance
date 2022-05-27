@@ -5,7 +5,6 @@ import Influencer from './components/influencer/Wrapper';
 import ScrollToTop from '../src/scrollToTop';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
 
-
 function App() {
   return (
     <Router>
