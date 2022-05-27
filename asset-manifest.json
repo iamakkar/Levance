@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/Levance/static/css/main.93146cb8.chunk.css",
+    "main.js": "/Levance/static/js/main.c3b00128.chunk.js",
+    "main.js.map": "/Levance/static/js/main.c3b00128.chunk.js.map",
+    "runtime-main.js": "/Levance/static/js/runtime-main.7ebeee29.js",
+    "runtime-main.js.map": "/Levance/static/js/runtime-main.7ebeee29.js.map",
+    "static/css/2.4c97ca4f.chunk.css": "/Levance/static/css/2.4c97ca4f.chunk.css",
+    "static/js/2.28cf833f.chunk.js": "/Levance/static/js/2.28cf833f.chunk.js",
+    "static/js/2.28cf833f.chunk.js.map": "/Levance/static/js/2.28cf833f.chunk.js.map",
+    "static/js/3.75afc6eb.chunk.js": "/Levance/static/js/3.75afc6eb.chunk.js",
+    "static/js/3.75afc6eb.chunk.js.map": "/Levance/static/js/3.75afc6eb.chunk.js.map",
+    "index.html": "/Levance/index.html",
+    "static/css/2.4c97ca4f.chunk.css.map": "/Levance/static/css/2.4c97ca4f.chunk.css.map",
+    "static/css/main.93146cb8.chunk.css.map": "/Levance/static/css/main.93146cb8.chunk.css.map",
+    "static/js/2.28cf833f.chunk.js.LICENSE.txt": "/Levance/static/js/2.28cf833f.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.7ebeee29.js",
+    "static/css/2.4c97ca4f.chunk.css",
+    "static/js/2.28cf833f.chunk.js",
+    "static/css/main.93146cb8.chunk.css",
+    "static/js/main.c3b00128.chunk.js"
+  ]
+}
