@@ -1,10 +1,10 @@
 import React from 'react'
 import './Main.css'
 import { Parallax } from 'react-parallax';
-import { withRouter } from 'react-router'
+import {useNavigate} from 'react-router-dom'
 
 function App(props) {
-
+    const navigate = useNavigate();
     const Card = ({ num, des, head }) => {
         return (
             <div className="home-brand-pr-crd">
@@ -30,10 +30,10 @@ function App(props) {
             <Parallax bgImage={"/assets/home1c.png"} strength={500} className="bg-image" >
                 <div className="bg-image-div">
                     <div className="home-btn1">
-                        <button className="btn1-style" onClick={() => props.history.push("/influencer")} >I'm an Influencer</button>
+                        <button className="btn1-style" onClick={() => navigate("/influencer")} >I'm an Influencer</button>
                     </div>
                     <div className="home-btn2">
-                        <button outline className="btn2-style" onClick={() => props.history.push("/brand")} >I'm a Brand</button>
+                        <button outline className="btn2-style" onClick={() => navigate("/brand")} >I'm a Brand</button>
                     </div>
                 </div>
             </Parallax>
@@ -51,7 +51,7 @@ function App(props) {
                     <Card num="2" head="Participate in Campaigns" des="Follow us on Instagram, where we post details about all the ongoing campaigns, participate in the one's you like. Else, our campaign managers are always there to reach out to you with all the suitable campaigns." />
                     <Card num="3" head="Create for Credit" des="Blow the trumpet with your jaw-dropping content and make your audience believe in the brand you are promoting. Finally, get paid on successfully campaign completion and wait for the next one!" />
                 </div>
-                <button className="home-brand-btn" onClick={() => props.history.push("/influencer")} >Register Now →</button>
+                <button className="home-brand-btn" onClick={() => navigate("/influencer")} >Register Now →</button>
             </div>
             <div className="home-brand" style={{ marginTop: 0, backgroundColor: '#58d3e6' }} >
                 <h2 className="home-brand-hd" style={{ color: '#3d3d3d' }}>How it Works for Brands</h2>
@@ -61,7 +61,7 @@ function App(props) {
                     <CardI num="2" head="Creating a Campaign" des="Our team will design the most suitable and cost-effective campaign with the best set of influencers for your product/service. We will train the influencers according to your requirements and regular follow-ups will be done throughout the campaign." />
                     <CardI num="3" head="Results & Chill" des="Sit back and enjoy the ever-engaging content made by our creators to showcase your brand on social media. Once all the content goes live, we'll send you complete campaign metrics and analytics along with all content links." />
                 </div>
-                <button className="home-brand-btn" onClick={() => props.history.push("/brand")} >Get a Quote →</button>
+                <button className="home-brand-btn" onClick={() => navigate("/brand")} >Get a Quote →</button>
             </div>
             <div className="home-why-top" >
                 <h1 className="home-why-head">Why Levance?</h1>
@@ -89,4 +89,4 @@ function App(props) {
     )
 }
 
-export default withRouter(App);
+export default App;

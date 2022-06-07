@@ -3,16 +3,18 @@ import Home from './components/home/Wrapper';
 import Brand from './components/brand/Wrapper';
 import Influencer from './components/influencer/Wrapper';
 import ScrollToTop from '../src/scrollToTop';
-import { Route, BrowserRouter as Router } from 'react-router-dom';
+import { Route, BrowserRouter, Routes } from 'react-router-dom';
 
 function App() {
   return (
-    <Router>
+    <BrowserRouter>
       <ScrollToTop />
-      <Route path="/influencer" exact={true} component={Influencer} />
-      <Route path="/brand" exact={true} component={Brand} />
-      <Route path="/" exact={true} component={Home} />
-    </Router>
+      <Routes>
+      <Route path='/' element={<Home />} />
+      <Route path="influencer" element={<Influencer />} />
+      <Route path="brand" element={<Brand />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

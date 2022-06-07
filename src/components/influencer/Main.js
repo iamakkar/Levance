@@ -5,7 +5,7 @@ import Select from 'react-select'
 import makeAnimated from 'react-select/animated';
 import Swal from 'sweetalert2'
 import axios from 'axios';
-import {useHistory} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import ReactLoading from 'react-loading';
 
 const options = [
@@ -29,7 +29,7 @@ const animatedComponents = makeAnimated();
 
 function App() {
 
-    const history = useHistory();
+    const navigate = useNavigate();
     const [validemail, setValidemail] = useState(true)
     const [validinsta, setValidinsta] = useState(true)
     const [loading, setisLoading] = useState(false);
@@ -118,7 +118,7 @@ function App() {
         City: "",
         Category: [],
         Instagram: "",
-        Youtube: ""})).then(() => history.push('/'))
+        Youtube: ""})).then(() => navigate('/'))
     }
 
     function validateEmail(email) {

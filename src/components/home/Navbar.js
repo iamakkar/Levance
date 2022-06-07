@@ -9,13 +9,13 @@ import {
   NavLink,
 } from 'reactstrap';
 import './Navbar.css';
-import { useHistory } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 
 const Example = (props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
-  const history = useHistory();
+  const navigate = useNavigate();
 
 
   return (
@@ -41,7 +41,7 @@ const Example = (props) => {
       </Navbar> :
         <>
           <div className="navbar-container" >
-            <img src='/assets/2.png' alt='err' onClick={() => history.push("/")} />
+            <img src='/assets/2.png' alt='err' onClick={() => navigate("/")} />
             <div className='nav-options'>
               <a className="nav-link" href="/">Home</a>
               <a className="nav-link" href="/influencer">I'm an Influencer</a>

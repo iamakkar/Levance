@@ -3,12 +3,12 @@ import './Main.css'
 import {Parallax, Background} from 'react-parallax'
 import axios from 'axios'
 import Swal from 'sweetalert2'
-import {useHistory} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import ReactLoading from 'react-loading';
 
 function App() {
 
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const [loading, setisLoading] = useState(false);
     const [detail, setDetail] = useState({
@@ -62,7 +62,7 @@ function App() {
                     confirmButtonText: 'Okay'
                 })
             }
-        }).then(() => history.push('/'))
+        }).then(() => navigate('/'))
     }
 
     return (

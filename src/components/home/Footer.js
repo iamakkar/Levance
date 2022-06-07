@@ -1,9 +1,10 @@
 import React from 'react'
 import "./Footer.css";
 import { SocialIcon } from 'react-social-icons';
-import { withRouter } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 function App(props) {
+    const navigate = useNavigate();
     return (
         <>
             <div className="footer-cont" >
@@ -19,9 +20,9 @@ function App(props) {
                 </div>
                 <div className="footer-ser" >
                     <h4>Quick Links:</h4>
-                    <span onClick={() => props.history.push("/")}>Home</span>
-                    <span onClick={() => props.history.push("/brand")}>I am a Brand</span>
-                    <span onClick={() => props.history.push("/influencer")}>I am an Influencer</span>
+                    <span onClick={() => navigate("/")}>Home</span>
+                    <span onClick={() => navigate("/brand")}>I am a Brand</span>
+                    <span onClick={() => navigate("/influencer")}>I am an Influencer</span>
                 </div>
                 <div className="footer-des" >
                     <h4>Contact Us:</h4>
@@ -50,4 +51,4 @@ function App(props) {
     )
 }
 
-export default withRouter(App);
+export default (App);
